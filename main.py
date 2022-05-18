@@ -4,7 +4,7 @@ from getPreview import getPreview
 
 from telegram.ext import Updater, CallbackContext, CallbackQueryHandler
 import logging
-
+from  getbackground import getbackground
 from mysqlop import createMysql
 from telegram.ext import MessageHandler, Filters
 from telegram.ext import CommandHandler
@@ -21,10 +21,10 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 
 myarr = {}
 
-themeFileDowmloaded=False
-themePhontoDownloaded=False
-spuperflag=False
-
+themeFileDowmloaded = False
+themePhontoDownloaded = False
+spuperflag = False
+Securitydoor= False
 
 
 def start(update, context):
@@ -35,87 +35,95 @@ def start(update, context):
             InlineKeyboardButton("提取主题背景", callback_data='2'),
         ],
 
-    ]  # 1
+    ]
     reply_markup = InlineKeyboardMarkup(keyboard)  # 2
     update.message.reply_text("请选择服务", reply_markup=reply_markup)
 
 
-def keyboard_callback(update,contetx): #4
-    query = update.callback_query #5
-    query.answer() #6
-    query.edit_message_text(text=f"Selected option: {query.data} ")
-    if query.data=='1':
-
+def keyboard_callback(update, contetx):
+    query = update.callback_query
+    query.answer()
+    # query.edit_message_text(text=f"Selected option: {query.data} ")
+    global spuperflag
+    global Securitydoor
+    Securitydoor= True  #安全们开启
+    if query.data == '1':
         query.edit_message_text(text="请发送您的主题和图片")
-
     else:
         query.edit_message_text(text="请发送您的主题")
+        spuperflag = True
+
 
 
 def downloadtheme(update, context):
-        global themeFileDowmloaded
-        global themePhontoDownloaded
-        context.bot.send_message(chat_id=update.effective_chat.id, text="You send me a theme!")
-        file = context.bot.getFile(update.message.document.file_id)
-        file.download("temptheme/" + update.message.document.file_name)    #下载主题
-        themeFileDowmloaded="temptheme/" + update.message.document.file_name
-        if themeFileDowmloaded and themePhontoDownloaded:
-            newthemepath=combinate(themeFileDowmloaded,themePhontoDownloaded)
-            context.bot.send_document(chat_id=update.effective_chat.id, document=open(newthemepath, "rb"))
-            context.bot.send_message(chat_id=update.effective_chat.id, text="This is your newTheme!")
+    global themeFileDowmloaded
+    global themePhontoDownloaded
+    global spuperflag
+    global Securitydoor
+    if Securitydoor:
+        context.bot.send_message(chat_id=update.effective_chat.id, text="请输入 /start 命令")
+        return
+    context.bot.send_message(chat_id=update.effective_chat.id, text="我以收到主题文件")
+    file = context.bot.getFile(update.message.document.file_id)
+    file.download("temptheme/" + update.message.document.file_name)
+    themeFileDowmloaded = "temptheme/" + update.message.document.file_name
+    if spuperflag :
+        picpath=getbackground(themeFileDowmloaded)
+        context.bot.send_document(chat_id=update.effective_chat.id,document=open(picpath, "rb"))
+        spuperflag=False
+        return
 
-            alls=getPreview(newthemepath) #2p
-
-            channelandthemepara = {"themeName": newthemepath[newthemepath.find("/"):],
-                                   "file": newthemepath}
-            alls = dict(alls, **channelandthemepara)
-            createMysql(alls)
-            print('success!')
-            context.bot.send_message(chat_id=update.effective_chat.id, text="success! query is OK!")
-            themeFileDowmloaded = False
-            themePhontoDownloaded = False
-        else:
-            context.bot.send_message(chat_id=update.effective_chat.id, text="l need a photo")
+    if themeFileDowmloaded and themePhontoDownloaded:
+        newthemepath = combinate(themeFileDowmloaded, themePhontoDownloaded)
+        context.bot.send_document(chat_id=update.effective_chat.id, document=open(newthemepath, "rb"))
+        context.bot.send_message(chat_id=update.effective_chat.id, text="成功！，这是合成的新主题")
+        # alls = getPreview(newthemepath)
+        # channelandthemepara = {"themeName": newthemepath[newthemepath.find("/"):],
+        #                        "file": newthemepath}
+        # alls = dict(alls, **channelandthemepara)
+        # createMysql(alls)
+        themeFileDowmloaded = False
+        themePhontoDownloaded = False
+    else:
+        context.bot.send_message(chat_id=update.effective_chat.id, text="我需要一张背景图片")
 
 
 def handlePhoto(update, context):
     global themeFileDowmloaded
     global themePhontoDownloaded
+    global spuperflag
+    global Securitydoor
+    if Securitydoor:
+        context.bot.send_message(chat_id=update.effective_chat.id, text="请输入 /start 命令")
+        return
+    if spuperflag:
+        return
     tim = time.localtime()
     timstr = time.strftime("%Y-%m-%d-%H-%M-%S", tim)
-    context.bot.send_message(chat_id=update.effective_chat.id, text="This is a Photo!")
+    context.bot.send_message(chat_id=update.effective_chat.id, text="这确实是一张图片！")
     file = context.bot.getFile(update.message.photo[2]['file_id'])
-    photoPath="tempthemephoto/" + timstr + ".jpg"
+    photoPath = "tempthemephoto/" + timstr + ".jpg"
     file.download(photoPath)
-    context.bot.send_message(chat_id=update.effective_chat.id, text="Photo is downloaded")  #下载图片
-    themePhontoDownloaded="tempthemephoto/" + timstr + ".jpg"
-
+    context.bot.send_message(chat_id=update.effective_chat.id, text="图片已下载")  # 下载图片
+    themePhontoDownloaded = "tempthemephoto/" + timstr + ".jpg"
     if themeFileDowmloaded and themePhontoDownloaded:
         newthemepath = combinate(themeFileDowmloaded, themePhontoDownloaded)
         context.bot.send_document(chat_id=update.effective_chat.id, document=open(newthemepath, "rb"))
-        context.bot.send_message(chat_id=update.effective_chat.id, text="This is your newTheme!")
-        alls = getPreview(newthemepath)  # 2p
-        channelandthemepara = {"themeName": newthemepath[newthemepath.find("/"):],
-                               "file": newthemepath}
-        alls = dict(alls, **channelandthemepara)
-        createMysql(alls)
-        print('success!')
-        context.bot.send_message(chat_id=update.effective_chat.id, text="success! query is OK!")
+        context.bot.send_message(chat_id=update.effective_chat.id, text="成功！，这是合成的新主题")
+        # alls = getPreview(newthemepath)  # 2p
+        # channelandthemepara = {"themeName": newthemepath[newthemepath.find("/"):],
+        #                        "file": newthemepath}
+        # alls = dict(alls, **channelandthemepara)
+        # createMysql(alls)
+        # print('success!')
         themeFileDowmloaded = False
         themePhontoDownloaded = False
     else:
-        context.bot.send_message(chat_id=update.effective_chat.id, text="l need a theme")
-
-
-
+        context.bot.send_message(chat_id=update.effective_chat.id, text="我需要一个主题文件")
 
 
 combins = CommandHandler('start', start)
 dispatcher.add_handler(combins)
-
-
-
-
 
 unknown_handler = MessageHandler(Filters.photo, handlePhoto)
 dispatcher.add_handler(unknown_handler)
