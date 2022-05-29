@@ -63,7 +63,7 @@ def downloadtheme(update, context):
     if Securitydoor:
         context.bot.send_message(chat_id=update.effective_chat.id, text="请输入 /start 命令")
         return
-    context.bot.send_message(chat_id=update.effective_chat.id, text="我以收到主题文件")
+    context.bot.send_message(chat_id=update.effective_chat.id, text="我已收到主题文件")
     file = context.bot.getFile(update.message.document.file_id)
     file.download("temptheme/" + update.message.document.file_name)
     themeFileDowmloaded = "temptheme/" + update.message.document.file_name
