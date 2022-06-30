@@ -23,8 +23,8 @@ myarr = {}
 
 themeFileDowmloaded = False
 themePhontoDownloaded = False
-spuperflag = False
-Securitydoor= False
+spuperflag = False   #为True 时就要 为只接受主题
+Securitydoor= False  #判断是选择了服务 没有选择就提示发送start 选择服务
 
 
 def start(update, context):
@@ -60,17 +60,18 @@ def downloadtheme(update, context):
     global themePhontoDownloaded
     global spuperflag
     global Securitydoor
-    if Securitydoor:
+    if not Securitydoor:  #安全门判断
         context.bot.send_message(chat_id=update.effective_chat.id, text="请输入 /start 命令")
         return
-    context.bot.send_message(chat_id=update.effective_chat.id, text="我已收到主题文件")
     file = context.bot.getFile(update.message.document.file_id)
     file.download("temptheme/" + update.message.document.file_name)
+    context.bot.send_message(chat_id=update.effective_chat.id, text="我已收到主题文件")
     themeFileDowmloaded = "temptheme/" + update.message.document.file_name
     if spuperflag :
         picpath=getbackground(themeFileDowmloaded)
         context.bot.send_document(chat_id=update.effective_chat.id,document=open(picpath, "rb"))
-        spuperflag=False
+        spuperflag=False #重置
+        Securitydoor=False #重置 服务结束
         return
 
     if themeFileDowmloaded and themePhontoDownloaded:
@@ -84,6 +85,8 @@ def downloadtheme(update, context):
         # createMysql(alls)
         themeFileDowmloaded = False
         themePhontoDownloaded = False
+        spuperflag = False  # 重置
+        Securitydoor = False  # 重置 服务结束
     else:
         context.bot.send_message(chat_id=update.effective_chat.id, text="我需要一张背景图片")
 
@@ -93,10 +96,11 @@ def handlePhoto(update, context):
     global themePhontoDownloaded
     global spuperflag
     global Securitydoor
-    if Securitydoor:
+    if not Securitydoor:
         context.bot.send_message(chat_id=update.effective_chat.id, text="请输入 /start 命令")
         return
-    if spuperflag:
+    if  spuperflag:
+        context.bot.send_message(chat_id=update.effective_chat.id, text="不需要图片 ")
         return
     tim = time.localtime()
     timstr = time.strftime("%Y-%m-%d-%H-%M-%S", tim)
@@ -116,8 +120,12 @@ def handlePhoto(update, context):
         # alls = dict(alls, **channelandthemepara)
         # createMysql(alls)
         # print('success!')
+
         themeFileDowmloaded = False
         themePhontoDownloaded = False
+        spuperflag = False  # 重置
+        Securitydoor = False  # 重置 服务结束
+
     else:
         context.bot.send_message(chat_id=update.effective_chat.id, text="我需要一个主题文件")
 
