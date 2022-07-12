@@ -139,6 +139,7 @@ def adminhanderex(update, context):
                                          until_date=259200,
                                          permissions=ChatPermissions(can_send_messages=False,
                                                                      can_send_media_messages=False))
+        print("已经封禁成员")
         context.bot.send_message(chat_id=update.effective_chat.id, text="用户id :"+str(update.effective_chat.id)+
                                                                         "用户名 :" + update. effective_user.full_name +
                                                                         "已被封禁 ")
