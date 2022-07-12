@@ -1,14 +1,13 @@
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update, ChatPermissions
 
 from getPreview import getPreview
-
+from adminfunction import *
 from telegram.ext import Updater, CallbackContext, CallbackQueryHandler
 import logging
-from  getbackground import getbackground
+from getbackground import getbackground
 from mysqlop import createMysql
 from telegram.ext import MessageHandler, Filters
 from telegram.ext import CommandHandler
-
 from combinate import combinate
 import time
 
@@ -23,9 +22,9 @@ myarr = {}
 
 themeFileDowmloaded = False
 themePhontoDownloaded = False
-spuperflag = False   #为True 时就要 为只接受主题
-Securitydoor= False  #判断是选择了服务 没有选择就提示发送start 选择服务
-
+spuperflag = False  # 为True 时就要 为只接受主题
+Securitydoor = False  # 判断是选择了服务 没有选择就提示发送start 选择服务
+banword=getbanword()
 
 def start(update, context):
     context.bot.send_message(chat_id=update.effective_chat.id, text="I'm a bot, please talk to me!")
@@ -46,7 +45,7 @@ def keyboard_callback(update, contetx):
     # query.edit_message_text(text=f"Selected option: {query.data} ")
     global spuperflag
     global Securitydoor
-    Securitydoor= True  #安全们开启
+    Securitydoor = True  # 安全们开启
     if query.data == '1':
         query.edit_message_text(text="请发送您的主题和图片")
     else:
@@ -54,24 +53,23 @@ def keyboard_callback(update, contetx):
         spuperflag = True
 
 
-
 def downloadtheme(update, context):
     global themeFileDowmloaded
     global themePhontoDownloaded
     global spuperflag
     global Securitydoor
-    if not Securitydoor:  #安全门判断
+    if not Securitydoor:  # 安全门判断
         context.bot.send_message(chat_id=update.effective_chat.id, text="请输入 /start 命令")
         return
     file = context.bot.getFile(update.message.document.file_id)
     file.download("temptheme/" + update.message.document.file_name)
     context.bot.send_message(chat_id=update.effective_chat.id, text="我已收到主题文件")
     themeFileDowmloaded = "temptheme/" + update.message.document.file_name
-    if spuperflag :
-        picpath=getbackground(themeFileDowmloaded)
-        context.bot.send_document(chat_id=update.effective_chat.id,document=open(picpath, "rb"))
-        spuperflag=False #重置
-        Securitydoor=False #重置 服务结束
+    if spuperflag:
+        picpath = getbackground(themeFileDowmloaded)
+        context.bot.send_document(chat_id=update.effective_chat.id, document=open(picpath, "rb"))
+        spuperflag = False  # 重置
+        Securitydoor = False  # 重置 服务结束
         return
 
     if themeFileDowmloaded and themePhontoDownloaded:
@@ -91,7 +89,7 @@ def downloadtheme(update, context):
         context.bot.send_message(chat_id=update.effective_chat.id, text="我需要一张背景图片")
 
 
-def handlePhoto(update, context):
+def handlePhoto(update: Update, context: CallbackContext):
     global themeFileDowmloaded
     global themePhontoDownloaded
     global spuperflag
@@ -99,7 +97,7 @@ def handlePhoto(update, context):
     if not Securitydoor:
         context.bot.send_message(chat_id=update.effective_chat.id, text="请输入 /start 命令")
         return
-    if  spuperflag:
+    if spuperflag:
         context.bot.send_message(chat_id=update.effective_chat.id, text="不需要图片 ")
         return
     tim = time.localtime()
@@ -130,6 +128,23 @@ def handlePhoto(update, context):
         context.bot.send_message(chat_id=update.effective_chat.id, text="我需要一个主题文件")
 
 
+def adminhanderex(update, context):
+    text = update.effective_message.text
+    print(text)
+    if (deletetxt(text,banword)):
+        context.bot.delete_message(chat_id=update.effective_chat.id,message_id=update.effective_message.message_id)
+
+        context.bot.restrict_chat_member(chat_id=update.effective_chat.id,
+                                         user_id=update.effective_user.id,
+                                         until_date=259200,
+                                         permissions=ChatPermissions(can_send_messages=False,
+                                                                     can_send_media_messages=False))
+        context.bot.send_message(chat_id=update.effective_chat.id, text="用户id :"+str(update.effective_chat.id)+
+                                                                        "用户名 :" + update. effective_user.full_name +
+                                                                        "已被封禁 ")
+    else:
+        pass
+
 combins = CommandHandler('start', start)
 dispatcher.add_handler(combins)
 
@@ -139,8 +154,8 @@ dispatcher.add_handler(unknown_handler)
 checkatthem = MessageHandler(Filters.document.file_extension("attheme"), downloadtheme)
 dispatcher.add_handler(checkatthem)
 
+adminhander = MessageHandler(Filters.text, adminhanderex)
+dispatcher.add_handler(adminhander)
+
 updater.dispatcher.add_handler(CallbackQueryHandler(keyboard_callback))
 updater.start_polling()
-
-# need  file jump  preview file
-# need  link  jump  preview file
