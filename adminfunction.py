@@ -1,8 +1,8 @@
 def deletetxt(txt,str):
     for x in str:
        if x in txt:
-           return True
-    return False
+           return x
+    return None
 
 
 

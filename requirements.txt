@@ -1,4 +1,0 @@
-imageio==2.19.2
-pyjnius==1.4.1
-python_telegram_bot==13.11
-requests==2.27.1

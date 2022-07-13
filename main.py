@@ -95,7 +95,7 @@ def handlePhoto(update: Update, context: CallbackContext):
     global spuperflag
     global Securitydoor
     if not Securitydoor:
-        context.bot.send_message(chat_id=update.effective_chat.id, text="请输入 /start 命令")
+        # context.bot.send_message(chat_id=update.effective_chat.id, text="请输入 /start 命令")
         return
     if spuperflag:
         context.bot.send_message(chat_id=update.effective_chat.id, text="不需要图片 ")
@@ -131,7 +131,8 @@ def handlePhoto(update: Update, context: CallbackContext):
 def adminhanderex(update, context):
     text = update.effective_message.text
     print(text)
-    if (deletetxt(text,banword)):
+    os=deletetxt(text, banword)
+    if (os is not None):
         context.bot.delete_message(chat_id=update.effective_chat.id,message_id=update.effective_message.message_id)
 
         context.bot.restrict_chat_member(chat_id=update.effective_chat.id,
@@ -141,13 +142,15 @@ def adminhanderex(update, context):
                                                                      can_send_media_messages=False))
         print("已经封禁成员")
         context.bot.send_message(chat_id=update.effective_chat.id, text="用户id :"+str(update.effective_chat.id)+
-                                                                        "用户名 :" + update. effective_user.full_name +
-                                                                        "已被封禁 ")
+                                                                        " 用户名 :" + update. effective_user.full_name +
+                                                                        "已被封禁3天，由于触发 关键词 "+os )
     else:
         pass
 
 combins = CommandHandler('start', start)
 dispatcher.add_handler(combins)
+
+
 
 unknown_handler = MessageHandler(Filters.photo, handlePhoto)
 dispatcher.add_handler(unknown_handler)
