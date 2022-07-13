@@ -1,6 +1,6 @@
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update, ChatPermissions
 
-from getPreview import getPreview
+
 from adminfunction import *
 from telegram.ext import Updater, CallbackContext, CallbackQueryHandler
 import logging
@@ -25,6 +25,10 @@ themePhontoDownloaded = False
 spuperflag = False  # 为True 时就要 为只接受主题
 Securitydoor = False  # 判断是选择了服务 没有选择就提示发送start 选择服务
 banword=getbanword()
+
+
+def ceshi(update,context):
+    context.bot.send_message(chat_id=update.effective_chat.id, text="l am alive!")
 
 def start(update, context):
     context.bot.send_message(chat_id=update.effective_chat.id, text="I'm a bot, please talk to me!")
@@ -134,7 +138,6 @@ def adminhanderex(update, context):
     os=deletetxt(text, banword)
     if (os is not None):
         context.bot.delete_message(chat_id=update.effective_chat.id,message_id=update.effective_message.message_id)
-
         context.bot.restrict_chat_member(chat_id=update.effective_chat.id,
                                          user_id=update.effective_user.id,
                                          until_date=259200,
@@ -147,10 +150,14 @@ def adminhanderex(update, context):
     else:
         pass
 
+def welcome(update,context):
+    context.bot.delete_message(chat_id=update.effective_chat.id, message_id=update.effective_message.message_id)
+
 combins = CommandHandler('start', start)
 dispatcher.add_handler(combins)
 
-
+combinss = CommandHandler('ceshi', ceshi)
+dispatcher.add_handler(combinss)
 
 unknown_handler = MessageHandler(Filters.photo, handlePhoto)
 dispatcher.add_handler(unknown_handler)
@@ -160,6 +167,9 @@ dispatcher.add_handler(checkatthem)
 
 adminhander = MessageHandler(Filters.text, adminhanderex)
 dispatcher.add_handler(adminhander)
+
+memberwelcom=MessageHandler(Filters.status_update.new_chat_members,welcome)
+dispatcher.add_handler(memberwelcom)
 
 updater.dispatcher.add_handler(CallbackQueryHandler(keyboard_callback))
 updater.start_polling()
