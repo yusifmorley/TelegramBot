@@ -123,7 +123,7 @@ def handlePhoto(update: Update, context: CallbackContext):
         photoPath = "MyFile/Photo/" + timstr + ".jpg"
         file.download(photoPath)
         context.bot.send_message(chat_id=update.effective_chat.id, text="图片已下载")
-        logging.info("已经下载 图片 id ：" + str(file))
+        logging.info("下载完成！ 图片文件 id ：" + str(file))
         return
 
     if not Securitydoor:
@@ -207,7 +207,7 @@ def videohandle(update, context):
         filename = timstr
     file.download("MyFile/Video/" + filename)
     context.bot.send_message(chat_id=update.effective_chat.id, text="文件已经下载")
-
+    logging.info("下载完成！ 视频文件 id ：" + str(file))
 
 combins = CommandHandler('start', start)
 dispatcher.add_handler(combins)
