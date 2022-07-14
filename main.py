@@ -1,3 +1,4 @@
+import telegram
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update, ChatPermissions
 
 from adminfunction import *
@@ -9,6 +10,7 @@ from telegram.ext import MessageHandler, Filters
 from telegram.ext import CommandHandler
 from combinate import combinate
 import time
+import ast
 
 myapi = "1941238169:AAG4FT5Bs1CZLLDZ5bidH6Sk4EgzsQqEgS8"
 updater = Updater(token=myapi, use_context=True)
@@ -154,7 +156,7 @@ def handlePhoto(update: Update, context: CallbackContext):
         themePhontoDownloaded = False
         spuperflag = False  # 重置
         Securitydoor = False  # 重置 服务结束
-        logging.info("完成合并 来自用户 id " + str(update.effective_user.id)+"用户名："+update.effective_user.full_name)
+        logging.info("完成合并 来自用户 id " + str(update.effective_user.id) + "用户名：" + update.effective_user.full_name)
     else:
         context.bot.send_message(chat_id=update.effective_chat.id, text="我需要一个主题文件")
 
@@ -188,12 +190,12 @@ def accept(update, context):
 
 
 def videohandle(update, context):
+    print(update)
     if Accpepflag:
         if update.effective_user.id != 507467074:
             context.bot.send_message(chat_id=update.effective_chat.id, text="您非私人用户")
             context.bot.send_message(chat_id=update.effective_chat.id, text=str(update.effective_user.id))
             return
-        file = context.bot.getFile(update.message.video.file_id)
         filename = ""
         if update.message.video.file_name:
             filename = update.message.video.file_name
@@ -203,11 +205,31 @@ def videohandle(update, context):
             tim = time.localtime()
             timstr = time.strftime("%Y-%m-%d-%H-%M-%S", tim)
             filename = timstr
-        if len(filename)>15:
-            filename=filename[:15]
-        file.download("MyFile/Video/" + filename)
-        context.bot.send_message(chat_id=update.effective_chat.id, text="文件已经下载")
-        logging.info("下载完成！ 视频文件 id ：" + str(file))
+        if len(filename) > 15:
+            filename = filename[:15]
+        if update.message.video.file_size > 20000000:
+            with open("Videoid/videoid", "a") as ws:
+               ws.write(                                  
+                   update.message.video.to_json()+"\n" )
+            context.bot.send_message(chat_id=update.effective_chat.id, text="文件已经下载")
+            logging.info("写入完成！ 视频文件 id ：" + str(update.message.video))
+        else:
+            with open("Videoid/videoid", "a") as ws:
+                ws.write(
+                   update.message.video.to_json()+"\n" )
+            logging.info("写入完成！ 视频文件 id ：" + str(update.message.video))
+            file = context.bot.getFile(update.message.video.file_id)
+            file.download("MyFile/Video/" + filename)
+            context.bot.send_message(chat_id=update.effective_chat.id, text="文件已经下载")
+            logging.info("下载完成！ 视频文件 id ：" + str(file))
+
+
+
+def getvideo(update,context):
+      with open("Videoid/videoid","r") as dep:
+          ob=dep.readline()
+      context.bot.send_video(chat_id=update.effective_chat.id,video=telegram.Video.de_json(data=ast.literal_eval(ob),bot=context.bot))
+
 
 combins = CommandHandler('start', start)
 dispatcher.add_handler(combins)
@@ -217,6 +239,9 @@ dispatcher.add_handler(combinss)
 
 combinsss = CommandHandler('accept', accept)
 dispatcher.add_handler(combinsss)
+
+combinssss = CommandHandler('get', getvideo)
+dispatcher.add_handler(combinssss)
 
 accpet_handler = MessageHandler(Filters.video, videohandle)
 dispatcher.add_handler(accpet_handler)
