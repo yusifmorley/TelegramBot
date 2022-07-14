@@ -188,6 +188,8 @@ def accept(update, context):
 
 
 def videohandle(update, context):
+    if Accpepflag:
+        return
     if update.effective_user.id != 507467074:
         context.bot.send_message(chat_id=update.effective_chat.id, text="您非私人用户")
         context.bot.send_message(chat_id=update.effective_chat.id, text=str(update.effective_user.id))
