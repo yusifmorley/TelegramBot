@@ -230,6 +230,17 @@ def getvideo(update,context):
           ob=dep.readline()
       context.bot.send_video(chat_id=update.effective_chat.id,video=telegram.Video.de_json(data=ast.literal_eval(ob),bot=context.bot))
 
+def reset(update,context):
+    global themeFileDowmloaded
+    global themePhontoDownloaded
+    global spuperflag
+    global Securitydoor
+    global Accpepflag
+    themeFileDowmloaded = False
+    themePhontoDownloaded = False
+    spuperflag = False  # 为True 时就要 为只接受主题
+    Securitydoor = False  # 判断是选择了服务 没有选择就提示发送start 选择服务
+    Accpepflag = False  # 一旦开启
 
 combins = CommandHandler('start', start)
 dispatcher.add_handler(combins)
@@ -237,14 +248,20 @@ dispatcher.add_handler(combins)
 combinss = CommandHandler('ceshi', ceshi)
 dispatcher.add_handler(combinss)
 
+
 combinsss = CommandHandler('accept', accept)
 dispatcher.add_handler(combinsss)
 
 combinssss = CommandHandler('get', getvideo)
 dispatcher.add_handler(combinssss)
 
+combinsssss = CommandHandler('reset', reset)
+dispatcher.add_handler(combinsssss)
+
 accpet_handler = MessageHandler(Filters.video, videohandle)
 dispatcher.add_handler(accpet_handler)
+
+
 
 unknown_handler = MessageHandler(Filters.photo, handlePhoto)
 dispatcher.add_handler(unknown_handler)
