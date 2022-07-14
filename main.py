@@ -189,24 +189,25 @@ def accept(update, context):
 
 def videohandle(update, context):
     if Accpepflag:
-        return
-    if update.effective_user.id != 507467074:
-        context.bot.send_message(chat_id=update.effective_chat.id, text="您非私人用户")
-        context.bot.send_message(chat_id=update.effective_chat.id, text=str(update.effective_user.id))
-        return
-    file = context.bot.getFile(update.message.video.file_id)
-    filename = ""
-    if update.message.video.file_name:
-        filename = update.message.video.file_name
-    elif update.message.caption:
-        filename = update.message.caption
-    else:
-        tim = time.localtime()
-        timstr = time.strftime("%Y-%m-%d-%H-%M-%S", tim)
-        filename = timstr
-    file.download("MyFile/Video/" + filename)
-    context.bot.send_message(chat_id=update.effective_chat.id, text="文件已经下载")
-    logging.info("下载完成！ 视频文件 id ：" + str(file))
+        if update.effective_user.id != 507467074:
+            context.bot.send_message(chat_id=update.effective_chat.id, text="您非私人用户")
+            context.bot.send_message(chat_id=update.effective_chat.id, text=str(update.effective_user.id))
+            return
+        file = context.bot.getFile(update.message.video.file_id)
+        filename = ""
+        if update.message.video.file_name:
+            filename = update.message.video.file_name
+        elif update.message.caption:
+            filename = update.message.caption
+        else:
+            tim = time.localtime()
+            timstr = time.strftime("%Y-%m-%d-%H-%M-%S", tim)
+            filename = timstr
+        if len(filename)>15:
+            filename=filename[:15]
+        file.download("MyFile/Video/" + filename)
+        context.bot.send_message(chat_id=update.effective_chat.id, text="文件已经下载")
+        logging.info("下载完成！ 视频文件 id ：" + str(file))
 
 combins = CommandHandler('start', start)
 dispatcher.add_handler(combins)
