@@ -116,7 +116,6 @@ def handlePhoto(update: Update, context: CallbackContext):
             context.bot.send_message(chat_id=update.effective_chat.id, text=str(update.effective_user.id))
             logging.warning("非法的使用 用户id为 " + str(update.effective_user.id))
             return
-        print(update)
         tim = time.localtime()
         timstr = time.strftime("%Y-%m-%d-%H-%M-%S", tim)
         file = context.bot.getFile(update.message.photo[2]['file_id'])
@@ -162,7 +161,6 @@ def handlePhoto(update: Update, context: CallbackContext):
 
 def adminhanderex(update, context):  # 管理员
     text = update.effective_message.text
-    print(text)
     os = deletetxt(text, banword)
     if os:
         context.bot.delete_message(chat_id=update.effective_chat.id, message_id=update.effective_message.message_id)
@@ -194,7 +192,6 @@ def videohandle(update, context):
         context.bot.send_message(chat_id=update.effective_chat.id, text="您非私人用户")
         context.bot.send_message(chat_id=update.effective_chat.id, text=str(update.effective_user.id))
         return
-    print(update)
     file = context.bot.getFile(update.message.video.file_id)
     filename = ""
     if update.message.video.file_name:
