@@ -163,6 +163,14 @@ def handlePhoto(update: Update, context: CallbackContext):
 
 
 def adminhanderex(update, context):  # 管理员
+    if Accpepflag:
+        if update.effective_user.id != 507467074:
+            context.bot.send_message(chat_id=update.effective_chat.id, text="您非私人用户")
+            context.bot.send_message(chat_id=update.effective_chat.id, text=str(update.effective_user.id))
+            return
+        with open("Text/text","a") as tx:
+            tx.write(update.effective_message.text+"\n")
+            context.bot.send_message(chat_id=update.effective_chat.id, text="文本写入完成")
 
     text = update.effective_message.text
     os = deletetxt(text, banword)
@@ -249,6 +257,7 @@ def animationhander(update, context):
         file = context.bot.getFile(update.message.animation.file_id)
         animationPath = "Photo/" + timstr + ".gif"
         file.download(animationPath)
+        context.bot.send_message(chat_id=update.effective_chat.id, text="文件已下载")
 
 
 def reset(update, context):
