@@ -113,6 +113,7 @@ def handlePhoto(update: Update, context: CallbackContext):
     global spuperflag
     global Securitydoor
     if Accpepflag:
+        print(update)
         if update.effective_user.id != 507467074:
             context.bot.send_message(chat_id=update.effective_chat.id, text="您非私人用户")
             context.bot.send_message(chat_id=update.effective_chat.id, text=str(update.effective_user.id))
@@ -162,6 +163,7 @@ def handlePhoto(update: Update, context: CallbackContext):
 
 
 def adminhanderex(update, context):  # 管理员
+
     text = update.effective_message.text
     os = deletetxt(text, banword)
     if os:
@@ -209,10 +211,10 @@ def videohandle(update, context):
         #     filename = filename[:15]
         # if update.message.video.file_size > 20000000:
         with open("Videoid/videoid", "a") as ws:
-                ws.write(
-                    update.message.video.to_json() + "\n")
-                context.bot.send_message(chat_id=update.effective_chat.id, text="文件已经下载")
-                logging.info("写入完成！ 视频文件 id ：" + str(update.message.video))
+            ws.write(
+                update.message.video.to_json() + "\n")
+            context.bot.send_message(chat_id=update.effective_chat.id, text="文件已经下载")
+            logging.info("写入完成！ 视频文件 id ：" + str(update.message.video))
         # else:
         #     with open("Videoid/videoid", "a") as ws:
         #         ws.write(
@@ -236,6 +238,19 @@ def getvideo(update, context):
                                    video=telegram.Video.de_json(data=ast.literal_eval(ob), bot=context.bot))
 
 
+def animationhander(update, context):
+    if Accpepflag:
+        if update.effective_user.id != 507467074:
+            context.bot.send_message(chat_id=update.effective_chat.id, text="您非私人用户")
+            context.bot.send_message(chat_id=update.effective_chat.id, text=str(update.effective_user.id))
+            return
+        tim = time.localtime()
+        timstr = time.strftime("%Y-%m-%d-%H-%M-%S", tim)
+        file = context.bot.getFile(update.message.animation.file_id)
+        animationPath = "Photo/" + timstr + ".gif"
+        file.download(animationPath)
+
+
 def reset(update, context):
     global themeFileDowmloaded
     global themePhontoDownloaded
@@ -247,6 +262,7 @@ def reset(update, context):
     spuperflag = False  # 为True 时就要 为只接受主题
     Securitydoor = False  # 判断是选择了服务 没有选择就提示发送start 选择服务
     Accpepflag = False  # 一旦开启
+    context.bot.send_message(chat_id=update.effective_chat.id, text="重置完成")
 
 
 combins = CommandHandler('start', start)
@@ -269,6 +285,9 @@ dispatcher.add_handler(accpet_handler)
 
 unknown_handler = MessageHandler(Filters.photo, handlePhoto)
 dispatcher.add_handler(unknown_handler)
+
+animation = MessageHandler(Filters.animation, animationhander)
+dispatcher.add_handler(animation)
 
 checkatthem = MessageHandler(Filters.document.file_extension("attheme"), downloadtheme)
 dispatcher.add_handler(checkatthem)
