@@ -6,9 +6,9 @@ def createMysql(dic):
   try:
     mydb = mysql.connector.connect(
         host="127.0.0.1",
-        user="morleybread",
-        password="2863278679Gy@",
-        database="Themedata",
+        user="",    
+        password="",
+        database="",
     )
 
     # mycursor=mydb.cursor()
