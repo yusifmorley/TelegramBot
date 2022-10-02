@@ -12,7 +12,7 @@ from combinate import combinate
 import time
 import ast
 
-myapi = "1941238169:AAG4FT5Bs1CZLLDZ5bidH6Sk4EgzsQqEgS8"
+myapi = ""  # 机器人api
 updater = Updater(token=myapi, use_context=True)
 dispatcher = updater.dispatcher
 
