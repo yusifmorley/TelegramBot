@@ -4,8 +4,26 @@ mydb = mysql.connector.connect(
     host="127.0.0.1",
     user="root",
     password="2863278679Gy@",
-    database="telegramdata",
+    database="hello",
 )
+
+
+def initdb(mydb):
+    mycursor = mydb.cursor()
+    mycursor.execute("show tables;")
+    if mycursor.fetchone() is None:
+        mycursor.execute(
+            """create table logodata(
+                    uid bigint not null,
+                    flag  int default 0,
+                    themepath varchar(100),
+                    picpath varchar(100),
+                    primary key(uid)
+                  )default charset =utf8
+            """
+        )
+        print("数据库表已创建")
+
 
 
 def getpicpath(mydb,id):
@@ -65,3 +83,4 @@ def createMysql(mydb, id,flag): #不管有没有 都 重置
 # #createMysql(mydb,1542485849,1)
 #
 # deletelog(mydb,154248754)
+initdb(mydb)

@@ -1,6 +1,3 @@
-import telegram
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update, ChatPermissions
-from adminfunction import *
 from telegram.ext import Updater, CallbackContext, CallbackQueryHandler
 import logging
 from getbackground import getbackground
@@ -11,7 +8,7 @@ from combinate import combinate
 import time
 import mysql.connector
 import mysqlop
-import ast
+
 
 myapi = "5738858657:AAFJmjtD5VVi3ed0n9n_5t44chXHVrZLHcM"  # 机器人api
 updater = Updater(token=myapi, use_context=True)
@@ -86,6 +83,7 @@ def handlePhoto(update, context):
         else:
             pass
 
+mysqlop.initdb(mydb) #初始化 数据库
 
 combinss = CommandHandler('combinthemeandphoto', combinThemeAndPic)
 dispatcher.add_handler(combinss)
