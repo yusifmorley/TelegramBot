@@ -1,6 +1,5 @@
 import telegram
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update, ChatPermissions
-
 from adminfunction import *
 from telegram.ext import Updater, CallbackContext, CallbackQueryHandler
 import logging
@@ -12,7 +11,7 @@ from combinate import combinate
 import time
 import ast
 
-myapi = ""  # 机器人api
+myapi = "5738858657:AAFJmjtD5VVi3ed0n9n_5t44chXHVrZLHcM"  # 机器人api
 updater = Updater(token=myapi, use_context=True)
 dispatcher = updater.dispatcher
 
@@ -20,14 +19,12 @@ logging.basicConfig(filename="Log/mylog", format='%(asctime)s - %(name)s - %(lev
                     level=logging.INFO)  # 日志
 
 myarr = {}
-
 themeFileDowmloaded = False
 themePhontoDownloaded = False
 spuperflag = False  # 为True 时就要 为只接受主题
 Securitydoor = False  # 判断是选择了服务 没有选择就提示发送start 选择服务
 Accpepflag = False  # 一旦开启
 banword = getbanword()
-
 
 def ceshi(update, context):
     context.bot.send_message(chat_id=update.effective_chat.id, text="l am alive!")
@@ -62,10 +59,6 @@ def keyboard_callback(update, contetx):
         spuperflag = True
 
 
-# def downloadalltypefile(update, context):
-#     file = context.bot.getFile(update.message.document.file_id)
-#     file.download("Myfile/" + update.message.document.file_name)
-#     context.bot.send_message(chat_id=update.effective_chat.id, text="文件已经下载")
 
 
 def downloadtheme(update, context):
@@ -93,11 +86,6 @@ def downloadtheme(update, context):
         newthemepath = combinate(themeFileDowmloaded, themePhontoDownloaded)
         context.bot.send_document(chat_id=update.effective_chat.id, document=open(newthemepath, "rb"))
         context.bot.send_message(chat_id=update.effective_chat.id, text="成功！，这是合成的新主题")
-        # alls = getPreview(newthemepath)
-        # channelandthemepara = {"themeName": newthemepath[newthemepath.find("/"):],
-        #                        "file": newthemepath}
-        # alls = dict(alls, **channelandthemepara)
-        # createMysql(alls)
         themeFileDowmloaded = False
         themePhontoDownloaded = False
         spuperflag = False  # 重置
@@ -288,6 +276,8 @@ dispatcher.add_handler(combinssss)
 
 combinsssss = CommandHandler('reset', reset)
 dispatcher.add_handler(combinsssss)
+
+
 
 accpet_handler = MessageHandler(Filters.video, videohandle)
 dispatcher.add_handler(accpet_handler)

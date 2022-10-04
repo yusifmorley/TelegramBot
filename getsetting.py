@@ -49,9 +49,3 @@ def getfillopacity(cla,b):
     w = gethex(p)
     h = ast.literal_eval(w)
     return h["fill-opacity"]
-
-# a=getfill("chat_unreadMessagesStartText")
-# print(a)
-# # print(hex(1000))#10->16
-# print(int("1000",16))  #16->10
-# print(getfill("chats_nameIcon","temptheme/Sea dark blue sky cloud light.attheme"))
