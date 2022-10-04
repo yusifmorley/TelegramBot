@@ -33,20 +33,20 @@ def getflag(mydb,id):
 def updathemeadata(mydb,themepath,id):
     mycursor = mydb.cursor()
     mycursor.execute("update  logodata set themepath='{}' where uid={} ".format(themepath,id))
-    print(mycursor.rowcount)
+    # print(mycursor.rowcount)
     mydb.commit()
 
 
 def updatpicdata(mydb,picpath,id):
     mycursor = mydb.cursor()
     mycursor.execute("update  logodata set picpath='{}' where uid={} ".format(picpath,id))
-    print(mycursor.rowcount)
+    # print(mycursor.rowcount)
     mydb.commit()
 
 def deletelog(mydb,id):
     mycursor = mydb.cursor()
     mycursor.execute("delete from logodata where uid={}".format(id))
-    print(mycursor.rowcount)
+    # print(mycursor.rowcount)
     mydb.commit()
 
 
@@ -54,14 +54,14 @@ def createMysql(mydb, id,flag): #不管有没有 都 重置
     mycursor = mydb.cursor()
     mycursor.execute("replace into  logodata ( uid,flag )values({},{})".format(id, flag))
     mydb.commit()
-    print(mycursor.rowcount)
+    # print(mycursor.rowcount)
 
 
-# createMysql(mydb,15662341558)
-
-#insertdata(mydb, 15424875849)
-#updathemeadata(mydb,"errejidjocjvjfigobkopcf",154248754)
-
-#createMysql(mydb,1542485849,1)
-
-deletelog(mydb,154248754)
+# createMysql(mydb,15662341558,2)
+#
+# #insertdata(mydb, 15424875849)
+# updathemeadata(mydb,"errejidjocjvjfigobkopcf",15662341558)
+#
+# #createMysql(mydb,1542485849,1)
+#
+# deletelog(mydb,154248754)
