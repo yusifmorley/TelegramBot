@@ -1,5 +1,8 @@
+from telegram import ChatPermissions
 from telegram.ext import Updater, CallbackContext, CallbackQueryHandler
 import logging
+
+from adminfunction import deletetxt, getbanword
 from getbackground import getbackground
 from mysqlop import createMysql
 from telegram.ext import MessageHandler, Filters
@@ -13,6 +16,7 @@ import mysqlop
 myapi = "5738858657:AAFJmjtD5VVi3ed0n9n_5t44chXHVrZLHcM"  # 机器人api
 updater = Updater(token=myapi, use_context=True)
 dispatcher = updater.dispatcher
+banword = getbanword()
 logging.basicConfig(filename="Log/mylog", format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                     level=logging.INFO)  # 日志
 mydb = mysql.connector.connect(
@@ -83,6 +87,38 @@ def handlePhoto(update, context):
         else:
             pass
 
+def adminhanderex(update, context):  # 管理员
+    text = update.effective_message.text
+    os = deletetxt(banword,text)
+
+    if os: #若存在违禁词
+
+        context.bot.delete_message(chat_id=update.effective_chat.id, message_id=update.effective_message.message_id)
+
+        num= mysqlop.getbannum(mydb, update.effective_chat.id)
+
+        if num==0:
+            mysqlop.creatbanuser(mydb,update.effective_chat.id,os)
+            context.bot.send_message(chat_id=update.effective_chat.id,
+                                     text="您触发了违禁词:{}".format(os))
+        elif num<=2:
+            mysqlop.upbanuser(mydb,update.effective_chat.id,os)
+            context.bot.send_message(chat_id=update.effective_chat.id,
+                                     text="您触发了违禁词:{}".format(os))
+        else:
+            context.bot.restrict_chat_member(chat_id=update.effective_chat.id,
+                                         user_id=update.effective_user.id,
+                                         permissions=ChatPermissions(can_send_messages=False,
+                                                                     can_send_media_messages=False))
+            textlog = "用户id :" + str(
+            update.effective_user.id) + " 用户名 :" + update.effective_user.full_name \
+                      + "已被永久封禁，由于触发违禁词" +\
+                      mysqlop.getbanwords(mydb,update.effective_chat.id)+os
+
+            context.bot.send_message(chat_id=update.effective_chat.id, text=textlog)
+            mysqlop.deletelog(mydb,update.effective_chat.id)
+            logging.info(textlog)
+
 mysqlop.initdb(mydb) #初始化 数据库
 
 combinss = CommandHandler('combinthemeandphoto', combinThemeAndPic)
@@ -96,5 +132,8 @@ dispatcher.add_handler(checkatthem)
 
 unknown_handler = MessageHandler(Filters.photo, handlePhoto)
 dispatcher.add_handler(unknown_handler)
+
+adminhander = MessageHandler(Filters.text, adminhanderex)
+dispatcher.add_handler(adminhander)
 
 updater.start_polling()

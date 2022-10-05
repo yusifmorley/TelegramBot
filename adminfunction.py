@@ -1,16 +1,15 @@
-def deletetxt(txt,str):
-    for x in str:
-       if x in txt:
-           return x
+def deletetxt(txt, str):
+    for x in txt:
+        if x in str:
+            return x
     return None
 
 
-
-def getbanword():
+def getbanword():  # 获取
     with open("banconfig/banword", "r") as fp:
-         return fp.read().split("\n")
+        return fp.read().split("\n")
 
-def writebanword(str):
+
+def writebanword(str): #
     with open("banconfig/banword", "a") as fp:
-        fp.write(str)
-
+        fp.write(str+"\n")
