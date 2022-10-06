@@ -95,29 +95,39 @@ def adminhanderex(update, context):  # 管理员
 
         context.bot.delete_message(chat_id=update.effective_chat.id, message_id=update.effective_message.message_id)
 
-        num= mysqlop.getbannum(mydb, update.effective_chat.id)
+        num= mysqlop.getbannum(mydb, update.effective_user.id)
 
         if num==0:
-            mysqlop.creatbanuser(mydb,update.effective_chat.id,os)
+            mysqlop.creatbanuser(mydb,update.effective_user.id,os)
+
             context.bot.send_message(chat_id=update.effective_chat.id,
                                      text="您触发了违禁词:{}".format(os))
+
+            mysqlop.upbanuser(mydb,update.effective_user.id,os)
+
         elif num<=2:
-            mysqlop.upbanuser(mydb,update.effective_chat.id,os)
+            mysqlop.upbanuser(mydb,update.effective_user.id,os)
             context.bot.send_message(chat_id=update.effective_chat.id,
                                      text="您触发了违禁词:{}".format(os))
         else:
-            context.bot.restrict_chat_member(chat_id=update.effective_chat.id,
+            try:
+                context.bot.restrict_chat_member(chat_id=update.effective_chat.id,
                                          user_id=update.effective_user.id,
                                          permissions=ChatPermissions(can_send_messages=False,
-                                                                     can_send_media_messages=False))
-            textlog = "用户id :" + str(
-            update.effective_user.id) + " 用户名 :" + update.effective_user.full_name \
-                      + "已被永久封禁，由于触发违禁词" +\
-                      mysqlop.getbanwords(mydb,update.effective_chat.id)+os
+                                                                 can_send_media_messages=False))
 
-            context.bot.send_message(chat_id=update.effective_chat.id, text=textlog)
-            mysqlop.deletelog(mydb,update.effective_chat.id)
-            logging.info(textlog)
+                textlog = "用户id :" + str(
+                    update.effective_user.id) + " 用户名 :" + update.effective_user.full_name \
+                          + "已被永久封禁，由于多次触发违禁词：" + \
+                          mysqlop.getbanwords(mydb, update.effective_user.id) + "-" + os
+                context.bot.send_message(chat_id=update.effective_chat.id, text=textlog)
+                mysqlop.deletelog(mydb, update.effective_user.id)
+                logging.info(textlog)
+            except:
+                context.bot.send_message(chat_id=update.effective_chat.id,
+                                         text="权限不够 无法执行")
+
+
 
 mysqlop.initdb(mydb) #初始化 数据库
 

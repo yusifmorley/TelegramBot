@@ -111,7 +111,8 @@ def creatbanuser(mydb,id,banword):
 def getbanwords(mydb,id):
     mycursor = mydb.cursor()
     mycursor.execute("select banword from bans where uid={}".format(id))
-    return mycursor.fetchone[0]
+
+    return mycursor.fetchone()[0]
 
 def deleteban(mydb,id):
     mycursor = mydb.cursor()
