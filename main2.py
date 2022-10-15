@@ -13,7 +13,7 @@ import mysql.connector
 import mysqlop
 
 
-myapi = "5738858657:AAFJmjtD5VVi3ed0n9n_5t44chXHVrZLHcM"  # 机器人api
+myapi = ""  # 机器人api
 updater = Updater(token=myapi, use_context=True)
 dispatcher = updater.dispatcher
 banword = getbanword()
