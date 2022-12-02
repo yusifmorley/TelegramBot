@@ -169,7 +169,7 @@ if __name__=="__main__":
             combinsss = CommandHandler('getbackground', getThemeBackgrounds)
             dispatcher.add_handler(combinsss)
 
-            combinssss = CommandHandler('getRandomTheme',getRanTheme)
+            combinssss = CommandHandler('getrandomtheme',getRanTheme)
             dispatcher.add_handler(combinssss)
 
             # combinssss = CommandHandler('delete', deletaBotMessage)
