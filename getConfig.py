@@ -9,9 +9,7 @@ with open("setup.cfg", "r") as f:
     TelegramBotId=data["telegrambotid"]
 
 def getMysqlConfig():
-    with open("setup.cfg", "r") as f:
-        print(MysqlData["host"])
-        mydb = mysql.connector.connect(
+    mydb = mysql.connector.connect(
             host=MysqlData["host"],
             user=MysqlData["user"],
             password=MysqlData["password"],
