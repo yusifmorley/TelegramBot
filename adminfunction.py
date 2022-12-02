@@ -1,3 +1,4 @@
+#管理功能
 def deletetxt(txt, str):
     for x in txt:
         if x in str:

@@ -1,7 +1,8 @@
-import ast
 
 
-def combinate(themePatn, PhotoPath):  #将主题与图片合并
+
+# 将主题与图片合并
+def combinate(themePatn, PhotoPath):
     with open(themePatn, "rb") as tPath:
         aa = tPath.read()
         if b'WLS' not in aa and b'WPS' not in aa:

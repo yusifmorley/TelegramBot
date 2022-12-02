@@ -1,7 +1,7 @@
 import ast
 
 
-def getDIC(a): # 主题获取 属性和参数 的字典格式
+def getDic(a):  # 主题获取 属性和参数 的字典格式
     fil = open(a, "rb")
     fils = fil.readlines()
     s = b''
@@ -11,9 +11,8 @@ def getDIC(a): # 主题获取 属性和参数 的字典格式
             break
         s += x
 
-    ss=b'{"' + s.rstrip(b'\n').replace(b'=', b'":"').replace(b'\n', b'",\n"') + b'"}'
+    ss = b'{"' + s.rstrip(b'\n').replace(b'=', b'":"').replace(b'\n', b'",\n"') + b'"}'
 
+    bi_gdic = ast.literal_eval(ss.decode("UTF-8"))
 
-    BIGdic = ast.literal_eval(ss.decode("UTF-8"))
-
-    return BIGdic
+    return bi_gdic

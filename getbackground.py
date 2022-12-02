@@ -1,3 +1,4 @@
+# 获取主题背景
 def getbackground(a): #Theme/ 开头
     with open(a, "rb") as hup:
         file = hup.read()

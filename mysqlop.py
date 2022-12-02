@@ -1,7 +1,8 @@
 import mysql.connector
+import yaml
+# 初始化数据库
 
-
-
+#获取配置
 
 def initdb(mydb):
     mycursor = mydb.cursor()
@@ -98,18 +99,21 @@ def upbanuser(mydb, id, banword):
     mycursor.execute("update bans set flag=flag+1 , banword=concat(banword,'-{}') where uid={}".format(banword, id))
     mydb.commit()
 
-def creatbanuser(mydb,id,banword):
+
+def creatbanuser(mydb, id, banword):
     mycursor = mydb.cursor()
-    mycursor.execute("insert into bans (uid, banword) values({},'{}')".format(id,banword))
+    mycursor.execute("insert into bans (uid, banword) values({},'{}')".format(id, banword))
     mydb.commit()
 
-def getbanwords(mydb,id):
+
+def getbanwords(mydb, id):
     mycursor = mydb.cursor()
     mycursor.execute("select banword from bans where uid={}".format(id))
 
     return mycursor.fetchone()[0]
 
-def deleteban(mydb,id):
+
+def deleteban(mydb, id):
     mycursor = mydb.cursor()
     mycursor.execute("delete from bans where uid={}".format(id))
     mydb.commit()
@@ -127,4 +131,3 @@ def deleteban(mydb,id):
 #
 # initdb(mydb)
 # creatbanuser(mydb,565454545,"@")
-
