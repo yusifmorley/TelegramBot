@@ -24,22 +24,17 @@ logging.basicConfig(filename="Log/mylog", format='%(asctime)s - %(name)s - %(lev
 logger=logging.getLogger(__name__)
 mydb = getConfig.getMysqlConfig()
 messids={}  #存储所有用户和bot 的massage_id  不包括抽取的图片 合成的主题 和随机返回的主题
-timeinter=1000 #定时
-tempcontext=None
-def play():
-    if len(messids)>0:
-
-    threading.Timer(timeinter, play).start()
-
 
 #合并主题和背景
 def combinThemeAndPic(update, context):
+    context.bot.delete_message(message_id=update.effective_message.message_id, chat_id=update.effective_chat.id)
     createMysql(mydb, update.effective_chat.id, 1)
     recordSend(update, context, "请发送您的主题和背景!")
 
 
 #获取主题背景
 def getThemeBackgrounds(update, context):
+    context.bot.delete_message(message_id=update.effective_message.message_id, chat_id=update.effective_chat.id)
     createMysql(mydb, update.effective_chat.id, 2)
     recordSend(update, context, "请发送您的主题！")
 
@@ -135,12 +130,13 @@ def delete(update,context):
     for x in mes:
         context.bot.delete_message(message_id=x.message_id, chat_id=update.effective_chat.id)
 def getRanTheme(update, context):
+    context.bot.delete_message(message_id=update.effective_message.message_id, chat_id=update.effective_chat.id)
     path=getRadomTheme.getRandomTheme()
     context.bot.send_document(chat_id=update.effective_chat.id, document=open("Theme/"+path, "rb"))
     recordSend(update, context, "这是您的主题文件，亲～")
 
 if __name__=="__main__":
-        threading.Timer(timeinter, play).start()
+
         mysqlop.initdb(mydb) #初始化 数据库
         try:
             combinss = CommandHandler('combinthemeandphoto', combinThemeAndPic)
