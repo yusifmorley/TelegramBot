@@ -6,3 +6,9 @@
 2022-12-05 22:46:45,903 - apscheduler.scheduler - INFO - Scheduler started
 2022-12-05 22:47:02,270 - apscheduler.scheduler - INFO - Scheduler started
 2022-12-05 22:49:20,939 - apscheduler.scheduler - INFO - Scheduler started
+2022-12-15 14:03:10,181 - apscheduler.scheduler - INFO - Scheduler started
+2022-12-15 14:03:15,235 - telegram.vendor.ptb_urllib3.urllib3.connectionpool - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None)) after connection broken by 'ConnectTimeoutError(<telegram.vendor.ptb_urllib3.urllib3.connectionpool.HTTPSConnectionPool object at 0x7f0a9a9a65c0>, 'Connect timed out. (connect timeout=5.0)')': /bot5738858657:AAFJmjtD5VVi3ed0n9n_5t44chXHVrZLHcM/getMe
+2022-12-15 14:03:20,301 - telegram.vendor.ptb_urllib3.urllib3.connectionpool - WARNING - Retrying (Retry(total=1, connect=None, read=None, redirect=None)) after connection broken by 'ConnectTimeoutError(<telegram.vendor.ptb_urllib3.urllib3.connectionpool.HTTPSConnectionPool object at 0x7f0a9a9a65c0>, 'Connect timed out. (connect timeout=5.0)')': /bot5738858657:AAFJmjtD5VVi3ed0n9n_5t44chXHVrZLHcM/getMe
+2022-12-15 14:03:25,362 - telegram.vendor.ptb_urllib3.urllib3.connectionpool - WARNING - Retrying (Retry(total=0, connect=None, read=None, redirect=None)) after connection broken by 'ConnectTimeoutError(<telegram.vendor.ptb_urllib3.urllib3.connectionpool.HTTPSConnectionPool object at 0x7f0a9a9a65c0>, 'Connect timed out. (connect timeout=5.0)')': /bot5738858657:AAFJmjtD5VVi3ed0n9n_5t44chXHVrZLHcM/getMe
+2022-12-15 14:05:22,919 - apscheduler.scheduler - INFO - Scheduler started
+2022-12-15 14:14:42,207 - apscheduler.scheduler - INFO - Scheduler started

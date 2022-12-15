@@ -135,6 +135,21 @@ def getRanTheme(update, context):
     context.bot.send_document(chat_id=update.effective_chat.id, document=open("Theme/"+path, "rb"))
     recordSend(update, context, "这是您的主题文件，亲～")
 
+def writeBanWord(update,context):
+    if  update.message.from_user.id!=507467074:
+        context.bot.send_message(chat_id=update.effective_chat.id,
+                                 text="您不是管理员！")
+        return
+
+    global banword
+
+    with open("banconfig/banword","a") as fp:
+        fp.write(context.args[0]+"\n")
+    banword = getbanword()
+    context.bot.send_message(chat_id=update.effective_chat.id,
+                             text="成功添加新的违禁词："+context.args[0])
+
+
 if __name__=="__main__":
 
         mysqlop.initdb(mydb) #初始化 数据库
@@ -148,6 +163,7 @@ if __name__=="__main__":
             combinssss = CommandHandler('getrandomtheme',getRanTheme)
             dispatcher.add_handler(combinssss)
 
+            dispatcher.add_handler(CommandHandler('report', writeBanWord))
             # combinssss = CommandHandler('delete', deletaBotMessage)
             # dispatcher.add_handler(combinssss)
 
