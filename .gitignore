@@ -9,3 +9,4 @@ temptheme/*
 Theme/*
 !Theme/.gitkeep
 /venv/
+setup.cfg
