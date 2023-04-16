@@ -138,7 +138,13 @@ def getRanTheme(update, context):
 def writeBanWord(update,context):
     if  update.message.from_user.id!=507467074:
         context.bot.send_message(chat_id=update.effective_chat.id,
-                                 text="您不是管理员！")
+                                 text="您不是管理员！\n"+"您可以输入以下命令：\n"
+                                """/combinthemeandphoto - 合并主题和背景\n
+                                   /getbackground - 抽取主题的背景\n
+                                   /getrandomtheme - 随机获取一个主题"""
+                                 )
+
+
         return
 
     global banword

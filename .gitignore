@@ -8,3 +8,4 @@ temptheme/*
 !temptheme/.gitkeep
 Theme/*
 !Theme/.gitkeep
+/venv/

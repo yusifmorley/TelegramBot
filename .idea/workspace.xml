@@ -6,31 +6,14 @@
   <component name="ChangeListManager">
     <list default="true" id="ca79680f-c54d-4792-8fc8-f23ed4ec4965" name="Changes" comment="ok">
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/TelegramBot.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/TelegramBot.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/TelegramBot.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Log/.gitkeep" beforeDir="false" afterPath="$PROJECT_DIR$/Log/.gitkeep" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Log/mylog" beforeDir="false" afterPath="$PROJECT_DIR$/Log/mylog" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Photo/.gitkeep" beforeDir="false" afterPath="$PROJECT_DIR$/Photo/.gitkeep" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Theme/.gitkeep" beforeDir="false" afterPath="$PROJECT_DIR$/Theme/.gitkeep" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/adminfunction.py" beforeDir="false" afterPath="$PROJECT_DIR$/adminfunction.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/background/.gitkeep" beforeDir="false" afterPath="$PROJECT_DIR$/background/.gitkeep" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/banconfig/banword" beforeDir="false" afterPath="$PROJECT_DIR$/banconfig/banword" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/combinate.py" beforeDir="false" afterPath="$PROJECT_DIR$/combinate.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dicsetting.py" beforeDir="false" afterPath="$PROJECT_DIR$/dicsetting.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/getPreview.py" beforeDir="false" afterPath="$PROJECT_DIR$/getPreview.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/getbackground.py" beforeDir="false" afterPath="$PROJECT_DIR$/getbackground.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/getpicbyterbase64.py" beforeDir="false" afterPath="$PROJECT_DIR$/getpicbyterbase64.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/getsetting.py" beforeDir="false" afterPath="$PROJECT_DIR$/getsetting.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysqlop.py" beforeDir="false" afterPath="$PROJECT_DIR$/mysqlop.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/preview/.gitkeep" beforeDir="false" afterPath="$PROJECT_DIR$/preview/.gitkeep" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirement.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirement.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/setting.text" beforeDir="false" afterPath="$PROJECT_DIR$/setting.text" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/setup.cfg" beforeDir="false" afterPath="$PROJECT_DIR$/setup.cfg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/setup.py" beforeDir="false" afterPath="$PROJECT_DIR$/setup.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/temp.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/temp.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/temptheme/.gitkeep" beforeDir="false" afterPath="$PROJECT_DIR$/temptheme/.gitkeep" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tempthemephoto/.gitkeep" beforeDir="false" afterPath="$PROJECT_DIR$/tempthemephoto/.gitkeep" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/theme-preview.svg" beforeDir="false" afterPath="$PROJECT_DIR$/theme-preview.svg" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,11 +43,12 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "ASKED_MARK_IGNORED_FILES_AS_EXCLUDED": "true",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Users/YusifMorley/Desktop/Project/pycharmProject/TelegramBot",
+    "last_opened_file_path": "F:/Project/pycharmProject/TelegramBot",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -148,7 +132,14 @@
       <workItem from="1671799623651" duration="47000" />
       <workItem from="1675336738010" duration="114000" />
       <workItem from="1675336868544" duration="656000" />
-      <workItem from="1675478405130" duration="1403000" />
+      <workItem from="1675478405130" duration="1438000" />
+      <workItem from="1675849752338" duration="256000" />
+      <workItem from="1675850016548" duration="146000" />
+      <workItem from="1675850172674" duration="303000" />
+      <workItem from="1676032842663" duration="299000" />
+      <workItem from="1676508744982" duration="1091000" />
+      <workItem from="1676539502503" duration="9000" />
+      <workItem from="1681628095778" duration="1598000" />
     </task>
     <task id="LOCAL-00001" summary="ok">
       <created>1669976257800</created>
@@ -206,7 +197,14 @@
       <option name="project" value="LOCAL" />
       <updated>1671085149822</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="ok">
+      <created>1675502172178</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1675502172178</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
