@@ -17,7 +17,7 @@ import threading
 
 myapi = getConfig.getTelegramId() # 机器人api
 updater = Updater(token=myapi, use_context=True)
-updater.bot.set_my_commands("""{"command":"a", "description":"aaa"},{"command":"b","description":"bbb"}""")
+updater.bot.set_my_commands([{"command":"a", "description":"aaa"},{"command":"b","description":"bbb"}])
 dispatcher = updater.dispatcher
 banword = getbanword()
 logging.basicConfig(filename="Log/mylog", format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
