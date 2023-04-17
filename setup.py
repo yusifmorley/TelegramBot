@@ -18,9 +18,11 @@ import threading
 
 myapi = getConfig.getTelegramId() # 机器人api
 updater = Updater(token=myapi, use_context=True)
+
 commands = [
-        telegram.BotCommand('start', 'Start the bot'),
-        telegram.BotCommand('help', 'Show this message')
+        telegram.BotCommand('combinthemeandphoto','合并主题和背景'),
+        telegram.BotCommand('getbackground','抽取主题的背景'),
+        telegram.BotCommand('getrandomtheme', '随机获取一个主题')
     ]
 updater.bot.set_my_commands(commands)
 dispatcher = updater.dispatcher
