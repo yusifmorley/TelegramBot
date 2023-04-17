@@ -1,3 +1,4 @@
+import telegram
 from telegram import ChatPermissions
 from telegram.ext import Updater, CallbackContext, CallbackQueryHandler
 import logging
@@ -17,7 +18,11 @@ import threading
 
 myapi = getConfig.getTelegramId() # 机器人api
 updater = Updater(token=myapi, use_context=True)
-updater.bot.set_my_commands([{"command":"a", "description":"aaa"},{"command":"b","description":"bbb"}])
+commands = [
+        telegram.BotCommand('start', 'Start the bot'),
+        telegram.BotCommand('help', 'Show this message')
+    ]
+updater.bot.set_my_commands(commands)
 dispatcher = updater.dispatcher
 banword = getbanword()
 logging.basicConfig(filename="Log/mylog", format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
