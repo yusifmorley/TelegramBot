@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ca79680f-c54d-4792-8fc8-f23ed4ec4965" name="Changes" comment="管理功能">
-      <change afterPath="$PROJECT_DIR$/BanWord.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PersonAdmin.py" beforeDir="false" afterPath="$PROJECT_DIR$/PersonAdmin.py" afterDir="false" />
-    </list>
+    <list default="true" id="ca79680f-c54d-4792-8fc8-f23ed4ec4965" name="Changes" comment="管理功能" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -210,7 +207,7 @@
       <workItem from="1681717878797" duration="885000" />
       <workItem from="1681799553553" duration="9862000" />
       <workItem from="1681814367286" duration="1101000" />
-      <workItem from="1681815576305" duration="2718000" />
+      <workItem from="1681815576305" duration="3194000" />
     </task>
     <task id="LOCAL-00001" summary="ok">
       <created>1669976257800</created>
@@ -331,7 +328,28 @@
       <option name="project" value="LOCAL" />
       <updated>1681807998490</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="管理功能">
+      <created>1681818302428</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1681818302428</updated>
+    </task>
+    <task id="LOCAL-00019" summary="管理功能">
+      <created>1681818431481</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1681818431481</updated>
+    </task>
+    <task id="LOCAL-00020" summary="管理功能">
+      <created>1681818506904</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1681818506904</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -354,7 +372,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="ok" />
     <MESSAGE value="管理" />
-    <option name="LAST_COMMIT_MESSAGE" value="管理" />
+    <MESSAGE value="管理功能" />
+    <option name="LAST_COMMIT_MESSAGE" value="管理功能" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/TelegramBot$setup.coverage" NAME="setup Coverage Results" MODIFIED="1671084881986" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />

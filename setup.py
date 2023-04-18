@@ -31,6 +31,7 @@ logging.basicConfig(filename="Log/mylog", format='%(asctime)s - %(name)s - %(lev
                     level=logging.INFO)  # 日志
 logger=logging.getLogger(__name__)
 mydb = getConfig.getMysqlConfig()
+mysqlop.initdb(mydb)
 BanWordObject=mysqlop.getBanWordObject(mydb)
 banword = getbanword(BanWordObject)
 messids={}  #存储所有用户和bot 的massage_id  不包括抽取的图片 合成的主题 和随机返回的主题
@@ -157,7 +158,7 @@ def writeBanWord(update,context):
 
 
 if __name__=="__main__":
-        mysqlop.initdb(mydb) #初始化 数据库
+        # mysqlop.initdb(mydb) #初始化 数据库
         try:
             combinss = CommandHandler('combinthemeandphoto', combinThemeAndPic)
             dispatcher.add_handler(combinss)
