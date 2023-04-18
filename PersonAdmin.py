@@ -7,7 +7,6 @@ class Person:  #每个人10句话
         self.talk_num=talk_num
         self.talkrecord=[] #记录用户发言
 
-
     def add_contain(self,text):
         flag=self.__addAndCheck__(text)
         self.__contain_size__()
