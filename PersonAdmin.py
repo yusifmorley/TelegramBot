@@ -31,7 +31,7 @@ class MonitorPerson:  #检测5个人
         self.monitor_person=monitor_person_num
         self.monit_list=[]  #我们依据每个人的 talkrecord个数排序
 
-    def compare(x,y):
+    def compare(self,x,y):
        return len(x.talkrecord)-len(y.talkrecord)
     def __contain_size__(self):
         if len(self.monit_list)>self.monitor_person:
