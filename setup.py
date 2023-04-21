@@ -111,6 +111,7 @@ def adminhanderex(update, context):  # 管理员
     monitor_person.run(user.id,user.first_name+" "+user.first_name,text,update,context)
     os = deletetxt(banword,text)
     if os: #若存在违禁词
+        context.bot.delete_message(message_id=update.effective_message.message_id, chat_id=update.effective_chat.id)
         blockperson(update, context) #封禁
         logger.info(os) #记录
 
