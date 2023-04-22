@@ -108,7 +108,8 @@ def adminhanderex(update, context):  # 管理员
 
     text = update.effective_message.text
     user=update.effective_message.from_user
-    monitor_person.run(user.id,user.first_name+" "+user.first_name,text,update,context)
+    if "/" not in text:
+        monitor_person.run(user.id,user.first_name+" "+user.first_name,text,update,context)
     os = deletetxt(banword,text)
     if os: #若存在违禁词
         context.bot.delete_message(message_id=update.effective_message.message_id, chat_id=update.effective_chat.id)
