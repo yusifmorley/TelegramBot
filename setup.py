@@ -158,6 +158,9 @@ def writeBanWord(update,context):
     context.bot.send_message(chat_id=update.effective_chat.id,
                              text="成功添加新的违禁词："+context.args[0])
 
+def error_hander(update,context):
+    logger.error("这是update {} 出错了",str(update))
+
 
 if __name__=="__main__":
         # mysqlop.initdb(mydb) #初始化 数据库
@@ -185,6 +188,7 @@ if __name__=="__main__":
             dispatcher.add_handler(adminhander)
             dispatcher.add_handler(MessageHandler(Filters.status_update.new_chat_members,onjoin))
 
+            dispatcher.add_error_handler(error_hander)
             updater.start_polling()
         except mysql.connector.errors.OperationalError: #连接断开 重新链接
              mydb = getConfig.getMysqlConfig()
