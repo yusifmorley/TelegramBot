@@ -1,8 +1,6 @@
-import mysql.connector
-import yaml
+from config import getConfig
+from app.admin import BanWord
 
-import getConfig
-import BanWord
 
 # 初始化数据库
 

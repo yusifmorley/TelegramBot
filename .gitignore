@@ -1,13 +1,13 @@
-background/*
-!background/.gitkeep
-preview/*
-!preview/.gitkeep
-tempthemephoto/*
-!tempthemephoto/.gitkeep
-temptheme/*
-!temptheme/.gitkeep
-Theme/*
-!Theme/.gitkeep
+file/background/*
+!file/background/.gitkeep
+file/preview/*
+!file/preview/.gitkeep
+file/tempthemephoto/*
+!file/tempthemephoto/.gitkeep
+file/temptheme/*
+!file/temptheme/.gitkeep
+file/Theme/*
+!file/Theme/.gitkeep
 /venv/
-setup.cfg
+config/setup.cfg
 

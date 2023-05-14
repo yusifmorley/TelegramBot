@@ -5,7 +5,7 @@ from getpicbyterbase64 import *
 
 def getPreview(b):
     # etree.Element('{http://www.w3.org/2000/svg}svg')
-    tree = etree.parse("theme-preview.svg")
+    tree = etree.parse("../../theme-preview.svg")
     root = tree.getroot()
 
     root.set("xmlns:xlink", "http://www.w3.org/1999/xlink")
