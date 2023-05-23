@@ -6,7 +6,7 @@ from telegram.ext import MessageHandler, Filters
 from telegram.ext import CommandHandler
 import mysql.connector
 from app.db import mysqlop
-from app import getConfig
+from app.config import get_config
 from app.theme import get_radom_theme
 from app.admin import AdminFunction
 myapi = getConfig.getTelegramId()  # 机器人api
@@ -16,7 +16,7 @@ commands = [
 ]
 updater.bot.set_my_commands(commands)
 dispatcher = updater.dispatcher
-logging.basicConfig(filename="Log/mylog", format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+logging.basicConfig(filename="log/mylog", format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                     level=logging.INFO)  # 日志
 logger = logging.getLogger(__name__)
 mydb = getConfig.getMysqlConfig()

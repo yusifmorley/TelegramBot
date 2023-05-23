@@ -26,5 +26,5 @@
 
 运行
   
-    python3 setup.py
+    python3 -m app
 

@@ -1,4 +1,3 @@
-from app import getConfig
 from app.admin import BanWord
 
 
