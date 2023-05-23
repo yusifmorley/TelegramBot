@@ -16,7 +16,7 @@ commands = [
 ]
 updater.bot.set_my_commands(commands)
 dispatcher = updater.dispatcher
-logging.basicConfig(filename="../Log/mylog", format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+logging.basicConfig(filename="Log/mylog", format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                     level=logging.INFO)  # 日志
 logger = logging.getLogger(__name__)
 mydb = getConfig.getMysqlConfig()

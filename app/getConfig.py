@@ -3,7 +3,7 @@ import mysql
 
 # 装载配置
 
-with open("../config/setup.cfg", "r") as f:
+with open("config/setup.cfg", "r") as f:
     data = yaml.load(f, yaml.FullLoader)
     MysqlData = data["mysql"]
     TelegramBotId = data["telegrambotid"]

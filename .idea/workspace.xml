@@ -5,28 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ca79680f-c54d-4792-8fc8-f23ed4ec4965" name="Changes" comment="error_handler">
-      <change afterPath="$PROJECT_DIR$/src/tempthemephoto/.gitkeep" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/admin/BanWord.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/admin/BanWord.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/admin/PersonAdmin.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/admin/PersonAdmin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/admin/adminfunction.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/admin/AdminFunction.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/db/mysqlop.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/db/mysqlop.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/test.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/theme/dicsetting.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/theme/dic_setting.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/theme/getPreview.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/theme/get_preview.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/theme/getRadomTheme.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/theme/get_radom_theme.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/theme/getbackground.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/theme/get_background.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/theme/getpicbyterbase64.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/theme/get_pic_base64.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/theme/getsetting.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/theme/get_setting.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/getConfig.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/getConfig.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/Photo/.gitkeep" beforeDir="false" afterPath="$PROJECT_DIR$/app/main2.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/Theme/.gitkeep" beforeDir="false" afterPath="$PROJECT_DIR$/src/Photo/.gitkeep" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/background/.gitkeep" beforeDir="false" afterPath="$PROJECT_DIR$/src/Theme/.gitkeep" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/preview/.gitkeep" beforeDir="false" afterPath="$PROJECT_DIR$/src/background/.gitkeep" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/temptheme/.gitkeep" beforeDir="false" afterPath="$PROJECT_DIR$/src/preview/.gitkeep" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/tempthemephoto/.gitkeep" beforeDir="false" afterPath="$PROJECT_DIR$/src/temptheme/.gitkeep" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/getConfig.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/getConfig.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -252,7 +232,7 @@
       <workItem from="1684237056721" duration="2833000" />
       <workItem from="1684562840452" duration="595000" />
       <workItem from="1684572212157" duration="27000" />
-      <workItem from="1684819106399" duration="3127000" />
+      <workItem from="1684819106399" duration="4264000" />
     </task>
     <task id="LOCAL-00001" summary="ok">
       <created>1669976257800</created>
@@ -436,7 +416,14 @@
       <option name="project" value="LOCAL" />
       <updated>1684065506836</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="error_handler">
+      <created>1684822508077</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1684822508077</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
