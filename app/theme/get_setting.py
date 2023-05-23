@@ -1,6 +1,6 @@
 from jnius import autoclass
 import ast
-from app.theme.dicsetting import getDic
+from app.theme.dic_setting import getDic
 
 
 def gethex(s):  # 获取渲染 数据

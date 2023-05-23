@@ -1,4 +1,4 @@
-from config import getConfig
+from app import getConfig
 from app.admin import BanWord
 
 
@@ -120,12 +120,12 @@ def deleteban(mydb, id):
 def getBanWordObject(mydb):
     return BanWord.banword(mydb)
 
-if __name__=="__main__":
-    mydb = getConfig.getMysqlConfig()
-    initdb(mydb)
-    # mycursor = mydb.cursor()
-    # mycursor.execute("show tables;")
-    # print(mycursor.fetchall())
-    ban= BanWord.banword(mydb)
-    print(ban.select())
+# if __name__=="__main__":
+#     mydb = getConfig.getMysqlConfig()
+#     initdb(mydb)
+#     # mycursor = mydb.cursor()
+#     # mycursor.execute("show tables;")
+#     # print(mycursor.fetchall())
+#     ban= BanWord.banword(mydb)
+#     print(ban.select())
 

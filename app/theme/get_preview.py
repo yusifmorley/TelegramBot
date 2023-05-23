@@ -1,6 +1,6 @@
 import xml.etree.ElementTree as etree
-from getsetting import *
-from getpicbyterbase64 import *
+from get_setting import *
+from get_pic_base64 import *
 
 
 def getPreview(b):
