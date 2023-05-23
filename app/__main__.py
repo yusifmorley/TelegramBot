@@ -8,7 +8,7 @@ import mysql.connector
 from app.db import mysqlop
 from app.config import get_config
 from app.theme import get_radom_theme
-from app.admin import AdminFunction
+from app.admin import admin_function
 myapi = getConfig.getTelegramId()  # 机器人api
 updater = Updater(token=myapi, use_context=True)
 commands = [

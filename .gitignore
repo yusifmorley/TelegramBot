@@ -9,5 +9,5 @@ src/temptheme/*
 src/Theme/*
 !src/Theme/.gitkeep
 /venv/
-config/setup.cfg
+setup.cfg
 
