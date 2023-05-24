@@ -10,4 +10,4 @@ src/Theme/*
 !src/Theme/.gitkeep
 /venv/
 setup.cfg
-
+__pycache__
