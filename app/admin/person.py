@@ -1,5 +1,5 @@
 import functools
-from admin_function import blockperson
+
 from app.admin import admin_function
 
 
@@ -73,5 +73,5 @@ class MonitorPerson:  # 检测5个人
             current_person = person
 
         if current_person.add_contain(text):  # True则有重复 封禁
-            blockperson(update, context)  # 封禁
+            admin_function.blockperson(update, context)  # 封禁
             self.monit_list.remove(current_person)  # 去除封禁person
