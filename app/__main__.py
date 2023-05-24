@@ -1,17 +1,17 @@
-import getConfig as getConfig
+
 import telegram
 from telegram.ext import Updater
 import logging
 from telegram.ext import MessageHandler, Filters
 from telegram.ext import CommandHandler
 import mysql.connector
-
 from app.admin.person import MonitorPerson
-from app.db import mysqlop
 from app.config import get_config
+from app.db import mysqlop
 from app.theme import get_radom_theme
 from app.admin import admin_function
-myapi = getConfig.getTelegramId()  # 机器人api
+
+myapi = get_config.getTelegramId()  # 机器人api
 updater = Updater(token=myapi, use_context=True)
 commands = [
     telegram.BotCommand('getrandomtheme', '随机获取一个主题')
@@ -21,7 +21,7 @@ dispatcher = updater.dispatcher
 logging.basicConfig(filename="log/mylog", format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                     level=logging.INFO)  # 日志
 logger = logging.getLogger(__name__)
-mydb = getConfig.getMysqlConfig()
+mydb = get_config.getMysqlConfig()
 
 mysqlop.initdb(mydb)
 BanWordObject = mysqlop.getBanWordObject(mydb)
@@ -83,4 +83,4 @@ if __name__ == "__main__":
         dispatcher.add_error_handler(error_hander)
         updater.start_polling()
     except mysql.connector.errors.OperationalError:  # 连接断开 重新链接
-        mydb = getConfig.getMysqlConfig()
+        mydb = get_config.getMysqlConfig()
