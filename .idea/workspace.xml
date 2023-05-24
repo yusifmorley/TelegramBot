@@ -5,11 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ca79680f-c54d-4792-8fc8-f23ed4ec4965" name="Changes" comment="重构">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/admin/person.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/__main__.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/__main__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/admin/AdminFunction.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/admin/admin_function.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/admin/PersonAdmin.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/admin/PersonAdmin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/.gitkeep" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -236,7 +234,8 @@
       <workItem from="1684562840452" duration="595000" />
       <workItem from="1684572212157" duration="27000" />
       <workItem from="1684819106399" duration="4767000" />
-      <workItem from="1684823971751" duration="337000" />
+      <workItem from="1684823971751" duration="521000" />
+      <workItem from="1684913763393" duration="1489000" />
     </task>
     <task id="LOCAL-00001" summary="ok">
       <created>1669976257800</created>
@@ -441,7 +440,14 @@
       <option name="project" value="LOCAL" />
       <updated>1684824176134</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="重构">
+      <created>1684824459318</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1684824459319</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

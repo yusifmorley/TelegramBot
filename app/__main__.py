@@ -1,10 +1,12 @@
+import getConfig as getConfig
 import telegram
 from telegram.ext import Updater
 import logging
-
 from telegram.ext import MessageHandler, Filters
 from telegram.ext import CommandHandler
 import mysql.connector
+
+from app.admin.person import MonitorPerson
 from app.db import mysqlop
 from app.config import get_config
 from app.theme import get_radom_theme
@@ -23,9 +25,9 @@ mydb = getConfig.getMysqlConfig()
 
 mysqlop.initdb(mydb)
 BanWordObject = mysqlop.getBanWordObject(mydb)
-banword = AdminFunction.getbanword(BanWordObject)
+banword = admin_function.getbanword(BanWordObject)
 
-
+mon_per=MonitorPerson(10) #监控10个人
 # 合并主题和背景
 def on_join(update, context):
     # print(update.effective_chat)
@@ -33,11 +35,10 @@ def on_join(update, context):
 
 
 def admin_handle(update, context):  # 管理员
+
     text = update.effective_message.text
-    os = AdminFunction.deletetxt(banword, text)
-    if os:  # 若存在违禁词
-        AdminFunction.blockperson(update, context)
-        logger.info(os)  # 记录
+    user = update.effective_message.from_user
+    mon_per.run(user.id, user.first_name + " " + user.first_name, text, update, context,banword,logger)
 
 
 def get_ran_theme(update, context):
@@ -56,8 +57,8 @@ def write_ban_word(update, context):
                                  )
         return
     global banword
-    AdminFunction.writebanword(BanWordObject, context.args[0])
-    banword = AdminFunction.getbanword(BanWordObject)
+    admin_function.writebanword(BanWordObject, context.args[0])
+    banword = admin_function.getbanword(BanWordObject)
     context.bot.send_message(chat_id=update.effective_chat.id,
                              text="成功添加新的违禁词：" + context.args[0])
     context.bot.delete_message(message_id=update.effective_message.message_id, chat_id=update.effective_chat.id)
