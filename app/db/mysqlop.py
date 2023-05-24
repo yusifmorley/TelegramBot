@@ -1,9 +1,5 @@
-from app.admin import BanWord
+from app.admin import ban_word
 
-
-# 初始化数据库
-
-#获取配置
 
 def initdb(mydb):
     mycursor = mydb.cursor()
@@ -117,7 +113,7 @@ def deleteban(mydb, id):
 
 
 def getBanWordObject(mydb):
-    return BanWord.banword(mydb)
+    return ban_word.banword(mydb)
 
 # if __name__=="__main__":
 #     mydb = getConfig.getMysqlConfig()
