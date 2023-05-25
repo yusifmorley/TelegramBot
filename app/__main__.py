@@ -42,12 +42,12 @@ def admin_handle(update, context):  # 管理员
 
 
 def get_ran_theme(update, context):
-    context.bot.delete_message(message_id=update.effective_message.message_id, chat_id=update.effective_chat.id)
+   # context.bot.delete_message(message_id=update.effective_message.message_id, chat_id=update.effective_chat.id)
     path = get_radom_theme.get_random_theme()
-    if not isinstance(path,str):
-        context.bot.send_document(chat_id=update.effective_chat.id, document=open("Theme/" + path, "rb"))
+    if "http" not in path:
+        context.bot.send_document(chat_id=update.effective_chat.id, document=open("src/Theme/" + path, "rb"))
     else:
-        context.bot.send_document(chat_id=update.effective_chat.id, text=path.rstrip("\n"))
+        context.bot.send_message(chat_id=update.effective_chat.id, text=path.rstrip("\n"))
 
     context.bot.send_message(chat_id=update.effective_chat.id, text="这是您的主题文件，亲～")
 
