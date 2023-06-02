@@ -68,6 +68,13 @@ def write_ban_word(update, context):
     context.bot.delete_message(message_id=update.effective_message.message_id, chat_id=update.effective_chat.id)
 
 
+def combintheme(update, context):
+    context.bot.send_message(chat_id=update.effective_chat.id,
+                             text="此命令已经取消\n" +
+                                  "您可以输入以下命令：\n" +
+                                  "/getrandomtheme - 随机获取一个主题"
+                             )
+
 def error_hander(update, context):
     logger.error("这是update {} 出错了", str(update))
 
@@ -79,6 +86,8 @@ if __name__ == "__main__":
         dispatcher.add_handler(combinssss)
 
         dispatcher.add_handler(CommandHandler('report', write_ban_word))
+
+        dispatcher.add_handler(CommandHandler('/combinthemeandphoto',combintheme))
 
         adminhander = MessageHandler(Filters.text, admin_handle)
         dispatcher.add_handler(adminhander)
