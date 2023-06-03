@@ -88,6 +88,7 @@ if __name__ == "__main__":
         dispatcher.add_handler(CommandHandler('report', write_ban_word))
 
         dispatcher.add_handler(CommandHandler('combinthemeandphoto',combintheme))
+        dispatcher.add_handler(CommandHandler('getbackground', combintheme))
 
         adminhander = MessageHandler(Filters.text, admin_handle)
         dispatcher.add_handler(adminhander)
