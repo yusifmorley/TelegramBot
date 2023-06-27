@@ -11,3 +11,4 @@ src/Theme/*
 /venv/
 setup.cfg
 __pycache__
+/src/ThemeLink/
