@@ -31,6 +31,11 @@ banword = admin_function.getbanword(BanWordObject)
 
 mon_per=MonitorPerson(10) #监控10个人
 
+strinfo="您可以输入以下命令：\n"+\
+        "/getrandomtheme - 随机获取一个主题\n"+\
+        "/getandroidtheme', '随机获取一个安卓主题文件\n"+\
+        "/getdesktoptheme', '随机获取一个桌面主题文件"
+
 # 合并主题和背景
 def on_join(update, context):
     # print(update.effective_chat)
@@ -55,12 +60,7 @@ def get_ran_theme(update, context):
 def write_ban_word(update, context):
     if update.message.from_user.id != 507467074:
         context.bot.send_message(chat_id=update.effective_chat.id,
-                                 text="您不是管理员！\n" +
-                                      "您可以输入以下命令：\n" +
-                                       "/getrandomtheme - 随机获取一个主题\n"+
-                                       "/getandroidtheme', '随机获取一个安卓主题文件\n"+
-                                       "/getdesktoptheme', '随机获取一个桌面主题文件"
-                                 )
+                                 text="您不是管理员！\n" +strinfo )
         return
     global banword
     admin_function.writebanword(BanWordObject, context.args[0])
@@ -72,12 +72,7 @@ def write_ban_word(update, context):
 
 def combin_theme(update, context):
     context.bot.send_message(chat_id=update.effective_chat.id,
-                             text="您不是管理员！\n" +
-                                      "您可以输入以下命令：\n" +
-                                       "/getrandomtheme - 随机获取一个主题\n"+
-                                       "/getandroidtheme', '随机获取一个安卓主题文件\n"+
-                                       "/getdesktoptheme', '随机获取一个桌面主题文件"
-                             )
+                             text="您不是管理员！\n" +strinfo)
 
 def error_hander(update, context):
     logger.error("这是update {} 出错了".format(str(update)))
@@ -94,12 +89,7 @@ def get_desktop_theme(update, context):
     context.bot.send_message(chat_id=update.effective_chat.id, text="这是您的主题文件，亲～")
 
 def start(update, context):
-    context.bot.send_message(chat_id=update.effective_chat.id,
-                                  text="您可以输入以下命令：\n" +
-                                  "/getrandomtheme - 随机获取一个主题\n" +
-                                  "/getandroidtheme', '随机获取一个安卓主题文件\n" +
-                                  "/getdesktoptheme', '随机获取一个桌面主题文件"
-                             )
+    context.bot.send_message(chat_id=update.effective_chat.id,text=strinfo)
     logger.info("可能为私聊 {}".format(str(update)))
 if __name__ == "__main__":
 
