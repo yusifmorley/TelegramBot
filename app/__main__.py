@@ -8,13 +8,15 @@ import mysql.connector
 from app.admin.person import MonitorPerson
 from app.config import get_config
 from app.db import mysqlop
-from app.theme import get_radom_theme
+from app.theme import get_radom_link, get_android, get_desktop
 from app.admin import admin_function
 
 myapi = get_config.getTelegramId()  # 机器人api
 updater = Updater(token=myapi, use_context=True)
 commands = [
-    telegram.BotCommand('getrandomtheme', '随机获取一个主题')
+    telegram.BotCommand('getrandomtheme', '随机获取一个主题主题链接'),
+    telegram.BotCommand('getandroidtheme', '随机获取一个安卓主题文件'),
+    telegram.BotCommand('getdesktoptheme', '随机获取一个桌面主题文件'),
 ]
 updater.bot.set_my_commands(commands)
 dispatcher = updater.dispatcher
@@ -28,6 +30,7 @@ BanWordObject = mysqlop.getBanWordObject(mydb)
 banword = admin_function.getbanword(BanWordObject)
 
 mon_per=MonitorPerson(10) #监控10个人
+
 # 合并主题和背景
 def on_join(update, context):
     # print(update.effective_chat)
@@ -43,11 +46,9 @@ def admin_handle(update, context):  # 管理员
 
 def get_ran_theme(update, context):
    # context.bot.delete_message(message_id=update.effective_message.message_id, chat_id=update.effective_chat.id)
-    path = get_radom_theme.get_random_theme()
-    if "http" not in path:
-        context.bot.send_document(chat_id=update.effective_chat.id, document=open("src/Theme/" + path, "rb"))
-    else:
-        context.bot.send_message(chat_id=update.effective_chat.id, text=path.rstrip("\n"))
+    path = get_radom_link.get_random_theme()
+
+    context.bot.send_message(chat_id=update.effective_chat.id, text=path.rstrip("\n"))
 
     context.bot.send_message(chat_id=update.effective_chat.id, text="这是您的主题文件，亲～")
 
@@ -68,7 +69,7 @@ def write_ban_word(update, context):
     context.bot.delete_message(message_id=update.effective_message.message_id, chat_id=update.effective_chat.id)
 
 
-def combintheme(update, context):
+def combin_theme(update, context):
     context.bot.send_message(chat_id=update.effective_chat.id,
                              text="此命令已经取消\n" +
                                   "您可以输入以下命令：\n" +
@@ -76,22 +77,36 @@ def combintheme(update, context):
                              )
 
 def error_hander(update, context):
-    logger.error("这是update {} 出错了", str(update))
+    logger.error("这是update {} 出错了".format(str(update)))
+
+def get_android_theme(update, context):
+    path=get_android.get_android_theme()
+    context.bot.send_document(chat_id=update.effective_chat.id, document=open("src/Theme/" + path, "rb"))
+    context.bot.send_message(chat_id=update.effective_chat.id, text="这是您的主题文件，亲～")
+
+
+def get_desktop_theme(update, context):
+    path = get_desktop.get_desktop_theme()
+    context.bot.send_document(chat_id=update.effective_chat.id, document=open("src/Theme/" + path, "rb"))
+    context.bot.send_message(chat_id=update.effective_chat.id, text="这是您的主题文件，亲～")
 
 
 if __name__ == "__main__":
 
     try:
-        combinssss = CommandHandler('getrandomtheme', get_ran_theme)
-        dispatcher.add_handler(combinssss)
+
+        dispatcher.add_handler(CommandHandler('getandroidtheme', get_android_theme))
+        dispatcher.add_handler(CommandHandler('getdesktoptheme', get_desktop_theme))
+
+        dispatcher.add_handler(CommandHandler('getrandomtheme', get_ran_theme))
 
         dispatcher.add_handler(CommandHandler('report', write_ban_word))
 
-        dispatcher.add_handler(CommandHandler('combinthemeandphoto',combintheme))
-        dispatcher.add_handler(CommandHandler('getbackground', combintheme))
+        dispatcher.add_handler(CommandHandler('combinthemeandphoto', combin_theme))
+        dispatcher.add_handler(CommandHandler('getbackground', combin_theme))
 
-        adminhander = MessageHandler(Filters.text, admin_handle)
-        dispatcher.add_handler(adminhander)
+
+        dispatcher.add_handler(MessageHandler(Filters.text, admin_handle))
         dispatcher.add_handler(MessageHandler(Filters.status_update.new_chat_members, on_join))
 
         dispatcher.add_error_handler(error_hander)

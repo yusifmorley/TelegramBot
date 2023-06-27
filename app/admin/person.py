@@ -2,7 +2,7 @@ import functools
 
 from app.admin import admin_function
 
-class MonitorPerson:  # 检测5个人
+class MonitorPerson:
     def __init__(self, monitor_person_num):  # monitor_person为监听人个数
         self.monitor_person = monitor_person_num
         self.text_list = []
@@ -18,6 +18,7 @@ class MonitorPerson:  # 检测5个人
         if os:  # 若存在违禁词
             admin_function.blockperson(update, context)
             logger.info(os)  # 记录
+
             return
     #判断text 是否有重复
         if text in self.text_list:
