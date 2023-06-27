@@ -16,7 +16,7 @@ updater = Updater(token=myapi, use_context=True)
 commands = [
     telegram.BotCommand('getrandomtheme', '随机获取一个主题主题链接'),
     telegram.BotCommand('getandroidtheme', '随机获取一个安卓主题文件'),
-    telegram.BotCommand('getdesktoptheme', '随机获取一个桌面主题文件'),
+    telegram.BotCommand('getdesktoptheme', '随机获取一个桌面主题文件')
 ]
 updater.bot.set_my_commands(commands)
 dispatcher = updater.dispatcher
