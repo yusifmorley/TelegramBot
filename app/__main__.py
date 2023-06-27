@@ -58,7 +58,9 @@ def write_ban_word(update, context):
         context.bot.send_message(chat_id=update.effective_chat.id,
                                  text="您不是管理员！\n" +
                                       "您可以输入以下命令：\n" +
-                                      "/getrandomtheme - 随机获取一个主题"
+                                       "/getrandomtheme - 随机获取一个主题\n"+
+                                       "/getandroidtheme', '随机获取一个安卓主题文件\n"+
+                                       "/getdesktoptheme', '随机获取一个桌面主题文件"
                                  )
         return
     global banword
@@ -71,9 +73,11 @@ def write_ban_word(update, context):
 
 def combin_theme(update, context):
     context.bot.send_message(chat_id=update.effective_chat.id,
-                             text="此命令已经取消\n" +
-                                  "您可以输入以下命令：\n" +
-                                  "/getrandomtheme - 随机获取一个主题"
+                             text="您不是管理员！\n" +
+                                      "您可以输入以下命令：\n" +
+                                       "/getrandomtheme - 随机获取一个主题\n"+
+                                       "/getandroidtheme', '随机获取一个安卓主题文件\n"+
+                                       "/getdesktoptheme', '随机获取一个桌面主题文件"
                              )
 
 def error_hander(update, context):

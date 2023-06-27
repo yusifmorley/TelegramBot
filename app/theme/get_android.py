@@ -5,7 +5,7 @@ set_android=[]
 
 def init_android():
     global set_android
-    set_android = os.listdir("../../src/Theme/android-theme")
+    set_android = os.listdir("src/Theme/android-theme")
     random.shuffle(set_android)
 def get_android_theme():   #获取随机主题链接
     global set_android
