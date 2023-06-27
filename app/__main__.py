@@ -32,7 +32,7 @@ banword = admin_function.getbanword(BanWordObject)
 mon_per=MonitorPerson(10) #监控10个人
 
 strinfo="您可以输入以下命令：\n"+\
-        "/getrandomtheme - 随机获取一个主题\n"+\
+        "/getrandomtheme , '随机获取一个随机种类的主题链接(有时主题可能不适用于您的设备)\n'"+\
         "/getandroidtheme', '随机获取一个安卓主题文件\n"+\
         "/getdesktoptheme', '随机获取一个桌面主题文件"
 
