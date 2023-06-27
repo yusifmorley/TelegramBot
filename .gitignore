@@ -11,4 +11,4 @@ src/Theme/*
 /venv/
 setup.cfg
 __pycache__
-/src/ThemeLink/
+!/src/ThemeLink/.gitkeep
