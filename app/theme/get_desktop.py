@@ -5,7 +5,7 @@ set_desktop=[]
 
 def init_desktop():
     global set_desktop
-    set_desktop = os.listdir("src/Theme/android-theme")
+    set_desktop = os.listdir("src/Theme/desktop-theme")
     random.shuffle(set_desktop)
 def get_desktop_theme():   #获取随机主题链接
     global set_desktop
