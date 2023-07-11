@@ -10,13 +10,14 @@ from app.config import get_config
 from app.db import mysqlop
 from app.theme import get_radom_link, get_android, get_desktop
 from app.admin import admin_function
-
+from  app.theme import get_ios
 myapi = get_config.getTelegramId()  # 机器人api
 updater = Updater(token=myapi, use_context=True)
 commands = [
-    telegram.BotCommand('getrandomtheme', '随机获取一个随机种类的主题链接(有时主题可能不适用于您的设备)'),
+    telegram.BotCommand('getrandomtheme', '随机获取一个安卓或桌面种类的主题链接(有时主题可能不适用于您的设备)'),
     telegram.BotCommand('getandroidtheme', '随机获取一个安卓主题文件'),
-    telegram.BotCommand('getdesktoptheme', '随机获取一个桌面主题文件')
+    telegram.BotCommand('getdesktoptheme', '随机获取一个桌面主题文件'),
+    telegram.BotCommand('getiostheme', '随机获取一个IOS主题链接')
 ]
 updater.bot.set_my_commands(commands)
 dispatcher = updater.dispatcher
@@ -34,7 +35,8 @@ mon_per=MonitorPerson(10) #监控10个人
 strinfo="您可以输入以下命令：\n"+\
         "/getrandomtheme , '随机获取一个随机种类的主题链接(有时主题可能不适用于您的设备)\n'"+\
         "/getandroidtheme', '随机获取一个安卓主题文件\n"+\
-        "/getdesktoptheme', '随机获取一个桌面主题文件"
+        "/getdesktoptheme', '随机获取一个桌面主题文件\n"+\
+        "/getiostheme', '随机获取一个IOS主题链接"
 
 # 合并主题和背景
 def on_join(update, context):
@@ -88,6 +90,12 @@ def get_desktop_theme(update, context):
     context.bot.send_document(chat_id=update.effective_chat.id, document=open("src/Theme/desktop-theme/" + path, "rb"))
     context.bot.send_message(chat_id=update.effective_chat.id, text="这是您的主题文件，亲～")
 
+def get_ios_theme(update, context):
+    path = get_ios.get_random_theme()
+    context.bot.send_message(chat_id=update.effective_chat.id, text=path.rstrip("\n"))
+    context.bot.send_message(chat_id=update.effective_chat.id, text="这是您的主题文件，亲～")
+
+
 def start(update, context):
     context.bot.send_message(chat_id=update.effective_chat.id,text=strinfo)
     logger.info("可能为私聊 {}".format(str(update)))
@@ -96,8 +104,8 @@ if __name__ == "__main__":
     try:
 
         dispatcher.add_handler(CommandHandler('getandroidtheme', get_android_theme))
+        dispatcher.add_handler(CommandHandler('getiostheme', get_ios_theme))
         dispatcher.add_handler(CommandHandler('getdesktoptheme', get_desktop_theme))
-
         dispatcher.add_handler(CommandHandler('getrandomtheme', get_ran_theme))
 
         dispatcher.add_handler(CommandHandler('start', start))
