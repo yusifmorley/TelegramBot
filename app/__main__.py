@@ -81,13 +81,25 @@ def error_hander(update, context):
 
 def get_android_theme(update, context):
     path=get_android.get_android_theme()
-    context.bot.send_document(chat_id=update.effective_chat.id, document=open("src/Theme/android-theme/" + path, "rb"))
+    fd= open("src/Theme/android-theme/" + path, "rb")
+    data=fd.read()
+    fd.close()
+    preview_bytes=get_android.get_android_preview(path,data)
+    context.bot.send_document(chat_id=update.effective_chat.id, document=data)
+    if preview_bytes:
+        context.bot.send_photo(chat_id=update.effective_chat.id,photo=preview_bytes)
     context.bot.send_message(chat_id=update.effective_chat.id, text="这是您的主题文件，亲～")
 
 
 def get_desktop_theme(update, context):
     path = get_desktop.get_desktop_theme()
+    fd = open("src/Theme/desktop-theme/" + path, "rb")
+    data = fd.read()
+    fd.close()
+    preview_bytes = get_desktop.get_desktop_preview(path, data)
     context.bot.send_document(chat_id=update.effective_chat.id, document=open("src/Theme/desktop-theme/" + path, "rb"))
+    if preview_bytes:
+        context.bot.send_photo(chat_id=update.effective_chat.id, photo=preview_bytes)
     context.bot.send_message(chat_id=update.effective_chat.id, text="这是您的主题文件，亲～")
 
 def get_ios_theme(update, context):
