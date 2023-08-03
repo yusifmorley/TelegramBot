@@ -85,7 +85,7 @@ def get_android_theme(update, context):
     data=fd.read()
     fd.close()
     preview_bytes=get_android.get_android_preview(path,data)
-    context.bot.send_document(chat_id=update.effective_chat.id, document=data)
+    context.bot.send_document(chat_id=update.effective_chat.id, document=data,filename=path)
     if preview_bytes:
         context.bot.send_photo(chat_id=update.effective_chat.id,photo=preview_bytes)
     context.bot.send_message(chat_id=update.effective_chat.id, text="这是您的主题文件，亲～")
@@ -97,7 +97,7 @@ def get_desktop_theme(update, context):
     data = fd.read()
     fd.close()
     preview_bytes = get_desktop.get_desktop_preview(path, data)
-    context.bot.send_document(chat_id=update.effective_chat.id, document=open("src/Theme/desktop-theme/" + path, "rb"))
+    context.bot.send_document(chat_id=update.effective_chat.id, document=data,filename=path)
     if preview_bytes:
         context.bot.send_photo(chat_id=update.effective_chat.id, photo=preview_bytes)
     context.bot.send_message(chat_id=update.effective_chat.id, text="这是您的主题文件，亲～")
