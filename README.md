@@ -1,5 +1,5 @@
 # TelegramBot
-提供Telegram主题和背景合并合并，背景提取，随机获取主题 和群组管理的Telegram机器人
+提供Telegram主题预览、随机获取主题 和群组管理的Telegram机器人
 
 配置文件 setup.cfg (采用yaml格式配置)(在根目录自行创建)
   机器人api 
