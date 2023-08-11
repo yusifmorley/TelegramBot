@@ -1,4 +1,4 @@
-
+import os
 import telegram
 from telegram.ext import Updater
 import logging
@@ -13,7 +13,9 @@ from app.admin import admin_function
 from  app.theme import get_ios
 myapi = get_config.getTelegramId()  # 机器人api
 
-request_kwargs={
+request_kwargs={}
+if os.environ.get('ENV')=='dev':
+    request_kwargs={
     'proxy_url': 'http://127.0.0.1:10810/'}
 
 updater = Updater(token=myapi, use_context=True,request_kwargs=request_kwargs)
