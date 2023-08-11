@@ -10,7 +10,7 @@ sets=[]
 
 # @profile
 def init():
-    with open("src/ThemeLink/link.txt","r") as fp:
+    with open("src/ThemeLink/link.txt","r",encoding='utf8') as fp:
         global sets
 
         links=fp.readlines()

@@ -12,7 +12,11 @@ from app.theme import get_radom_link, get_android, get_desktop
 from app.admin import admin_function
 from  app.theme import get_ios
 myapi = get_config.getTelegramId()  # 机器人api
-updater = Updater(token=myapi, use_context=True)
+
+request_kwargs={
+    'proxy_url': 'http://127.0.0.1:10810/'}
+
+updater = Updater(token=myapi, use_context=True,request_kwargs=request_kwargs)
 commands = [
     telegram.BotCommand('getrandomtheme', '随机获取一个安卓或桌面种类的主题链接(有时主题可能不适用于您的设备)'),
     telegram.BotCommand('getandroidtheme', '随机获取一个安卓主题文件'),
