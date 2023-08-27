@@ -17,8 +17,8 @@ def getbanword(banwordobject):  # 获取
     return lis
 
 
-def writebanword(banwordobject, str):  #
-    banwordobject.insert(str)
+def writebanword(banwordObject, str):  #
+    banwordObject.insert(str)
 
 
 def blockperson(update, context):

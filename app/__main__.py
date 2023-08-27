@@ -1,6 +1,6 @@
 import os
 import telegram
-from telegram.ext import Updater
+from telegram.ext import Updater,ContextTypes
 import logging
 from telegram.ext import MessageHandler, Filters
 from telegram.ext import CommandHandler

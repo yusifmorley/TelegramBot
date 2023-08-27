@@ -12,3 +12,4 @@ src/Theme/*
 setup.cfg
 __pycache__
 !/src/ThemeLink/.gitkeep
+新功能.txt
