@@ -15,3 +15,15 @@
 2023-08-11 16:04:23,457 - apscheduler.scheduler - INFO - Scheduler started
 2023-08-11 16:21:19,396 - apscheduler.scheduler - INFO - Scheduler started
 2023-08-11 16:24:01,602 - apscheduler.scheduler - INFO - Scheduler started
+2023-08-29 18:08:28,185 - apscheduler.scheduler - INFO - Scheduler started
+2023-08-29 18:53:19,407 - __main__ - ERROR - 这是update {'update_id': 652436676, 'message': {'new_chat_photo': [], 'date': 1693305199, 'entities': [], 'chat': {'title': '人工智障交流2群', 'id': -1001926124981, 'type': 'supergroup'}, 'message_id': 50, 'supergroup_chat_created': False, 'new_chat_members': [{'id': 178220800, 'first_name': 'Spam Info Bot', 'is_bot': True, 'username': 'SpamBot'}], 'channel_chat_created': False, 'delete_chat_photo': False, 'photo': [], 'group_chat_created': False, 'caption_entities': [], 'from': {'id': 5406390640, 'first_name': 'just', 'is_bot': False, 'last_name': 'TV', 'username': 'zerghopyx'}}} 出错了
+2023-08-29 18:57:06,506 - apscheduler.scheduler - INFO - Scheduler started
+2023-08-29 19:02:00,345 - apscheduler.scheduler - INFO - Scheduler started
+2023-08-29 19:02:06,990 - __main__ - INFO - 可能为私聊 {'update_id': 19744759, 'message': {'new_chat_photo': [], 'channel_chat_created': False, 'message_id': 1, 'delete_chat_photo': False, 'caption_entities': [], 'new_chat_members': [], 'entities': [{'offset': 0, 'type': 'bot_command', 'length': 6}], 'chat': {'id': 507467074, 'type': 'private', 'first_name': 'morley', 'last_name': 'dimu'}, 'text': '/start', 'group_chat_created': False, 'date': 1693306924, 'photo': [], 'supergroup_chat_created': False, 'from': {'first_name': 'morley', 'last_name': 'dimu', 'is_bot': False, 'language_code': 'zh-hans', 'id': 507467074}}}
+2023-08-29 19:03:14,785 - apscheduler.scheduler - INFO - Scheduler started
+2023-08-29 19:03:59,538 - apscheduler.scheduler - INFO - Scheduler started
+2023-08-31 17:55:46,594 - apscheduler.scheduler - INFO - Scheduler started
+2023-08-31 18:07:36,137 - apscheduler.scheduler - INFO - Scheduler started
+2023-08-31 19:29:06,253 - apscheduler.scheduler - INFO - Scheduler started
+2023-09-01 15:40:22,602 - apscheduler.scheduler - INFO - Scheduler started
+2023-09-01 15:50:46,145 - apscheduler.scheduler - INFO - Scheduler started

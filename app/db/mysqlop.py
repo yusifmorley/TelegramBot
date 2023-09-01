@@ -1,12 +1,17 @@
+import mysql
+import yaml
+
 from app.admin import ban_word
+from app.decorate.mysql_dr import mysql_w
 
-
+@mysql_w
 def initdb(mydb):
     mycursor = mydb.cursor()
     mycursor.execute("show tables;")
     if len(mycursor.fetchall()) < 3:
+        #创建 主题创建信息表
         mycursor.execute(
-            """create table logodata(
+            """create table if not exists  create_theme_logo( 
                     uid bigint not null,
                     flag  int default 0,
                     themepath varchar(100),
@@ -15,112 +20,23 @@ def initdb(mydb):
                   )default charset =utf8
             """
         )
-        mycursor.execute("""
-         create table bans(
-            uid bigint not null,
-            flag int default 0,
-            banword varchar(30) not null,
-            primary key(uid)
-        )default charset =utf8
-        """)
-        mycursor.execute("""
-        
-                 create table banword(
+        # 封禁用户记录表
+    mycursor.execute("""
+            create table if not exists ban_user_logo(
+               uid bigint not null,
+               usr_name varchar(30) not null ,
+               word text not null ,
+               ban_word varchar(30) not null,
+               primary key(uid)
+           )default charset =utf8
+           """)
+    # 违禁词 记录表
+    mycursor.execute("""
+                 create table if not exists banword(
                  id int primary key auto_increment,
                  word varchar(10) not null)""")
 
-        mydb.commit()
     print("数据库表已创建")
 
 
-def getpicpath(mydb, id):
-    mycursor = mydb.cursor()
-    mycursor.execute("select picpath from logodata where uid ={}".format(id))
-    return mycursor.fetchone()
-
-
-def getthemepath(mydb, id):
-    mycursor = mydb.cursor()
-    mycursor.execute("select themepath from logodata where uid ={}".format(id))
-    return mycursor.fetchone()
-
-
-def getflag(mydb, id):
-    mycursor = mydb.cursor()
-    mycursor.execute("select flag from logodata where uid ={}".format(id))
-    return mycursor.fetchone()
-
-def updathemeadata(mydb, themepath, id):
-    mycursor = mydb.cursor()
-    mycursor.execute("update  logodata set themepath='{}' where uid={} ".format(themepath, id))
-    # print(mycursor.rowcount)
-    mydb.commit()
-
-
-def updatpicdata(mydb, picpath, id):
-    mycursor = mydb.cursor()
-    mycursor.execute("update  logodata set picpath='{}' where uid={} ".format(picpath, id))
-    # print(mycursor.rowcount)
-    mydb.commit()
-
-
-def deletelog(mydb, id):
-    mycursor = mydb.cursor()
-    mycursor.execute("delete from logodata where uid={}".format(id))
-    # print(mycursor.rowcount)
-    mydb.commit()
-
-
-def createMysql(mydb, id, flag):  # 不管有没有 都 重置
-    mycursor = mydb.cursor()
-    mycursor.execute("replace into  logodata ( uid,flag )values({},{})".format(id, flag))
-    mydb.commit()
-    # print(mycursor.rowcount)
-
-
-def getbannum(mydb, id):
-    mycursor = mydb.cursor()
-    mycursor.execute("select flag from bans where uid={}".format(id))
-    num = mycursor.fetchone()
-    if num is not None:
-        return num[0]
-    else:
-        return 0
-
-
-def upbanuser(mydb, id, banword):
-    mycursor = mydb.cursor()
-    mycursor.execute("update bans set flag=flag+1 , banword=concat(banword,'-{}') where uid={}".format(banword, id))
-    mydb.commit()
-
-
-def creatbanuser(mydb, id, banword):
-    mycursor = mydb.cursor()
-    mycursor.execute("insert into bans (uid, banword) values({},'{}')".format(id, banword))
-    mydb.commit()
-
-
-def getbanwords(mydb, id):
-    mycursor = mydb.cursor()
-    mycursor.execute("select banword from bans where uid={}".format(id))
-    return mycursor.fetchone()[0]
-
-
-def deleteban(mydb, id):
-    mycursor = mydb.cursor()
-    mycursor.execute("delete from bans where uid={}".format(id))
-    mydb.commit()
-
-
-def getBanWordObject(mydb):
-    return ban_word.banword(mydb)
-
-# if __name__=="__main__":
-#     mydb = getConfig.getMysqlConfig()
-#     initdb(mydb)
-#     # mycursor = mydb.cursor()
-#     # mycursor.execute("show tables;")
-#     # print(mycursor.fetchall())
-#     ban= BanWord.banword(mydb)
-#     print(ban.select())
 
