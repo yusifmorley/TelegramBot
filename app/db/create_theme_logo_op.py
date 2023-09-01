@@ -4,8 +4,6 @@ import mysql
 from app.db.mysqlop import initdb
 
 
-
-
 if __name__=="__main__":
     mydb = mysql.connector.connect(
         host='127.0.0.1',
