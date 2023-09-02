@@ -197,11 +197,11 @@ def button_update(update: Update, context: CallbackContext):
                query.message.delete()
                # 2 创建 主题 发送主题
                picp="src/Photo/"+str(user_id)+".png"
-               by=open(picp).read()
+               by=open(picp,"rb").read()
                lis=[]
-               lis[0]=existing_user.color_1
-               lis[1]=existing_user.color_2
-               lis[2]=existing_user.color_3
+               lis.append(existing_user.color_1)
+               lis.append(existing_user.color_2)
+               lis.append(existing_user.color_3)
 
                data= get_attheme(by,lis)
                usr_file=str(user_id)+".attheme"
