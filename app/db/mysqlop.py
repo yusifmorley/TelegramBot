@@ -12,10 +12,11 @@ def initdb(mydb):
         #创建 主题创建信息表
         mycursor.execute(
             """create table if not exists  create_theme_logo( 
-                    uid bigint not null,
-                    flag  int default 0,
-                    themepath varchar(100),
-                    picpath varchar(100),
+                    uid bigint not null, 
+                    color_1 varchar(20) ,
+                    color_2 varchar(20) ,
+                    color_3 varchar(20) ,
+                    picpath varchar(100) not null,
                     primary key(uid)
                   )default charset =utf8
             """

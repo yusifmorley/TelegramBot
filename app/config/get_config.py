@@ -8,17 +8,21 @@ import mysql
 with open("setup.cfg", "r") as f:
     data = yaml.load(f, yaml.FullLoader)
     MysqlData = data["mysql"]
+
+    if os.environ.get('ENV') == 'dev':
+        MysqlData["password"] = 'root'
+
     TelegramBotId = data["telegrambotid"]
+
+def get_engine_str():
+    return  "mysql://{}:{}@localhost/{}".format(MysqlData["user"],MysqlData["password"],"telegramdata")
+
 
 
 def getMysqlConfig():
-    if os.environ.get('ENV') == 'dev':
-        MysqlData["password"]='root'
-
     mydb = mysql.connector.connect(
         host=MysqlData["host"],
         user=MysqlData["user"],
-
         password=MysqlData["password"],
         database="telegramdata",
     )

@@ -13,8 +13,12 @@ from app.theme import get_radom_link, get_android, get_desktop
 from app.admin import admin_function, ban_word
 from  app.theme import get_ios
 from app.util.create_atheme import get_attheme_color_pic,get_kyb
-
+from io import BytesIO
+from app.model.models import init_session,CreateThemeLogo
+from sqlalchemy.orm.session import Session
 myapi = get_config.getTelegramId()  # 机器人api
+
+session:Session=init_session()
 
 request_kwargs={}
 if os.environ.get('ENV')=='dev':
@@ -128,10 +132,32 @@ def get_ios_theme(update: Update, context: CallbackContext):
 def create_attheme(update: Update, context: CallbackContext):
     context.bot.send_message(chat_id=update.effective_chat.id, text="请发送您的图片")
 
+#用户发送图片
 def base_photo(update: Update, context: CallbackContext):
    file_id= update.effective_message.photo[-1].file_id  #最后一个是完整图片
    pic_file:File=bot.get_file(file_id)
-   picbytes=pic_file.download_as_bytearray()
+   user_id=update.effective_user.id
+   #io重用
+   bio=BytesIO()
+   #写入图片
+   picp="src/Photo/"+user_id+".png"
+   fp =open(picp,"wb")
+   pic_file.download(out=bio)
+   fp.write(bio.getvalue())
+   fp.close()
+   #更新数据库
+   same_primary_key = update.effective_user.id
+   existing_user:CreateThemeLogo = session.query(CreateThemeLogo).get(same_primary_key)
+   if existing_user:
+       # 如果记录已存在，执行 变更 picpath
+       existing_user.picpath=picp
+   else:
+       # 如果记录不存在，插入新数据
+       new_user = CreateThemeLogo(uid=user_id,picpath=picp)
+       session.add(new_user)
+
+   picbytes=bio.getvalue()
+   bio.close()
 
    content:list=get_attheme_color_pic(picbytes)
    ky=get_kyb(content[0])
@@ -141,11 +167,28 @@ def base_photo(update: Update, context: CallbackContext):
 
 
    # pic_file.download("src/Photo/"+file_id+".jpg")
-
+#解决 颜色三个状态
 def button_update(update: Update, context: CallbackContext):
     query = update.callback_query
-    print(query.id)
-    print(query.data)
+    user_id = update.effective_user.id
+    same_primary_key = user_id
+    existing_user: CreateThemeLogo = session.query(CreateThemeLogo).get(same_primary_key)
+    if existing_user:
+       if existing_user.color_1:
+           if existing_user.color_2:
+               existing_user.color_3=query.data
+               # 1 删除call back
+               # 2 创建 主题 发送主题
+
+
+           else:
+               existing_user.color_2=query.data
+               return
+       else:
+           existing_user.color_1=query.data
+           return
+    # print(query.id)
+    # print(query.data)
 
 
 
