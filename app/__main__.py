@@ -12,7 +12,7 @@ from app.db import mysqlop
 from app.theme import get_radom_link, get_android, get_desktop
 from app.admin import admin_function, ban_word
 from  app.theme import get_ios
-from app.util.create_atheme import get_attheme_color_pic,get_kyb
+from app.util.create_atheme import get_attheme_color_pic,get_kyb,get_attheme
 from io import BytesIO
 from app.model.models import init_session,CreateThemeLogo
 from sqlalchemy.orm.session import Session
@@ -41,7 +41,7 @@ bot:Bot=updater.bot
 bot.set_my_commands(commands)
 
 dispatcher = updater.dispatcher
-logging.basicConfig(filename="log/mylog", format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+logging.basicConfig(filename="log/mylog.txt", format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                     level=logging.INFO)  # 日志
 logger = logging.getLogger(__name__)
 mydb = get_config.getMysqlConfig()
@@ -99,7 +99,12 @@ def combin_theme(update: Update, context: CallbackContext):
                              text="您不是管理员！\n" +strinfo)
 
 def error_hander(update: Update, context: CallbackContext):
-    logger.error("这是update {} 出错了".format(str(update)))
+    exception = context.error
+    # 打印错误信息到日志
+    logging.error(f"发生异常: {exception}")
+    # 可选：向用户发送错误消息
+    # update.message.reply_text("抱歉，发生了一个错误，请稍后再试。")
+    # logger.error("这是update {} 出错了".format(str(update)))
 
 def get_android_theme(update: Update, context: CallbackContext):
     path=get_android.get_android_theme()
@@ -140,21 +145,30 @@ def base_photo(update: Update, context: CallbackContext):
    #io重用
    bio=BytesIO()
    #写入图片
-   picp="src/Photo/"+user_id+".png"
+   picp="src/Photo/"+str(user_id)+".png"
+
+   logger.info("ok")
+
+
    fp =open(picp,"wb")
+
    pic_file.download(out=bio)
    fp.write(bio.getvalue())
    fp.close()
    #更新数据库
    same_primary_key = update.effective_user.id
-   existing_user:CreateThemeLogo = session.query(CreateThemeLogo).get(same_primary_key)
+   existing_user:CreateThemeLogo|None = session.get(CreateThemeLogo,same_primary_key)
    if existing_user:
        # 如果记录已存在，执行 变更 picpath
        existing_user.picpath=picp
+       existing_user.color_1=  None
+       existing_user.color_2 = None
+       existing_user.color_3 = None
    else:
        # 如果记录不存在，插入新数据
        new_user = CreateThemeLogo(uid=user_id,picpath=picp)
        session.add(new_user)
+   session.commit()
 
    picbytes=bio.getvalue()
    bio.close()
@@ -171,22 +185,37 @@ def base_photo(update: Update, context: CallbackContext):
 def button_update(update: Update, context: CallbackContext):
     query = update.callback_query
     user_id = update.effective_user.id
+    original_reply_markup = query.message.reply_markup
     same_primary_key = user_id
-    existing_user: CreateThemeLogo = session.query(CreateThemeLogo).get(same_primary_key)
+    existing_user:CreateThemeLogo|None = session.get(CreateThemeLogo,same_primary_key)
     if existing_user:
        if existing_user.color_1:
            if existing_user.color_2:
                existing_user.color_3=query.data
+
                # 1 删除call back
+               query.message.delete()
                # 2 创建 主题 发送主题
+               picp="src/Photo/"+str(user_id)+".png"
+               by=open(picp).read()
+               lis=[]
+               lis[0]=existing_user.color_1
+               lis[1]=existing_user.color_2
+               lis[2]=existing_user.color_3
 
-
+               data= get_attheme(by,lis)
+               usr_file=str(user_id)+".attheme"
+               context.bot.send_document(chat_id=update.effective_chat.id, document=data, filename=usr_file)
+               context.bot.send_message(chat_id=update.effective_chat.id, text="这是您的主题文件，亲～")
            else:
                existing_user.color_2=query.data
-               return
+               query.edit_message_caption(caption="好的！请设置 次要 字体颜色",reply_markup=original_reply_markup)
+
+
        else:
            existing_user.color_1=query.data
-           return
+           query.edit_message_caption(caption="首先,请设置主要字体颜色",reply_markup=original_reply_markup)
+       session.commit()
     # print(query.id)
     # print(query.data)
 
@@ -219,7 +248,7 @@ if __name__ == "__main__":
         dispatcher.add_handler(MessageHandler(Filters.text, admin_handle))
         dispatcher.add_handler(MessageHandler(Filters.status_update.new_chat_members, on_join))
 
-        dispatcher.add_error_handler(error_hander)
+        # dispatcher.add_error_handler(error_hander)
         updater.start_polling()
     except mysql.connector.errors.OperationalError:  # 连接断开 重新链接
         mydb = get_config.getMysqlConfig()

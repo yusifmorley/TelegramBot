@@ -37,5 +37,5 @@ class CreateThemeLogo(Base):
 def init_session():
      engine = create_engine(get_config.get_engine_str())
      #自动提交事务
-     DBSession = sessionmaker(bind=engine,autocommit=True)
+     DBSession = sessionmaker(bind=engine)
      return DBSession()   #返回seesion实例
