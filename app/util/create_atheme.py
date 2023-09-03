@@ -60,7 +60,7 @@ def get_kyb(arr:list):
             [
                 InlineKeyboardButton("白", callback_data='#FFFFFF'),
                 InlineKeyboardButton("黑", callback_data='#000000'),
-                InlineKeyboardButton("全部随机", callback_data='default'),
+                # InlineKeyboardButton("全部随机", callback_data='default'),
              ],
         ]
         return keyboard
