@@ -219,7 +219,10 @@ def button_update(update: Update, context: CallbackContext):
        else:
            existing_user.color_1=query.data
            query.edit_message_caption(caption="首先,请设置主要字体颜色",reply_markup=original_reply_markup)
+
        session.commit()
+    else:
+        query.answer("此键盘不属于你，点击无效呢！")
 
 
 def start(update: Update, context: CallbackContext):
