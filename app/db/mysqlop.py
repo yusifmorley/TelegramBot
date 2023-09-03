@@ -16,7 +16,8 @@ def initdb(mydb):
                     color_1 varchar(20) ,
                     color_2 varchar(20) ,
                     color_3 varchar(20) ,
-                    picpath varchar(100) not null,
+                    pic_path varchar(100) not null,
+                    callback_id bigint,
                     primary key(uid)
                   )default charset =utf8
             """

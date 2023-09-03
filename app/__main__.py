@@ -1,6 +1,6 @@
 import os
 import telegram
-from telegram import Update, Bot, File, InlineKeyboardButton, InlineKeyboardMarkup
+from telegram import Update, Bot, File, InlineKeyboardButton, InlineKeyboardMarkup,Message
 from telegram.ext import Updater, ContextTypes, CallbackContext, CallbackQueryHandler
 import logging
 from telegram.ext import MessageHandler, Filters
@@ -16,6 +16,7 @@ from app.util.create_atheme import get_attheme_color_pic,get_kyb,get_attheme
 from io import BytesIO
 from app.model.models import init_session,CreateThemeLogo
 from sqlalchemy.orm.session import Session
+
 myapi = get_config.getTelegramId()  # 机器人api
 
 session:Session=init_session()
@@ -142,14 +143,11 @@ def base_photo(update: Update, context: CallbackContext):
    file_id= update.effective_message.photo[-1].file_id  #最后一个是完整图片
    pic_file:File=bot.get_file(file_id)
    user_id=update.effective_user.id
+
    #io重用
    bio=BytesIO()
    #写入图片
    picp="src/Photo/"+str(user_id)+".png"
-
-   logger.info("ok")
-
-
    fp =open(picp,"wb")
 
    pic_file.download(out=bio)
@@ -157,38 +155,46 @@ def base_photo(update: Update, context: CallbackContext):
    fp.close()
    #更新数据库
    same_primary_key = update.effective_user.id
+   picbytes = bio.getvalue()
+   bio.close()
+
+   content: list = get_attheme_color_pic(picbytes)
+   #生成键盘
+   ky = get_kyb(content[0])
+
+   reply_markup = InlineKeyboardMarkup(ky)
+   call_message: Message = update.message.reply_photo(content[1], caption="请选择主题的背景颜色",
+                                                         reply_markup=reply_markup)
+
+   #查询 数据
    existing_user:CreateThemeLogo|None = session.get(CreateThemeLogo,same_primary_key)
    if existing_user:
        # 如果记录已存在，执行 变更 picpath
-       existing_user.picpath=picp
+       existing_user.pic_path=picp
        existing_user.color_1=  None
        existing_user.color_2 = None
        existing_user.color_3 = None
+       existing_user.callback_id = call_message.message_id
    else:
        # 如果记录不存在，插入新数据
-       new_user = CreateThemeLogo(uid=user_id,picpath=picp)
+       new_user = CreateThemeLogo(uid=user_id,pic_path=picp,callback_id=call_message.message_id)
        session.add(new_user)
+
    session.commit()
-
-   picbytes=bio.getvalue()
-   bio.close()
-
-   content:list=get_attheme_color_pic(picbytes)
-   ky=get_kyb(content[0])
-   if ky:
-     reply_markup = InlineKeyboardMarkup(ky)
-     update.message.reply_photo(content[1],caption="请选择主题的背景颜色", reply_markup=reply_markup)
-
 
    # pic_file.download("src/Photo/"+file_id+".jpg")
 #解决 颜色三个状态
 def button_update(update: Update, context: CallbackContext):
+
     query = update.callback_query
+
     user_id = update.effective_user.id
     original_reply_markup = query.message.reply_markup
     same_primary_key = user_id
+
     existing_user:CreateThemeLogo|None = session.get(CreateThemeLogo,same_primary_key)
-    if existing_user:
+
+    if existing_user and query.message.message_id == existing_user.callback_id:
        if existing_user.color_1:
            if existing_user.color_2:
                existing_user.color_3=query.data
@@ -197,11 +203,10 @@ def button_update(update: Update, context: CallbackContext):
                query.message.delete()
                # 2 创建 主题 发送主题
                picp="src/Photo/"+str(user_id)+".png"
-               by=open(picp,"rb").read()
-               lis=[]
-               lis.append(existing_user.color_1)
-               lis.append(existing_user.color_2)
-               lis.append(existing_user.color_3)
+               fp=open(picp,"rb")
+               by=fp.read()
+               fp.close()
+               lis= [existing_user.color_1, existing_user.color_2, existing_user.color_3]
 
                data= get_attheme(by,lis)
                usr_file=str(user_id)+".attheme"
@@ -211,15 +216,10 @@ def button_update(update: Update, context: CallbackContext):
                existing_user.color_2=query.data
                query.edit_message_caption(caption="好的！请设置 次要 字体颜色",reply_markup=original_reply_markup)
 
-
        else:
            existing_user.color_1=query.data
            query.edit_message_caption(caption="首先,请设置主要字体颜色",reply_markup=original_reply_markup)
        session.commit()
-    # print(query.id)
-    # print(query.data)
-
-
 
 
 def start(update: Update, context: CallbackContext):

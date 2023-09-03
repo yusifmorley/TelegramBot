@@ -8,7 +8,6 @@ from app.config import get_config
 # sqlacodegen mysql://root:root@localhost/telegramdata  > models.py
 Base = declarative_base()
 
-
 class BanUserLogo(Base):
     __tablename__ = 'ban_user_logo'
 
@@ -32,7 +31,8 @@ class CreateThemeLogo(Base):
     color_1 = Column(String(20))
     color_2 = Column(String(20))
     color_3 = Column(String(20))
-    picpath = Column(String(100),nullable=False)
+    pic_path = Column(String(100), nullable=False)
+    callback_id = Column(BigInteger)
 
 def init_session():
      engine = create_engine(get_config.get_engine_str())
