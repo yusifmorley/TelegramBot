@@ -163,7 +163,7 @@ def base_photo(update: Update, context: CallbackContext):
    ky = get_kyb(content[0])
 
    reply_markup = InlineKeyboardMarkup(ky)
-   call_message: Message = update.message.reply_photo(content[1], caption="请选择主题的背景颜色",
+   call_message: Message = update.message.reply_photo(content[1], caption="首先，请选择主题的背景颜色",
                                                          reply_markup=reply_markup)
 
    #查询 数据
@@ -218,7 +218,7 @@ def button_update(update: Update, context: CallbackContext):
 
        else:
            existing_user.color_1=query.data
-           query.edit_message_caption(caption="首先,请设置主要字体颜色",reply_markup=original_reply_markup)
+           query.edit_message_caption(caption="嗯！请设置主要字体颜色",reply_markup=original_reply_markup)
 
        session.commit()
     else:
