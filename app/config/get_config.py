@@ -15,7 +15,7 @@ with open("setup.cfg", "r") as f:
     TelegramBotId = data["telegrambotid"]
 
 def get_engine_str():
-    return  "mysql://{}:'{}'@127.0.0.1/{}".format(MysqlData["user"],'2863278679Gy@',"telegramdata")
+    return  "mysql://{}:'{}'@127.0.0.1/{}".format(MysqlData["user"],'2863278679Gy%40',"telegramdata")
 
 
 
