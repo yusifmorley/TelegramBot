@@ -13,16 +13,21 @@ class MonitorPerson:
         self.text_list.append(text)
 
     def run(self, usr_id, user_name, text, update, context,banword,logger):
+        #对@进行特殊处理
+        if '@' in text and "/" not in text:
+            admin_function.blockperson(update, context,"@")
+
+
     #判断是否触违禁词
         os = admin_function.deletetxt(banword, text)
         if os:  # 若存在违禁词
-            admin_function.blockperson(update, context)
+            admin_function.blockperson(update, context,os)
             logger.info(os)  # 记录
 
             return
     #判断text 是否有重复
         if text in self.text_list:
-            admin_function.blockperson(update,context)
+            admin_function.blockperson(update,context,"重复")
         else:
             self.__contain_list__(text)
 

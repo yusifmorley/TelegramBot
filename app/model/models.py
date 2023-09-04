@@ -34,8 +34,10 @@ class CreateThemeLogo(Base):
     pic_path = Column(String(100), nullable=False)
     callback_id = Column(BigInteger)
 
+
+engine = create_engine(get_config.get_engine_str())
+# 自动提交事务
+DBSession = sessionmaker(bind=engine)
+seesion=DBSession()
 def init_session():
-     engine = create_engine(get_config.get_engine_str())
-     #自动提交事务
-     DBSession = sessionmaker(bind=engine)
-     return DBSession()   #返回seesion实例
+     return seesion   #返回seesion实例

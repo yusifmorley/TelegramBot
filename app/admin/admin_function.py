@@ -1,7 +1,7 @@
 # 管理功能
 from telegram import ChatPermissions
-
-
+from app.model.models import init_session,BanUserLogo
+from telegram import Update
 def deletetxt(txt, str):
     for x in txt:
         if x in str:
@@ -17,11 +17,18 @@ def getbanword(banwordobject):  # 获取
     return lis
 
 
-def writeBanWord(banwordObject, str):  #
+def writeBanWord(banwordObject, str):
     banwordObject.insert(str)
 
 
-def blockperson(update, context):
+def blockperson(update:Update, context,ban_word):
+    session=init_session()
+    session.add(BanUserLogo(uid=update.effective_user.id,
+                            usr_name=update.effective_user.name,
+                            word=update.message.text,
+                            ban_word=ban_word
+                            ))
+    session.commit()
     context.bot.delete_message(message_id=update.effective_message.message_id, chat_id=update.effective_chat.id)
     context.bot.restrict_chat_member(chat_id=update.effective_chat.id,
                                      user_id=update.effective_user.id,
