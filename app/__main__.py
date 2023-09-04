@@ -1,7 +1,7 @@
 import os
 import telegram
 from telegram import Update, Bot, File, InlineKeyboardButton, InlineKeyboardMarkup,Message
-from telegram.ext import Updater, ContextTypes, CallbackContext, CallbackQueryHandler
+from telegram.ext import Updater, ContextTypes, CallbackContext, CallbackQueryHandler, DispatcherHandlerStop
 import logging
 from telegram.ext import MessageHandler, Filters
 from telegram.ext import CommandHandler
@@ -14,7 +14,7 @@ from app.admin import admin_function, ban_word
 from  app.theme import get_ios
 from app.util.create_atheme import get_attheme_color_pic,get_kyb,get_attheme
 from io import BytesIO
-from app.model.models import init_session,CreateThemeLogo
+from app.model.models import init_session, CreateThemeLogo, BanUserLogo
 from sqlalchemy.orm.session import Session
 
 myapi = get_config.getTelegramId()  # 机器人api
@@ -224,6 +224,11 @@ def button_update(update: Update, context: CallbackContext):
     else:
         query.answer("此键盘不属于你，点击无效呢！")
 
+def filter_private(update: Update, context: CallbackContext):
+
+    existing_user: BanUserLogo | None = session.get(BanUserLogo, update.effective_user.id)
+    if  existing_user:
+        raise DispatcherHandlerStop("非法私聊用户")
 
 def start(update: Update, context: CallbackContext):
     context.bot.send_message(chat_id=update.effective_chat.id,text=strinfo)
@@ -231,6 +236,7 @@ def start(update: Update, context: CallbackContext):
 
 if __name__ == "__main__":
     try:
+        dispatcher.add_handler(MessageHandler(Filters.all, filter_private),group=-1)
         #基于图片创建 attheme主题
         dispatcher.add_handler(CommandHandler('create_attheme_base_pic', create_attheme))
         dispatcher.add_handler(MessageHandler(Filters.photo, base_photo))
