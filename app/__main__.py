@@ -1,6 +1,6 @@
 import os
 import telegram
-from telegram import Update, Bot, File, InlineKeyboardButton, InlineKeyboardMarkup,Message
+from telegram import Update, Bot, File, InlineKeyboardButton, InlineKeyboardMarkup,Message,Chat
 from telegram.ext import Updater, ContextTypes, CallbackContext, CallbackQueryHandler, DispatcherHandlerStop
 import logging
 from telegram.ext import MessageHandler, Filters
@@ -225,10 +225,11 @@ def button_update(update: Update, context: CallbackContext):
         query.answer("此键盘不属于你，点击无效呢！")
 
 def filter_private(update: Update, context: CallbackContext):
-
-    existing_user: BanUserLogo | None = session.get(BanUserLogo, update.effective_user.id)
-    if  existing_user:
-        raise DispatcherHandlerStop("非法私聊用户")
+    if update.effective_chat.type==Chat.PRIVATE:
+        existing_user: BanUserLogo | None = session.get(BanUserLogo, update.effective_user.id)
+        if  existing_user:
+            logger.warning("非法私聊用户,禁止使用机器人")
+            raise DispatcherHandlerStop()
 
 def start(update: Update, context: CallbackContext):
     context.bot.send_message(chat_id=update.effective_chat.id,text=strinfo)
