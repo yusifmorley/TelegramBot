@@ -23,7 +23,9 @@ def writeBanWord(banwordObject, str):
 
 def blockperson(update:Update, context,ban_word):
     session=init_session()
-    session.add(BanUserLogo(uid=update.effective_user.id,
+    existing_user: BanUserLogo | None = session.get(BanUserLogo, update.effective_user.id)
+    if not existing_user:
+         session.add(BanUserLogo(uid=update.effective_user.id,
                             usr_name=update.effective_user.name,
                             word=update.message.text,
                             ban_word=ban_word
