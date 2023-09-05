@@ -5,6 +5,8 @@ import base64
 
 from telegram import InlineKeyboardButton
 
+from app.util.color_parse import is_light, parse_color
+
 #与nodejs 交互 发送一个图片
 url0= "http://127.0.0.1:3000/attheme"
 
@@ -46,8 +48,20 @@ def get_attheme(pic_byte: bytes,color_list:list):
     else:
         return None
 
-def get_kyb(arr:list):
+def get_kyb(arr:list[str]):
+    autocolor:list=[]
     if len(arr)==5:
+        for x in arr:
+            if not is_light(parse_color(x[1:])): #如果洋浦一个是暗色
+                autocolor.append(x)
+                autocolor.append('#FFFFFF')
+                autocolor.append('#FFFFFF')
+                break
+        if len(autocolor)==0: #没有暗色
+            autocolor.append(arr[0])
+            autocolor.append('#000000')
+            autocolor.append('#000000')
+
         keyboard = [
             [
                 InlineKeyboardButton("1", callback_data=arr[0]),
@@ -60,12 +74,16 @@ def get_kyb(arr:list):
             [
                 InlineKeyboardButton("白", callback_data='#FFFFFF'),
                 InlineKeyboardButton("黑", callback_data='#000000'),
-                # InlineKeyboardButton("全部随机", callback_data='default'),
+                InlineKeyboardButton("全部随机", callback_data=",".join(autocolor))
              ],
         ]
         return keyboard
     else:
         return None
+
+
+
+
 
 if __name__=='__main__':
     fo= open('../../src/background/Green Mystery.jpg', 'rb').read()

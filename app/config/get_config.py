@@ -33,3 +33,5 @@ def getMysqlConfig():
 
 def getTelegramId():
     return TelegramBotId
+def get_myid():
+    return data['myid']

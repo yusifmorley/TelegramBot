@@ -10,6 +10,7 @@ from telegram.ext import CommandHandler
 import mysql.connector
 from app.admin.person import MonitorPerson
 from app.config import get_config
+from app.config.get_config import get_myid
 from app.db import mysqlop
 from app.theme import get_radom_link, get_android, get_desktop
 from app.admin import admin_function, ban_word
@@ -19,6 +20,7 @@ from io import BytesIO
 from app.model.models import init_session, CreateThemeLogo, BanUserLogo
 from sqlalchemy.orm.session import Session
 
+my_id=get_myid()
 myapi = get_config.getTelegramId()  # 机器人api
 
 session:Session=init_session()
@@ -62,7 +64,7 @@ strinfo="您可以输入以下命令：\n"+\
         "/getandroidtheme', '随机获取一个安卓主题文件\n"+\
         "/getdesktoptheme', '随机获取一个桌面主题文件\n"+\
         "/getiostheme', '随机获取一个IOS主题链接"
-
+exception_occurred = False
 # 合并主题和背景
 def on_join(update: Update, context: CallbackContext):
     # print(update.effective_chat)
@@ -187,14 +189,28 @@ def base_photo(update: Update, context: CallbackContext):
    # pic_file.download("src/Photo/"+file_id+".jpg")
 #解决 颜色三个状态
 def button_update(update: Update, context: CallbackContext):
-
+    color_arr:list|None=None
     query = update.callback_query
 
     user_id = update.effective_user.id
     original_reply_markup = query.message.reply_markup
     same_primary_key = user_id
-
     existing_user:CreateThemeLogo|None = session.get(CreateThemeLogo,same_primary_key)
+    #如果是全部随机
+    if len(query.data)>15:
+       color_arr= query.data.split(",")
+       query.message.delete()
+       # 2 创建 主题 发送主题
+       picp = "src/Photo/" + str(user_id) + ".png"
+       fp = open(picp, "rb")
+       by = fp.read()
+       fp.close()
+       lis =color_arr
+       data = get_attheme(by, lis)
+       usr_file = str(user_id) + ".attheme"
+       context.bot.send_document(chat_id=update.effective_chat.id, document=data, filename=usr_file)
+       context.bot.send_message(chat_id=update.effective_chat.id, text="这是您的主题文件，亲～")
+       return
 
     if existing_user and query.message.message_id == existing_user.callback_id:
        if existing_user.color_1:
@@ -239,6 +255,7 @@ def start(update: Update, context: CallbackContext):
 
 if __name__ == "__main__":
     try:
+
         dispatcher.add_handler(MessageHandler(Filters.all, filter_private),group=-1)
         #基于图片创建 attheme主题
         dispatcher.add_handler(CommandHandler('create_attheme_base_pic', create_attheme))
@@ -262,10 +279,19 @@ if __name__ == "__main__":
 
         # dispatcher.add_error_handler(error_hander)
         updater.start_polling()
-    except mysql.connector.errors.OperationalError:  # 连接断开 重新链接
+    except mysql.connector.errors.OperationalError as e:  # 连接断开 重新链接
+        logger.warning(f"数据库链接发生错误: {e}")
         mydb = get_config.getMysqlConfig()
+        exception_occurred=True
     except sqlalchemy.exc.PendingRollbackError as e:
         session.rollback()  #回滚
-        logger.warning(f"发生错误: {e}")
+        logger.warning(f"数据库提交发生错误: {e}")
+        exception_occurred = True
     except telegram.error.BadRequest as e:
         logger.warning(f"错误请求: {e}")
+        exception_occurred = True
+    finally:
+        if exception_occurred:
+            # 异常发生时的清理操作
+            bot.send_message(chat_id=my_id, text="出错了")
+            exception_occurred=False
