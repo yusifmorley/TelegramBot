@@ -267,3 +267,5 @@ if __name__ == "__main__":
     except sqlalchemy.exc.PendingRollbackError as e:
         session.rollback()  #回滚
         logger.warning(f"发生错误: {e}")
+    except telegram.error.BadRequest as e:
+        logger.warning(f"错误请求: {e}")
