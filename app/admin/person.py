@@ -16,7 +16,9 @@ class MonitorPerson:
         #对@进行特殊处理
         if '@' in text and "/" not in text:
             admin_function.blockperson(update, context,"@")
-
+        #防止误删来自频道的消息
+        if  "addtheme" in text:
+            return
 
     #判断是否触违禁词
         os = admin_function.deletetxt(banword, text)
