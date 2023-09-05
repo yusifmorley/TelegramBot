@@ -1,7 +1,7 @@
 import functools
 
 from app.admin import admin_function
-
+from telegram import Update,Chat
 class MonitorPerson:
     def __init__(self, monitor_person_num):  # monitor_person为监听人个数
         self.monitor_person = monitor_person_num
@@ -12,7 +12,11 @@ class MonitorPerson:
             del  self.text_list[0]  #删除首个元素
         self.text_list.append(text)
 
-    def run(self, usr_id, user_name, text, update, context,banword,logger):
+    def run(self, usr_id, user_name, text, update:Update, context,banword,logger):
+        #排除来自频道的消息
+        if update.message.chat.type==Chat.CHANNEL:
+            return
+
         #对@进行特殊处理
         if '@' in text and "/" not in text:
             admin_function.blockperson(update, context,"@")
