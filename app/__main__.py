@@ -1,4 +1,6 @@
 import os
+
+import sqlalchemy.exc
 import telegram
 from telegram import Update, Bot, File, InlineKeyboardButton, InlineKeyboardMarkup,Message,Chat
 from telegram.ext import Updater, ContextTypes, CallbackContext, CallbackQueryHandler, DispatcherHandlerStop
@@ -262,3 +264,6 @@ if __name__ == "__main__":
         updater.start_polling()
     except mysql.connector.errors.OperationalError:  # 连接断开 重新链接
         mydb = get_config.getMysqlConfig()
+    except sqlalchemy.exc.PendingRollbackError as e:
+        session.rollback()  #回滚
+        logger.warning(f"发生错误: {e}")
