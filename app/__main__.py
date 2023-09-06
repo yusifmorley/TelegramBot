@@ -139,11 +139,29 @@ def get_ios_theme(update: Update, context: CallbackContext):
     context.bot.send_message(chat_id=update.effective_chat.id, text=path.rstrip("\n"))
     context.bot.send_message(chat_id=update.effective_chat.id, text="这是您的主题文件，亲～")
 
+
 def create_attheme(update: Update, context: CallbackContext):
+    same_primary_key = update.effective_user.id
+    existing_user: CreateThemeLogo | None = session.get(CreateThemeLogo, same_primary_key)
+    if existing_user:
+        existing_user.flag=1
+    else:
+        new_user = CreateThemeLogo(uid=same_primary_key,flag=1)
+        session.add(new_user)
+
     context.bot.send_message(chat_id=update.effective_chat.id, text="请发送您的图片")
 
 #用户发送图片
 def base_photo(update: Update, context: CallbackContext):
+   same_primary_key = update.effective_user.id
+   existing_user: CreateThemeLogo | None = session.get(CreateThemeLogo, same_primary_key)
+
+   if not existing_user:
+       return
+
+   if existing_user and existing_user.flag == 0:
+       return
+
    file_id= update.effective_message.photo[-1].file_id  #最后一个是完整图片
    pic_file:File=bot.get_file(file_id)
    user_id=update.effective_user.id
@@ -158,7 +176,7 @@ def base_photo(update: Update, context: CallbackContext):
    fp.write(bio.getvalue())
    fp.close()
    #更新数据库
-   same_primary_key = update.effective_user.id
+
    picbytes = bio.getvalue()
    bio.close()
 
@@ -170,19 +188,13 @@ def base_photo(update: Update, context: CallbackContext):
    call_message: Message = update.message.reply_photo(content[1], caption="首先，请选择主题的背景颜色",
                                                          reply_markup=reply_markup)
 
-   #查询 数据
-   existing_user:CreateThemeLogo|None = session.get(CreateThemeLogo,same_primary_key)
-   if existing_user:
-       # 如果记录已存在，执行 变更 picpath
-       existing_user.pic_path=picp
-       existing_user.color_1=  None
-       existing_user.color_2 = None
-       existing_user.color_3 = None
-       existing_user.callback_id = call_message.message_id
-   else:
-       # 如果记录不存在，插入新数据
-       new_user = CreateThemeLogo(uid=user_id,pic_path=picp,callback_id=call_message.message_id)
-       session.add(new_user)
+   # 如果记录已存在，执行 变更 picpath
+   existing_user.pic_path=picp
+   existing_user.color_1=  None
+   existing_user.color_2 = None
+   existing_user.color_3 = None
+   existing_user.callback_id = call_message.message_id
+
 
    session.commit()
 
@@ -210,6 +222,8 @@ def button_update(update: Update, context: CallbackContext):
        usr_file = str(user_id) + ".attheme"
        context.bot.send_document(chat_id=update.effective_chat.id, document=data, filename=usr_file)
        context.bot.send_message(chat_id=update.effective_chat.id, text="这是您的主题文件，亲～")
+       existing_user.flag = 0  # 置0
+       session.commit()
        return
 
     if existing_user and query.message.message_id == existing_user.callback_id:
@@ -225,11 +239,11 @@ def button_update(update: Update, context: CallbackContext):
                by=fp.read()
                fp.close()
                lis= [existing_user.color_1, existing_user.color_2, existing_user.color_3]
-
                data= get_attheme(by,lis)
                usr_file=str(user_id)+".attheme"
                context.bot.send_document(chat_id=update.effective_chat.id, document=data, filename=usr_file)
                context.bot.send_message(chat_id=update.effective_chat.id, text="这是您的主题文件，亲～")
+               existing_user.flag=0 #置0
            else:
                existing_user.color_2=query.data
                query.edit_message_caption(caption="好的！请设置 次要 字体颜色",reply_markup=original_reply_markup)
