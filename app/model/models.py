@@ -6,6 +6,7 @@ from sqlalchemy.dialects.mysql import TINYINT
 from app.config import get_config
 #命令行运行报错 相关MySQ python依赖没有安装 关闭系统代理
 # sqlacodegen mysql://root:root@localhost/telegramdata  > models.py
+#ubuntu 需要安装依赖  apt-get install python3.10-dev libmysqlclient-dev
 Base = declarative_base()
 
 
