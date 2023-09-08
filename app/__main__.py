@@ -277,6 +277,15 @@ def filter_private(update: Update, context: CallbackContext):
             raise DispatcherHandlerStop()
 
 def parse_document(update: Update, context: CallbackContext):
+    same_primary_key = update.effective_user.id
+    existing_user: CreateThemeLogo | None = session.get(CreateThemeLogo, same_primary_key)
+
+    if not existing_user:
+        return
+
+    if existing_user and existing_user.flag == 0:
+        return
+
     document = update.message.document
     # 获取文档的文件名
     file_name:str = document.file_name
