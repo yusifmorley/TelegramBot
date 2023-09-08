@@ -33,7 +33,7 @@ class CreateThemeLogo(Base):
     color_1 = Column(String(20))
     color_2 = Column(String(20))
     color_3 = Column(String(20))
-    pic_path = Column(String(100), nullable=False)
+    pic_path = Column(String(100))
     callback_id = Column(BigInteger)
     flag = Column(TINYINT, server_default=text("'0'"))
 

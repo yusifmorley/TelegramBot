@@ -1,5 +1,7 @@
 import os
 
+import PIL
+from PIL import Image
 import sqlalchemy.exc
 import telegram
 from telegram import Update, Bot, File, InlineKeyboardButton, InlineKeyboardMarkup,Message,Chat
@@ -19,10 +21,10 @@ from app.util.create_atheme import get_attheme_color_pic,get_kyb,get_attheme
 from io import BytesIO
 from app.model.models import init_session, CreateThemeLogo, BanUserLogo
 from sqlalchemy.orm.session import Session
-
+from typing import IO
 my_id=get_myid()
 myapi = get_config.getTelegramId()  # 机器人api
-
+# public_IO:IO|None=None #供用户发送 document 形式的　图片用　
 session:Session=init_session()
 
 request_kwargs={}
@@ -152,7 +154,10 @@ def create_attheme(update: Update, context: CallbackContext):
     context.bot.send_message(chat_id=update.effective_chat.id, text="请发送您的图片")
 
 #用户发送图片
-def base_photo(update: Update, context: CallbackContext):
+def base_photo(update: Update, context: CallbackContext,doucment_pt:str|None=None):
+   pic_file : File|None=None
+   picbytes = None
+   picp= None
    same_primary_key = update.effective_user.id
    existing_user: CreateThemeLogo | None = session.get(CreateThemeLogo, same_primary_key)
 
@@ -162,23 +167,30 @@ def base_photo(update: Update, context: CallbackContext):
    if existing_user and existing_user.flag == 0:
        return
 
-   file_id= update.effective_message.photo[-1].file_id  #最后一个是完整图片
-   pic_file:File=bot.get_file(file_id)
-   user_id=update.effective_user.id
+   if update.message.document:
+        if doucment_pt:
+           fd= open(doucment_pt,'rb')
+           picbytes= fd.read()
+           fd.close()
+           picp=doucment_pt
+   else:
 
-   #io重用
-   bio=BytesIO()
-   #写入图片
-   picp="src/Photo/"+str(user_id)+".png"
-   fp =open(picp,"wb")
+       pid= update.effective_message.photo[-1].file_id  #最后一个是完整图片
+       pic_file:File=bot.get_file(pid)
+       user_id=update.effective_user.id
+       #io重用
+       bio=BytesIO()
+       #写入图片
+       picp="src/Photo/"+str(user_id)+".png"
+       fp =open(picp,"wb")
 
-   pic_file.download(out=bio)
-   fp.write(bio.getvalue())
-   fp.close()
-   #更新数据库
+       pic_file.download(out=bio)
+       fp.write(bio.getvalue())
+       fp.close()
+       #更新数据库
 
-   picbytes = bio.getvalue()
-   bio.close()
+       picbytes = bio.getvalue()
+       bio.close()
 
    content: list = get_attheme_color_pic(picbytes)
    #生成键盘
@@ -256,12 +268,33 @@ def button_update(update: Update, context: CallbackContext):
     else:
         query.answer("此键盘不属于你，点击无效呢！")
 
+#所有文件
 def filter_private(update: Update, context: CallbackContext):
     if update.effective_chat.type==Chat.PRIVATE:
         existing_user: BanUserLogo | None = session.get(BanUserLogo, update.effective_user.id)
         if  existing_user:
             logger.warning("非法私聊用户,禁止使用机器人")
             raise DispatcherHandlerStop()
+
+def parse_document(update: Update, context: CallbackContext):
+    document = update.message.document
+    # 获取文档的文件名
+    file_name:str = document.file_name
+    if  '.jpg' not  in file_name and 'png' not  in file_name :
+        return
+
+    try:
+
+       file_obj:File= document.get_file()
+       file_path:str='src/Photo/'+document.file_name
+       public_IO:IO= file_obj.download(file_path)
+       Image.open(public_IO)
+    except Exception :
+       # 如果无法打开图像，它不是一个有效的图像文件
+       update.message.reply_text(f"您发送了非法文件")
+       return
+    update.message.reply_text("嗯嗯！这确实是一个图片")
+    base_photo(update,context,file_path)
 
 def start(update: Update, context: CallbackContext):
     context.bot.send_message(chat_id=update.effective_chat.id,text=strinfo)
@@ -271,6 +304,9 @@ if __name__ == "__main__":
     try:
 
         dispatcher.add_handler(MessageHandler(Filters.all, filter_private),group=-1)
+
+        dispatcher.add_handler(MessageHandler(Filters.document,parse_document))
+
         #基于图片创建 attheme主题
         dispatcher.add_handler(CommandHandler('create_attheme_base_pic', create_attheme))
         dispatcher.add_handler(MessageHandler(Filters.photo, base_photo))
