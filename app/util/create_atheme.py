@@ -51,7 +51,7 @@ def get_attheme(pic_byte: bytes,color_list:list):
 def get_kyb(arr:list[str]):
     autocolor:list=[]
     autocolor1: list = []
-    if len(arr)==5:
+    if len(arr) == 5:
         for x in arr:
             if not is_light(parse_color(x[1:])): #如果有一个是暗色
                 autocolor.append(x)
@@ -65,7 +65,7 @@ def get_kyb(arr:list[str]):
 
         for x in arr:
             if  is_light(parse_color(x[1:])):  #如果有一个是亮色
-                autocolor1.append(arr[0])
+                autocolor1.append(x)
                 autocolor1.append('#000000')
                 autocolor1.append('#000000')
                 break
