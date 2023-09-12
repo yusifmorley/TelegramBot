@@ -10,6 +10,8 @@ import logging
 from telegram.ext import MessageHandler, Filters
 from telegram.ext import CommandHandler
 import mysql.connector
+from urllib3.exceptions import NewConnectionError
+
 from app.admin.person import MonitorPerson
 from app.config import get_config
 from app.config.get_config import get_myid
@@ -106,12 +108,30 @@ def combin_theme(update: Update, context: CallbackContext):
                              text="您不是管理员！\n" +strinfo)
 
 def error_hander(update: Update, context: CallbackContext):
-    exception = context.error
-    # 打印错误信息到日志
-    logging.error(f"发生异常: {exception}")
-    # 可选：向用户发送错误消息
-    # update.message.reply_text("抱歉，发生了一个错误，请稍后再试。")
-    # logger.error("这是update {} 出错了".format(str(update)))
+    global exception_occurred ,mydb
+    try:
+        raise context.error
+    except Exception as e:
+        logger.error(f"An error occurred: {str(e)}")
+    except mysql.connector.errors.OperationalError as e:  # 连接断开 重新链接
+        logger.warning(f"数据库链接发生错误: {e}")
+        mydb = get_config.getMysqlConfig()
+        exception_occurred=True
+    except sqlalchemy.exc.PendingRollbackError as e:
+        session.rollback()  #回滚
+        logger.warning(f"数据库提交发生错误: {e}")
+        exception_occurred = True
+    except telegram.error.BadRequest as e:
+        logger.warning(f"错误请求: {e}")
+        exception_occurred = True
+    except ConnectionError|NewConnectionError as e:
+        logger.warning(f"网络错误: {e}")
+    finally:
+        if exception_occurred:
+            # 异常发生时的清理操作
+            context.bot.send_message(chat_id=my_id, text=f"出错了 {context.error}")
+            exception_occurred=False
+
 
 def get_android_theme(update: Update, context: CallbackContext):
     path=get_android.get_android_theme()
@@ -310,47 +330,30 @@ def start(update: Update, context: CallbackContext):
     logger.info("可能为私聊 {}".format(str(update)))
 
 if __name__ == "__main__":
-    try:
 
-        dispatcher.add_handler(MessageHandler(Filters.all, filter_private),group=-1)
+    dispatcher.add_handler(MessageHandler(Filters.all, filter_private),group=-1)
 
-        dispatcher.add_handler(MessageHandler(Filters.document,parse_document))
+    dispatcher.add_handler(MessageHandler(Filters.document,parse_document))
 
         #基于图片创建 attheme主题
-        dispatcher.add_handler(CommandHandler('create_attheme_base_pic', create_attheme))
-        dispatcher.add_handler(MessageHandler(Filters.photo, base_photo))
-        dispatcher.add_handler(CallbackQueryHandler(button_update))
+    dispatcher.add_handler(CommandHandler('create_attheme_base_pic', create_attheme))
+    dispatcher.add_handler(MessageHandler(Filters.photo, base_photo))
+    dispatcher.add_handler(CallbackQueryHandler(button_update))
 
         #随机获取主题
-        dispatcher.add_handler(CommandHandler('getandroidtheme', get_android_theme))
-        dispatcher.add_handler(CommandHandler('getiostheme', get_ios_theme))
-        dispatcher.add_handler(CommandHandler('getdesktoptheme', get_desktop_theme))
-        dispatcher.add_handler(CommandHandler('getrandomtheme', get_ran_theme))
+    dispatcher.add_handler(CommandHandler('getandroidtheme', get_android_theme))
+    dispatcher.add_handler(CommandHandler('getiostheme', get_ios_theme))
+    dispatcher.add_handler(CommandHandler('getdesktoptheme', get_desktop_theme))
+    dispatcher.add_handler(CommandHandler('getrandomtheme', get_ran_theme))
 
-        dispatcher.add_handler(CommandHandler('start', start))
-        dispatcher.add_handler(CommandHandler('report', write_ban_word))
+    dispatcher.add_handler(CommandHandler('start', start))
+    dispatcher.add_handler(CommandHandler('report', write_ban_word))
 
-        dispatcher.add_handler(CommandHandler('combinthemeandphoto', combin_theme))
-        dispatcher.add_handler(CommandHandler('getbackground', combin_theme))
+    dispatcher.add_handler(CommandHandler('combinthemeandphoto', combin_theme))
+    dispatcher.add_handler(CommandHandler('getbackground', combin_theme))
 
-        dispatcher.add_handler(MessageHandler(Filters.text, admin_handle))
-        dispatcher.add_handler(MessageHandler(Filters.status_update.new_chat_members, on_join))
+    dispatcher.add_handler(MessageHandler(Filters.text, admin_handle))
+    dispatcher.add_handler(MessageHandler(Filters.status_update.new_chat_members, on_join))
 
-        # dispatcher.add_error_handler(error_hander)
-        updater.start_polling()
-    except mysql.connector.errors.OperationalError as e:  # 连接断开 重新链接
-        logger.warning(f"数据库链接发生错误: {e}")
-        mydb = get_config.getMysqlConfig()
-        exception_occurred=True
-    except sqlalchemy.exc.PendingRollbackError as e:
-        session.rollback()  #回滚
-        logger.warning(f"数据库提交发生错误: {e}")
-        exception_occurred = True
-    except telegram.error.BadRequest as e:
-        logger.warning(f"错误请求: {e}")
-        exception_occurred = True
-    finally:
-        if exception_occurred:
-            # 异常发生时的清理操作
-            bot.send_message(chat_id=my_id, text="出错了")
-            exception_occurred=False
+    dispatcher.add_error_handler(error_hander)
+    updater.start_polling()
