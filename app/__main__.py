@@ -16,6 +16,7 @@ from app.admin.person import MonitorPerson
 from app.config import get_config
 from app.config.get_config import get_myid
 from app.db import mysqlop
+from app.decorate.listen import lisen
 from app.theme import get_radom_link, get_android, get_desktop
 from app.admin import admin_function, ban_word
 from  app.theme import get_ios
@@ -81,7 +82,7 @@ def admin_handle(update: Update, context: CallbackContext):  # 管理员
     user = update.effective_message.from_user
     mon_per.run(user.id, user.first_name + " " + user.first_name, text, update, context,banword,logger)
 
-
+@lisen
 def get_ran_theme(update: Update, context: CallbackContext):
    # context.bot.delete_message(message_id=update.effective_message.message_id, chat_id=update.effective_chat.id)
     path = get_radom_link.get_random_theme()
@@ -132,7 +133,7 @@ def error_hander(update: Update, context: CallbackContext):
             context.bot.send_message(chat_id=my_id, text=f"出错了 {context.error}")
             exception_occurred=False
 
-
+@lisen
 def get_android_theme(update: Update, context: CallbackContext):
     path=get_android.get_android_theme()
     fd= open("src/Theme/android-theme/" + path, "rb")
@@ -144,7 +145,7 @@ def get_android_theme(update: Update, context: CallbackContext):
         context.bot.send_photo(chat_id=update.effective_chat.id,photo=preview_bytes)
     context.bot.send_message(chat_id=update.effective_chat.id, text="这是您的主题文件，亲～")
 
-
+@lisen
 def get_desktop_theme(update: Update, context: CallbackContext):
     path = get_desktop.get_desktop_theme()
     fd = open("src/Theme/desktop-theme/" + path, "rb")
@@ -155,13 +156,13 @@ def get_desktop_theme(update: Update, context: CallbackContext):
     if preview_bytes:
         context.bot.send_photo(chat_id=update.effective_chat.id, photo=preview_bytes)
     context.bot.send_message(chat_id=update.effective_chat.id, text="这是您的主题文件，亲～")
-
+@lisen
 def get_ios_theme(update: Update, context: CallbackContext):
     path = get_ios.get_random_theme()
     context.bot.send_message(chat_id=update.effective_chat.id, text=path.rstrip("\n"))
     context.bot.send_message(chat_id=update.effective_chat.id, text="这是您的主题文件，亲～")
 
-
+@lisen
 def create_attheme(update: Update, context: CallbackContext):
     same_primary_key = update.effective_user.id
     existing_user: CreateThemeLogo | None = session.get(CreateThemeLogo, same_primary_key)
@@ -171,6 +172,7 @@ def create_attheme(update: Update, context: CallbackContext):
         new_user = CreateThemeLogo(uid=same_primary_key,flag=1)
         session.add(new_user)
 
+    session.commit()
     context.bot.send_message(chat_id=update.effective_chat.id, text="请发送您的图片")
 
 #用户发送图片
@@ -355,5 +357,5 @@ if __name__ == "__main__":
     dispatcher.add_handler(MessageHandler(Filters.text, admin_handle))
     dispatcher.add_handler(MessageHandler(Filters.status_update.new_chat_members, on_join))
 
-    dispatcher.add_error_handler(error_hander)
+    #dispatcher.add_error_handler(error_hander)
     updater.start_polling()

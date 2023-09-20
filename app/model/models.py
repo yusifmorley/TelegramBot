@@ -1,5 +1,6 @@
 # coding: utf-8
-from sqlalchemy import BigInteger, Column, Integer, String, Text, text, create_engine
+
+from sqlalchemy import BigInteger, Column, Date, Integer, String, Text, text, create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.dialects.mysql import TINYINT
@@ -36,6 +37,13 @@ class CreateThemeLogo(Base):
     pic_path = Column(String(100))
     callback_id = Column(BigInteger)
     flag = Column(TINYINT, server_default=text("'0'"))
+
+class UserUseRecord(Base):
+    __tablename__ = 'user_use_record'
+
+    uid = Column(Integer, primary_key=True, nullable=False, comment='用户id')
+    date = Column(Date, primary_key=True, nullable=False, comment='日期')
+    count_record = Column(Integer, comment='使用次数')
 
 
 engine = create_engine(get_config.get_engine_str())

@@ -13,10 +13,12 @@ def get_from(theme_type,theme_name,theme_data):
     else:
        url = main_url1 + quote(theme_name)
 
-    content= requests.post(url, data=theme_data,headers=head).content
+    content = requests.post(url, data=theme_data,headers=head).content
 
     if content != b'fail':
         return  content
     else:
         return None
 
+if __name__ =="__main__":
+    print(quote("CrackBerry • By Linebeck.tdesktop-theme"))
