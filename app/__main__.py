@@ -357,5 +357,7 @@ if __name__ == "__main__":
     dispatcher.add_handler(MessageHandler(Filters.text, admin_handle))
     dispatcher.add_handler(MessageHandler(Filters.status_update.new_chat_members, on_join))
 
-    #dispatcher.add_error_handler(error_hander)
+    if os.environ.get('ENV') != 'dev':
+        dispatcher.add_error_handler(error_hander)
+
     updater.start_polling()
