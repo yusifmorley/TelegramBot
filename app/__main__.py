@@ -1,5 +1,6 @@
 import os
 
+import MySQLdb
 import PIL
 from PIL import Image
 import sqlalchemy.exc
@@ -110,10 +111,11 @@ def combin_theme(update: Update, context: CallbackContext):
 
 def error_hander(update: Update, context: CallbackContext):
     global exception_occurred ,mydb
+
     try:
+        logger.error(context.error)
         raise context.error
-    except Exception as e:
-        logger.error(f"An error occurred: {str(e)}")
+
     except mysql.connector.errors.OperationalError as e:  # 连接断开 重新链接
         logger.warning(f"数据库链接发生错误: {e}")
         mydb = get_config.getMysqlConfig()
@@ -127,6 +129,10 @@ def error_hander(update: Update, context: CallbackContext):
         exception_occurred = True
     except ConnectionError|NewConnectionError as e:
         logger.warning(f"网络错误: {e}")
+    except MySQLdb.DataError as e:
+        session.rollback()
+        logger.warning(f"数据插入错误: {e}")
+
     finally:
         if exception_occurred:
             # 异常发生时的清理操作
