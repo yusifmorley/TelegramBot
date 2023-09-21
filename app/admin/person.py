@@ -1,7 +1,11 @@
 import functools
 
+from telegram.ext import CallbackContext
+
 from app.admin import admin_function
-from telegram import Update,Chat
+from telegram import Update, Chat, ChatMember
+
+
 class MonitorPerson:
     def __init__(self, monitor_person_num):  # monitor_person为监听人个数
         self.monitor_person = monitor_person_num
@@ -12,8 +16,14 @@ class MonitorPerson:
             del  self.text_list[0]  #删除首个元素
         self.text_list.append(text)
 
-    def run(self, usr_id, user_name, text, update:Update, context,banword,logger):
+    def run(self, usr_id, user_name, text, update:Update, context: CallbackContext,banword,logger):
+
+        chat_memeber:ChatMember=context.bot.get_chat_member()
+
+        if not chat_memeber.can_delete_messages:
+           return
         #排除来自频道的消息
+
         if hasattr(update,"message") and hasattr(update.message,"chat"):
             if update.message.chat.type==Chat.CHANNEL:
                 return

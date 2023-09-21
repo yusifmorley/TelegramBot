@@ -26,6 +26,7 @@ from io import BytesIO
 from app.model.models import init_session, CreateThemeLogo, BanUserLogo
 from sqlalchemy.orm.session import Session
 from typing import IO
+
 my_id=get_myid()
 myapi = get_config.getTelegramId()  # 机器人api
 # public_IO:IO|None=None #供用户发送 document 形式的　图片用　
@@ -38,6 +39,7 @@ if os.environ.get('ENV')=='dev':
     myapi='6520279001:AAFlM8bPclv-dZvSERAbLihBNlMNVz2KRK0' #测试机器人
 
 updater = Updater(token=myapi, use_context=True,request_kwargs=request_kwargs)
+
 commands = [
     telegram.BotCommand('getrandomtheme', '随机获取一个安卓或桌面种类的主题链接(有时主题可能不适用于您的设备)'),
     telegram.BotCommand('getandroidtheme', '随机获取一个安卓主题文件'),
@@ -236,8 +238,6 @@ def base_photo(update: Update, context: CallbackContext,doucment_pt:str|None=Non
    existing_user.color_2 = None
    existing_user.color_3 = None
    existing_user.callback_id = call_message.message_id
-
-
    session.commit()
 
    # pic_file.download("src/Photo/"+file_id+".jpg")

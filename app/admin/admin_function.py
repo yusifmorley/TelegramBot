@@ -24,6 +24,7 @@ def writeBanWord(banwordObject, str):
 
 
 def blockperson(update:Update, context: CallbackContext,ban_word):
+
     session=init_session()
     existing_user: BanUserLogo | None = session.get(BanUserLogo, update.effective_user.id)
     if not existing_user:
