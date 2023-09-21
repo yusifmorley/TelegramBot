@@ -85,7 +85,6 @@ def admin_handle(update: Update, context: CallbackContext):  # 管理员
 
 @lisen
 def get_ran_theme(update: Update, context: CallbackContext):
-   # context.bot.delete_message(message_id=update.effective_message.message_id, chat_id=update.effective_chat.id)
     path = get_radom_link.get_random_theme()
 
     context.bot.send_message(chat_id=update.effective_chat.id, text=path.rstrip("\n"))
@@ -108,12 +107,14 @@ def write_ban_word(update: Update, context: CallbackContext):
 def combin_theme(update: Update, context: CallbackContext):
     context.bot.send_message(chat_id=update.effective_chat.id,
                              text="您不是管理员！\n" +strinfo)
-
+#错误处理
 def error_hander(update: Update, context: CallbackContext):
     global exception_occurred ,mydb
 
     try:
+
         logger.error(context.error)
+        logger.error(update)
         raise context.error
 
     except mysql.connector.errors.OperationalError as e:  # 连接断开 重新链接
@@ -136,7 +137,8 @@ def error_hander(update: Update, context: CallbackContext):
     finally:
         if exception_occurred:
             # 异常发生时的清理操作
-            context.bot.send_message(chat_id=my_id, text=f"出错了 {context.error}")
+            context.bot.send_message(chat_id=my_id, text=f"出错了 {context.error},\n{update}")
+
             exception_occurred=False
 
 @lisen
