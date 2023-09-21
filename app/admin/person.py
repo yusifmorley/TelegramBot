@@ -14,8 +14,9 @@ class MonitorPerson:
 
     def run(self, usr_id, user_name, text, update:Update, context,banword,logger):
         #排除来自频道的消息
-        if update.message.chat.type==Chat.CHANNEL:
-            return
+        if hasattr(update,"message") and hasattr(update.message,"chat"):
+            if update.message.chat.type==Chat.CHANNEL:
+                return
 
         #对@进行特殊处理
         if '@' in text and "/" not in text:
