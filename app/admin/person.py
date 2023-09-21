@@ -17,8 +17,13 @@ class MonitorPerson:
         self.text_list.append(text)
 
     def run(self, usr_id, user_name, text, update:Update, context: CallbackContext,banword,logger):
+        #机器人id
+        bot_user_id = context.bot.get_me().id
 
-        chat_memeber:ChatMember=context.bot.get_chat_member()
+        # 群组的 Chat ID
+        chat_id = update.message.chat_id
+
+        chat_memeber:ChatMember=context.bot.get_chat_member(chat_id, bot_user_id)
 
         if not chat_memeber.can_delete_messages:
            return
