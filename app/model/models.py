@@ -41,7 +41,7 @@ class CreateThemeLogo(Base):
 class UserUseRecord(Base):
     __tablename__ = 'user_use_record'
 
-    uid = Column(Integer, primary_key=True, nullable=False, comment='用户id')
+    uid = Column(BigInteger, primary_key=True, nullable=False, comment='用户id')
     date = Column(Date, primary_key=True, nullable=False, comment='日期')
     count_record = Column(Integer, comment='使用次数')
 
