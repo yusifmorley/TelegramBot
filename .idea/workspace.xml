@@ -4,9 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ca79680f-c54d-4792-8fc8-f23ed4ec4965" name="Changes" comment="优化错误处理">
+    <list default="true" id="ca79680f-c54d-4792-8fc8-f23ed4ec4965" name="Changes" comment="优化机器">
+      <change afterPath="$PROJECT_DIR$/src/uml/SCreateTheme.puml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/uml/myS.puml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/admin/person.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/admin/person.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -17,6 +18,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Python Script" />
+        <option value="UML Sequence" />
       </list>
     </option>
   </component>
@@ -44,6 +46,7 @@
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
     &quot;ASKED_MARK_IGNORED_FILES_AS_EXCLUDED&quot;: &quot;true&quot;,
+    &quot;DefaultPlantUmlFileTemplate&quot;: &quot;UML Sequence&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
@@ -57,7 +60,7 @@
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
     &quot;run.code.analysis.last.selected.profile&quot;: &quot;aDefault&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;org.jetbrains.plugins.github.ui.GithubSettingsConfigurable&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
   &quot;keyToStringList&quot;: {
@@ -373,7 +376,19 @@
       <workItem from="1695172744404" duration="5122000" />
       <workItem from="1695262230044" duration="8567000" />
       <workItem from="1695274175608" duration="3689000" />
-      <workItem from="1695297911341" duration="1218000" />
+      <workItem from="1695297911341" duration="1356000" />
+      <workItem from="1695383664097" duration="1055000" />
+      <workItem from="1695444221005" duration="59000" />
+      <workItem from="1695444287457" duration="4267000" />
+      <workItem from="1695475583635" duration="595000" />
+      <workItem from="1695539863456" duration="261000" />
+      <workItem from="1695544981188" duration="1219000" />
+      <workItem from="1695553291725" duration="138000" />
+      <workItem from="1695553576646" duration="881000" />
+      <workItem from="1695554637106" duration="1234000" />
+      <workItem from="1695555889259" duration="883000" />
+      <workItem from="1695610433306" duration="12286000" />
+      <workItem from="1695640035877" duration="1586000" />
     </task>
     <task id="LOCAL-00015" summary="ok">
       <created>1681708485862</created>
@@ -718,7 +733,7 @@
       <option name="project" value="LOCAL" />
       <updated>1691742284559</updated>
     </task>
-    <option name="localTasksCounter" value="99" />
+    <option name="localTasksCounter" value="100" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -739,7 +754,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="ok" />
     <MESSAGE value="管理" />
     <MESSAGE value="管理功能" />
     <MESSAGE value="error_handler" />
@@ -764,7 +778,8 @@
     <MESSAGE value="错误处理" />
     <MESSAGE value="优化AttributeError" />
     <MESSAGE value="优化错误处理" />
-    <option name="LAST_COMMIT_MESSAGE" value="优化错误处理" />
+    <MESSAGE value="优化机器" />
+    <option name="LAST_COMMIT_MESSAGE" value="优化机器" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -790,31 +805,6 @@
           <option name="timeStamp" value="4" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/app/admin/admin_function.py</url>
-          <line>28</line>
-          <option name="timeStamp" value="5" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/app/admin/admin_function.py</url>
-          <line>30</line>
-          <option name="timeStamp" value="6" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/app/admin/admin_function.py</url>
-          <line>33</line>
-          <option name="timeStamp" value="7" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/app/admin/admin_function.py</url>
-          <line>35</line>
-          <option name="timeStamp" value="8" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/app/admin/admin_function.py</url>
-          <line>36</line>
-          <option name="timeStamp" value="9" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/app/admin/person.py</url>
           <line>36</line>
           <option name="timeStamp" value="10" />
@@ -833,7 +823,7 @@
     <SUITE FILE_PATH="coverage/TelegramBot$get_android_theme.coverage" NAME="get_android_theme Coverage Results" MODIFIED="1687843096639" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/app/theme" />
     <SUITE FILE_PATH="coverage/TelegramBot$app.coverage" NAME="dev Coverage Results" MODIFIED="1691742238470" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/TelegramBot$get_preview.coverage" NAME="get_preview 覆盖结果" MODIFIED="1694528142791" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/app/util" />
-    <SUITE FILE_PATH="coverage/TelegramBot$dev.coverage" NAME="dev 覆盖结果" MODIFIED="1695299132639" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/TelegramBot$dev.coverage" NAME="dev 覆盖结果" MODIFIED="1695640041692" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/TelegramBot$__init__.coverage" NAME="__init__ Coverage Results" MODIFIED="1691740526349" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/app" />
     <SUITE FILE_PATH="coverage/TelegramBot$get_radom_theme__1_.coverage" NAME="get_radom_theme (1) Coverage Results" MODIFIED="1687842640479" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/app/theme" />
     <SUITE FILE_PATH="coverage/TelegramBot$create_atheme.coverage" NAME="create_atheme Coverage Results" MODIFIED="1693475668786" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/app/util" />

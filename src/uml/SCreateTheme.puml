@@ -1,0 +1,89 @@
+#相对于流程图 时序图更加具体
+@startuml
+title create_attheme_base_pic 命令解析
+participant User
+participant bot
+participant Database
+participant node_theme_system
+
+
+User -> bot: 用户开始发送创建主题命令
+bot -> Database: 根据用户id查询创建主题的记录
+
+
+
+alt Database --> bot: 若数据库里存在记录
+
+bot -> bot: 将用户记录的existing_user.flag=1
+bot -> bot: 提交
+else 返回数据为空
+bot -> Database: 创建记录
+bot -> bot: 提交
+end
+bot -> User: 向用户发送消息: "请发送您的图片"
+
+newpage 图片解析
+User -> bot: 用户发送图片
+bot-> Database: 根据用户id查询创建主题的记录
+
+
+alt Database --> bot: 若数据库里存在记录
+
+bot -> bot:下载图片到src/Photo
+bot -> node_theme_system: 提交 http://127.0.0.1:3000/attheme
+node_theme_system -->bot :返回图片的 色彩数组 和 base64格式的 色彩预览图片
+bot->bot :依据色彩数组 生成键盘
+bot-->User :发送 预览图片和键盘
+bot ->Database: 更新图片地址
+else 返回数据为空 或者有数据 且flag为0
+bot ->bot :结束
+end
+
+newpage 键盘回调button_update函数
+User -> bot: 用户点击按钮
+
+activate bot
+bot -> Database: 获取会话信息
+bot -> bot: 获取回调查询信息
+bot -> bot: 获取更新消息信息
+bot -> bot: 获取现有用户信息
+
+alt 需要全部随机
+    bot -> bot: 解析颜色数组
+    bot -> bot: 删除键盘和色彩预览的回调消息
+    bot -> bot: 读取图像随机的色彩数组
+    bot -> node_theme_system: 创建主题数据
+    activate node_theme_system
+    node_theme_system -->bot: 返回图片数据
+    deactivate node_theme_system
+    bot --> User: 发送主题数据给用户
+    bot --> User: 发送消息给用户(结束标志)
+    bot -> bot: 将数据库里用户数据置flag为0
+    bot -> Database: 提交commit
+    bot -> bot: 结束函数
+else 用户已存在且消息匹配   一个用户对应一个回调id
+    bot -> bot: 检查颜色配置
+    alt 颜色1已设置
+        bot -> bot: 检查颜色2是否设置
+        alt 颜色2已设置
+            bot -> bot: 设置颜色3为查询数据
+            bot -> bot: 删除消息
+            bot -> bot: 读取图像数据
+            bot -> node_theme_system: 创建主题数据
+            bot --> User: 发送主题数据给用户
+            bot --> User: 发送消息给用户
+            bot -> bot: 置0用户flag
+        else 颜色2未设置
+            bot -> bot: 设置颜色2为查询数据
+            bot -> bot: 编辑消息标题
+        end
+    else 颜色1未设置
+        bot -> bot: 设置颜色1为查询数据
+        bot -> bot: 编辑回调信息的
+    end
+    bot -> Database: 向数据库提交commit
+end
+
+bot --> User: 操作结束
+deactivate bot
+@enduml
