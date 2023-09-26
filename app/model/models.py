@@ -46,6 +46,14 @@ class UserUseRecord(Base):
     count_record = Column(Integer, comment='使用次数')
 
 
+class User(Base):
+    __tablename__ = 'user'
+
+    uid = Column(BigInteger, primary_key=True, comment='用户id')
+    full_name = Column(String(255))
+    link = Column(String(255))
+    language_code = Column(String(255))
+
 engine = create_engine(get_config.get_engine_str())
 # 自动提交事务
 DBSession = sessionmaker(bind=engine)

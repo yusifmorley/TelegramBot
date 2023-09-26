@@ -5,7 +5,7 @@ import PIL
 from PIL import Image
 import sqlalchemy.exc
 import telegram
-from telegram import Update, Bot, File, InlineKeyboardButton, InlineKeyboardMarkup,Message,Chat
+from telegram import Update, Bot, File, InlineKeyboardButton, InlineKeyboardMarkup, Message, Chat, User
 from telegram.ext import Updater, ContextTypes, CallbackContext, CallbackQueryHandler, DispatcherHandlerStop
 import logging
 from telegram.ext import MessageHandler, Filters
@@ -305,9 +305,17 @@ def button_update(update: Update, context: CallbackContext):
 
 
 
-#所有文件
-def filter_private(update: Update, context: CallbackContext):
-    if update.effective_chat.type==Chat.PRIVATE:
+#过滤恶意用户
+def filter_user(update: Update, context: CallbackContext):
+        user:User= update.effective_user
+        existing_user: User | None = session.get(User, update.effective_user.id)
+        if not existing_user:
+            existing_user.id=user.id
+            existing_user.full_name=user.full_name
+            existing_user.link=user.link
+            existing_user.language_code=user.language_code
+        session.commit()
+
         existing_user: BanUserLogo | None = session.get(BanUserLogo, update.effective_user.id)
         if  existing_user:
             logger.warning("非法私聊用户,禁止使用机器人")
@@ -348,7 +356,7 @@ def start(update: Update, context: CallbackContext):
 
 if __name__ == "__main__":
 
-    dispatcher.add_handler(MessageHandler(Filters.all, filter_private),group=-1)
+    dispatcher.add_handler(MessageHandler(Filters.all, filter_user), group=-1)
 
     dispatcher.add_handler(MessageHandler(Filters.document,parse_document))
 
