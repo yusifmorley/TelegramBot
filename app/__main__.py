@@ -308,12 +308,25 @@ def button_update(update: Update, context: CallbackContext):
 
 #过滤恶意用户
 def filter_user(update: Update, context: CallbackContext):
+        #记录用户
         user:User= update.effective_user
-        existing_user: app.model.models.User | None = session.get(app.model.models.User, update.effective_user.id)
-        if not existing_user:
+        existing_user_log: app.model.models.User | None = session.get(app.model.models.User, update.effective_user.id)
+        #如果不存在
+        if not existing_user_log:
             new_user=app.model.models.User(uid=user.id,full_name=user.full_name,link=user.link,language_code=user.language_code)
             session.add(new_user)
+
+        #如果和数据里不一样
+        if existing_user_log:
+          if user.full_name !=existing_user_log.full_name:
+             existing_user_log.full_name=user.full_name
+
+          if user.link != existing_user_log.link:
+              existing_user_log.link = user.link
+
         session.commit()
+
+        #过滤用户
         existing_user: BanUserLogo | None = session.get(BanUserLogo, update.effective_user.id)
         if  existing_user:
             logger.warning("非法私聊用户,禁止使用机器人")
