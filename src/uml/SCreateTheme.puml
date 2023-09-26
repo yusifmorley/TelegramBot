@@ -66,20 +66,21 @@ else 用户已存在且消息匹配   一个用户对应一个回调id
     alt 颜色1已设置
         bot -> bot: 检查颜色2是否设置
         alt 颜色2已设置
-            bot -> bot: 设置颜色3为查询数据
+            bot -> Database: 设置颜色3为查询数据
             bot -> bot: 删除消息
             bot -> bot: 读取图像数据
-            bot -> node_theme_system: 创建主题数据
+            bot -> node_theme_system:http://127.0.0.1:3000/attheme-create 创建主题数据
+            node_theme_system -->bot :返回主题数据
             bot --> User: 发送主题数据给用户
             bot --> User: 发送消息给用户
-            bot -> bot: 置0用户flag
+            bot -> Database: 置0用户flag
         else 颜色2未设置
-            bot -> bot: 设置颜色2为查询数据
+            bot -> Database: 设置颜色2为查询数据
             bot -> bot: 编辑消息标题
         end
     else 颜色1未设置
-        bot -> bot: 设置颜色1为查询数据
-        bot -> bot: 编辑回调信息的
+        bot -> Database: 设置颜色1为查询数据
+        bot -> bot: 编辑回调信息的标题
     end
     bot -> Database: 向数据库提交commit
 end

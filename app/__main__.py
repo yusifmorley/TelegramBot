@@ -21,7 +21,7 @@ from app.decorate.listen import lisen
 from app.theme import get_radom_link, get_android, get_desktop
 from app.admin import admin_function, ban_word
 from  app.theme import get_ios
-from app.util.create_atheme import get_attheme_color_pic,get_kyb,get_attheme
+from app.util.create_atheme import get_attheme_color_pic, get_kyb, get_attheme, get_transparent_ky
 from io import BytesIO
 from app.model.models import init_session, CreateThemeLogo, BanUserLogo
 from sqlalchemy.orm.session import Session
@@ -243,60 +243,67 @@ def base_photo(update: Update, context: CallbackContext,doucment_pt:str|None=Non
    # pic_file.download("src/Photo/"+file_id+".jpg")
 #解决 颜色三个状态
 def button_update(update: Update, context: CallbackContext):
+    data=None
     color_arr:list|None=None
     query = update.callback_query
-
     user_id = update.effective_user.id
     original_reply_markup = query.message.reply_markup
     same_primary_key = user_id
     existing_user:CreateThemeLogo|None = session.get(CreateThemeLogo,same_primary_key)
+
+    if not existing_user or  query.message.message_id != existing_user.callback_id:
+        query.answer("此键盘不属于你，点击无效呢！")
+        return
+
+    if existing_user.color_3:
+        # 1 删除call back
+        query.message.delete()
+        # 2 创建 主题 发送主题
+        picp = "src/Photo/" + str(user_id) + ".png"
+        fp = open(picp, "rb")
+        by = fp.read()
+        fp.close()
+        lis = [existing_user.color_1, existing_user.color_2, existing_user.color_3]
+
+        if query.data == "off":
+            data = get_attheme(by, lis)
+        elif query.data == "tran":
+            data = get_attheme(by, lis, True)
+
+        usr_file = str(user_id) + ".attheme"
+        context.bot.send_document(chat_id=update.effective_chat.id, document=data, filename=usr_file)
+        context.bot.send_message(chat_id=update.effective_chat.id, text="这是您的主题文件，亲～")
+        existing_user.flag = 0  # 置0
+        session.commit()
+        return
     #如果是全部随机
     if len(query.data)>15:
        color_arr= query.data.split(",")
-       query.message.delete()
-       # 2 创建 主题 发送主题
-       picp = "src/Photo/" + str(user_id) + ".png"
-       fp = open(picp, "rb")
-       by = fp.read()
-       fp.close()
-       lis =color_arr
-       data = get_attheme(by, lis)
-       usr_file = str(user_id) + ".attheme"
-       context.bot.send_document(chat_id=update.effective_chat.id, document=data, filename=usr_file)
-       context.bot.send_message(chat_id=update.effective_chat.id, text="这是您的主题文件，亲～")
-       existing_user.flag = 0  # 置0
+       existing_user.color_1=color_arr[0]
+       existing_user.color_2=color_arr[1]
+       existing_user.color_3=color_arr[2]
+       reply_markup = InlineKeyboardMarkup(get_transparent_ky())
+       query.edit_message_caption(caption="嗯嗯！您可以继续选择", reply_markup=reply_markup)
        session.commit()
        return
 
-    if existing_user and query.message.message_id == existing_user.callback_id:
-       if existing_user.color_1:
-           if existing_user.color_2:
-               existing_user.color_3=query.data
+    if existing_user.color_1:
+        if existing_user.color_2:
+            if not existing_user.color_3:
+                existing_user.color_3 = query.data
+                reply_markup = InlineKeyboardMarkup(get_transparent_ky())
+                query.edit_message_caption(caption="嗯嗯！您可以继续选择", reply_markup=reply_markup)
+        else:
+            existing_user.color_2=query.data
+            query.edit_message_caption(caption="好的！请设置 次要 字体颜色",reply_markup=original_reply_markup)
 
-               # 1 删除call back
-               query.message.delete()
-               # 2 创建 主题 发送主题
-               picp="src/Photo/"+str(user_id)+".png"
-               fp=open(picp,"rb")
-               by=fp.read()
-               fp.close()
-               lis= [existing_user.color_1, existing_user.color_2, existing_user.color_3]
-               data= get_attheme(by,lis)
-               usr_file=str(user_id)+".attheme"
-               context.bot.send_document(chat_id=update.effective_chat.id, document=data, filename=usr_file)
-               context.bot.send_message(chat_id=update.effective_chat.id, text="这是您的主题文件，亲～")
-               existing_user.flag=0 #置0
-           else:
-               existing_user.color_2=query.data
-               query.edit_message_caption(caption="好的！请设置 次要 字体颜色",reply_markup=original_reply_markup)
-
-       else:
-           existing_user.color_1=query.data
-           query.edit_message_caption(caption="嗯！请设置主要字体颜色",reply_markup=original_reply_markup)
-
-       session.commit()
     else:
-        query.answer("此键盘不属于你，点击无效呢！")
+        existing_user.color_1=query.data
+        query.edit_message_caption(caption="嗯！请设置主要字体颜色",reply_markup=original_reply_markup)
+
+    session.commit()
+
+
 
 #所有文件
 def filter_private(update: Update, context: CallbackContext):

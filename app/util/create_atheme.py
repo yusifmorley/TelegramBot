@@ -33,7 +33,8 @@ def get_attheme_color_pic(byte_arr:bytes):
         return None
 
 
-def get_attheme(pic_byte: bytes,color_list:list):
+def get_attheme(pic_byte: bytes,color_list:list,flag=False):
+    url=url1
     head = {
         'Content-Type': 'application/json'
     }
@@ -42,7 +43,11 @@ def get_attheme(pic_byte: bytes,color_list:list):
     picObj={'picb': picb, 'colors': color_list}
     # content = requests.post(url1, data=picObj,headers=head).content
 
-    content = requests.post(url1, json=ast.literal_eval(str(picObj)), headers=head).content
+    #如果为真 就是透明主题
+    if flag:
+        url=url1+"/tran"
+
+    content = requests.post(url, json=ast.literal_eval(str(picObj)), headers=head).content
     if content != b'fail':
         return content  # 返回内容
     else:
@@ -96,7 +101,17 @@ def get_kyb(arr:list[str]):
     else:
         return None
 
+#获取透明键盘
+def get_transparent_ky():
+    keyboard = [
+        [
+            InlineKeyboardButton("结束编辑", callback_data="off"),
+            InlineKeyboardButton("透明主题", callback_data='tran'),
 
+        ]
+
+    ]
+    return keyboard
 
 
 
