@@ -1,4 +1,5 @@
 import os
+from logging.handlers import TimedRotatingFileHandler
 
 import MySQLdb
 import PIL
@@ -40,7 +41,6 @@ if os.environ.get('ENV')=='dev':
     myapi='6520279001:AAFlM8bPclv-dZvSERAbLihBNlMNVz2KRK0' #测试机器人
 
 updater = Updater(token=myapi, use_context=True,request_kwargs=request_kwargs)
-
 commands = [
     telegram.BotCommand('getrandomtheme', '随机获取一个安卓或桌面种类的主题链接(有时主题可能不适用于您的设备)'),
     telegram.BotCommand('getandroidtheme', '随机获取一个安卓主题文件'),
@@ -49,24 +49,29 @@ commands = [
     telegram.BotCommand('create_attheme_base_pic', ' 基于图片创建attheme主题')
 
 ]
-
-
 bot:Bot=updater.bot
 bot.set_my_commands(commands)
-
 dispatcher = updater.dispatcher
-logging.basicConfig(filename="log/mylog.txt", format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+
+#日志配置
+logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                     level=logging.INFO)  # 日志
 logger = logging.getLogger(__name__)
+handler =TimedRotatingFileHandler('log/my_log.log', when='midnight', interval=1, backupCount=7)
+logger.addHandler(handler)
+
 mydb = get_config.getMysqlConfig()
 #初始化数据库
 mysqlop.initdb(mydb)
+
 #获取 banword 对象
 BanWordObject = ban_word.banword(mydb)
+
 #获取所有违禁词
 banword = admin_function.getbanword(BanWordObject)
 
-mon_per=MonitorPerson(10) #监控10个人
+#监控10个人
+mon_per=MonitorPerson(10)
 
 strinfo="您可以输入以下命令：\n"+\
         "/getrandomtheme , '随机获取一个随机种类的主题链接(有时主题可能不适用于您的设备)\n'"+\
