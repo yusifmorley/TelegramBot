@@ -334,7 +334,7 @@ def filter_user(update: Update, context: CallbackContext):
         #过滤用户
         existing_user: BanUserLogo | None = session.get(BanUserLogo, update.effective_user.id)
         if  existing_user:
-            logger.warning("非法私聊用户,禁止使用机器人")
+            logger.warning("非法私聊用户,禁止使用机器人: {}".format(update))
             raise DispatcherHandlerStop()
 
 def parse_document(update: Update, context: CallbackContext):
