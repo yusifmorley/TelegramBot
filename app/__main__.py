@@ -2,12 +2,11 @@ import os
 from logging.handlers import TimedRotatingFileHandler
 
 import MySQLdb
-import PIL
 from PIL import Image
 import sqlalchemy.exc
 import telegram
-from telegram import Update, Bot, File, InlineKeyboardButton, InlineKeyboardMarkup, Message, Chat, User
-from telegram.ext import Updater, ContextTypes, CallbackContext, CallbackQueryHandler, DispatcherHandlerStop
+from telegram import Update, Bot, File, InlineKeyboardMarkup, Message, User
+from telegram.ext import Updater, CallbackContext, CallbackQueryHandler, DispatcherHandlerStop
 import logging
 from telegram.ext import MessageHandler, Filters
 from telegram.ext import CommandHandler
@@ -15,7 +14,7 @@ import mysql.connector
 from urllib3.exceptions import NewConnectionError
 
 import app.model.models
-from app.admin.person import MonitorPerson
+from app.admin.person_monitor import MonitorPerson
 from app.config import get_config
 from app.config.get_config import get_myid
 from app.db import mysqlop
@@ -65,10 +64,10 @@ mydb = get_config.getMysqlConfig()
 mysqlop.initdb(mydb)
 
 #获取 banword 对象
-BanWordObject = ban_word.banword(mydb)
+BanWordObject = ban_word.BanWord(mydb)
 
 #获取所有违禁词
-banword = admin_function.getbanword(BanWordObject)
+ban_words = admin_function.get_ban_word(BanWordObject)
 
 #监控10个人
 mon_per=MonitorPerson(10)
@@ -81,7 +80,10 @@ strinfo="您可以输入以下命令：\n"+\
 exception_occurred = False
 # 合并主题和背景
 def on_join(update: Update, context: CallbackContext):
-    # print(update.effective_chat)
+    #如果没有权限
+    if app.admin.admin_function.bot_delete_permission(update,context)==0:
+        return
+
     context.bot.delete_message(chat_id=update.effective_chat.id, message_id=update.effective_message.message_id)
 
 
@@ -89,7 +91,7 @@ def admin_handle(update: Update, context: CallbackContext):  # 管理员
 
     text = update.effective_message.text
     user = update.effective_message.from_user
-    mon_per.run(user.id, user.first_name + " " + user.first_name, text, update, context,banword,logger)
+    mon_per.run(user.id, user.first_name + " " + user.first_name, text, update, context, ban_words, logger)
 
 @lisen
 def get_ran_theme(update: Update, context: CallbackContext):
@@ -104,9 +106,9 @@ def write_ban_word(update: Update, context: CallbackContext):
         context.bot.send_message(chat_id=update.effective_chat.id,
                                  text="您不是管理员！\n" +strinfo )
         return
-    global banword
-    admin_function.writeBanWord(BanWordObject, context.args[0])
-    banword = admin_function.getbanword(BanWordObject)
+    global ban_words
+    admin_function.write_ban_word(BanWordObject, context.args[0])
+    ban_words = admin_function.get_ban_word(BanWordObject)
     context.bot.send_message(chat_id=update.effective_chat.id,
                              text="成功添加新的违禁词：" + context.args[0])
     context.bot.delete_message(message_id=update.effective_message.message_id, chat_id=update.effective_chat.id)
@@ -116,7 +118,7 @@ def combin_theme(update: Update, context: CallbackContext):
     context.bot.send_message(chat_id=update.effective_chat.id,
                              text="您不是管理员！\n" +strinfo)
 #错误处理
-def error_hander(update: Update, context: CallbackContext):
+def error_handler(update: Update, context: CallbackContext):
     global exception_occurred ,mydb
 
     try:
@@ -313,6 +315,7 @@ def button_update(update: Update, context: CallbackContext):
 
 #过滤恶意用户
 def filter_user(update: Update, context: CallbackContext):
+
         #记录用户
         user:User= update.effective_user
         existing_user_log: app.model.models.User | None = session.get(app.model.models.User, update.effective_user.id)
@@ -397,6 +400,6 @@ if __name__ == "__main__":
     dispatcher.add_handler(MessageHandler(Filters.status_update.new_chat_members, on_join))
 
     if os.environ.get('ENV') != 'dev':
-        dispatcher.add_error_handler(error_hander)
+        dispatcher.add_error_handler(error_handler)
 
     updater.start_polling()

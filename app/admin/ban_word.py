@@ -1,4 +1,4 @@
-class banword:
+class BanWord:
     def __init__(self,mydb):
         self.mydb=mydb
         self.mycursor = mydb.cursor()

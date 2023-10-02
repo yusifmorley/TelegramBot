@@ -1,9 +1,9 @@
-import functools
-
 from telegram.ext import CallbackContext
 
 from app.admin import admin_function
-from telegram import Update, Chat, ChatMember
+from telegram import Update, Chat
+
+from app.admin.admin_function import bot_delete_permission, bot_restrict_permission
 
 
 class MonitorPerson:
@@ -17,39 +17,41 @@ class MonitorPerson:
         self.text_list.append(text)
 
     def run(self, usr_id, user_name, text, update:Update, context: CallbackContext,banword,logger):
-        #机器人id
-        bot_user_id = context.bot.get_me().id
+        # 是否有权限删除
+        if bot_delete_permission(update, context) == 0:
+            return
 
-        # 群组的 Chat ID
-        chat_id = update.message.chat_id
+        if bot_restrict_permission(update, context) == 0:
+            return
 
-        chat_memeber:ChatMember=context.bot.get_chat_member(chat_id, bot_user_id)
-
-        if not chat_memeber.can_delete_messages:
-           return
         #排除来自频道的消息
-
         if hasattr(update,"message") and hasattr(update.message,"chat"):
             if update.message.chat.type==Chat.CHANNEL:
                 return
 
         #对@进行特殊处理
         if '@' in text and "/" not in text:
-            admin_function.blockperson(update, context,"@")
+            admin_function.block_person(update, context, "@")
+
+        #对 t.me 链接特殊处理
+        if  't.me' in text:
+            if update.effective_chat.username in text:
+                return
+
+
         #防止误删来自频道的消息
         if  "addtheme" in text:
             return
 
-    #判断是否触违禁词
-        os = admin_function.deletetxt(banword, text)
+        #判断是否触违禁词
+        os = admin_function.delete_txt(banword, text)
         if os:  # 若存在违禁词
-            admin_function.blockperson(update, context,os)
+            admin_function.block_person(update, context, os)
             logger.info(os)  # 记录
-
             return
-    #判断text 是否有重复
+
+        #判断text 是否有重复
         if text in self.text_list:
-            admin_function.blockperson(update,context,"重复")
+            admin_function.block_person(update, context, "重复")
         else:
             self.__contain_list__(text)
-

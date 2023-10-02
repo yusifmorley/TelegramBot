@@ -4,7 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ca79680f-c54d-4792-8fc8-f23ed4ec4965" name="Changes" comment="日志优化" />
+    <list default="true" id="ca79680f-c54d-4792-8fc8-f23ed4ec4965" name="Changes" comment="日志优化">
+      <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/__main__.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/__main__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/admin/admin_function.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/admin/admin_function.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/admin/ban_word.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/admin/ban_word.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/admin/person.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/admin/person_monitor.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/decorate/listen.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/decorate/listen.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -20,6 +28,7 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RESET_MODE" value="HARD" />
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/venv/Lib/site-packages/telegram/ext/contexttypes.py" root0="SKIP_INSPECTION" />
@@ -389,6 +398,10 @@
       <workItem from="1695728634189" duration="5511000" />
       <workItem from="1695895617522" duration="183000" />
       <workItem from="1695950033961" duration="2323000" />
+      <workItem from="1696048932608" duration="744000" />
+      <workItem from="1696070971418" duration="641000" />
+      <workItem from="1696126246265" duration="5971000" />
+      <workItem from="1696240819713" duration="1396000" />
     </task>
     <task id="LOCAL-00015" summary="ok">
       <created>1681708485862</created>
@@ -733,7 +746,7 @@
       <option name="project" value="LOCAL" />
       <updated>1691742284559</updated>
     </task>
-    <option name="localTasksCounter" value="106" />
+    <option name="localTasksCounter" value="107" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -785,33 +798,43 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/app/admin/person.py</url>
-          <line>25</line>
+          <url>file://$PROJECT_DIR$/app/admin/person_monitor.py</url>
+          <line>28</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/app/admin/person.py</url>
-          <line>28</line>
+          <url>file://$PROJECT_DIR$/app/admin/person_monitor.py</url>
+          <line>27</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/app/admin/person.py</url>
-          <line>27</line>
+          <url>file://$PROJECT_DIR$/app/admin/person_monitor.py</url>
+          <line>37</line>
           <option name="timeStamp" value="3" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/app/admin/person.py</url>
-          <line>31</line>
+          <url>file://$PROJECT_DIR$/app/__main__.py</url>
+          <line>355</line>
           <option name="timeStamp" value="4" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/app/admin/person.py</url>
-          <line>36</line>
+          <url>file://$PROJECT_DIR$/app/__main__.py</url>
+          <line>358</line>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/app/__main__.py</url>
+          <line>343</line>
+          <option name="timeStamp" value="9" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/app/__main__.py</url>
+          <line>344</line>
           <option name="timeStamp" value="10" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/app/admin/person.py</url>
-          <line>37</line>
+          <url>file://$PROJECT_DIR$/app/admin/person_monitor.py</url>
+          <line>41</line>
           <option name="timeStamp" value="11" />
         </line-breakpoint>
       </breakpoints>
@@ -823,7 +846,7 @@
     <SUITE FILE_PATH="coverage/TelegramBot$get_android_theme.coverage" NAME="get_android_theme Coverage Results" MODIFIED="1687843096639" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/app/theme" />
     <SUITE FILE_PATH="coverage/TelegramBot$app.coverage" NAME="dev Coverage Results" MODIFIED="1691742238470" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/TelegramBot$get_preview.coverage" NAME="get_preview 覆盖结果" MODIFIED="1694528142791" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/app/util" />
-    <SUITE FILE_PATH="coverage/TelegramBot$dev.coverage" NAME="dev 覆盖结果" MODIFIED="1695734639646" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/TelegramBot$dev.coverage" NAME="dev 覆盖结果" MODIFIED="1696247178143" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/TelegramBot$__init__.coverage" NAME="__init__ Coverage Results" MODIFIED="1691740526349" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/app" />
     <SUITE FILE_PATH="coverage/TelegramBot$get_radom_theme__1_.coverage" NAME="get_radom_theme (1) Coverage Results" MODIFIED="1687842640479" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/app/theme" />
     <SUITE FILE_PATH="coverage/TelegramBot$create_atheme.coverage" NAME="create_atheme Coverage Results" MODIFIED="1693475668786" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/app/util" />
