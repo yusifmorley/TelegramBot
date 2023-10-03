@@ -17,12 +17,14 @@ class MonitorPerson:
         self.text_list.append(text)
 
     def run(self, usr_id, user_name, text, update:Update, context: CallbackContext,banword,logger):
+        #如果是组 或者超级组
+        if update.effective_message.chat.type ==Chat.GROUP or  update.effective_message.chat.type ==Chat.SUPERGROUP :
         # 是否有权限删除
-        if bot_delete_permission(update, context) == 0:
-            return
+            if bot_delete_permission(update, context) == 0:
+                return
 
-        if bot_restrict_permission(update, context) == 0:
-            return
+            if bot_restrict_permission(update, context) == 0:
+                return
 
         #排除来自频道的消息
         if hasattr(update,"message") and hasattr(update.message,"chat"):

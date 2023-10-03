@@ -12,26 +12,23 @@ with open("setup.cfg", "r") as f:
     if os.environ.get('ENV') == 'dev':
         MysqlData["password"] = 'root'
 
-    TelegramBotId = data["telegrambotid"]
-
 def get_engine_str():
     passw:str=MysqlData["password"]
     passw=passw.replace("@","%40")
-    return  "mysql://{}:{}@127.0.0.1/{}".format(MysqlData["user"],passw,"telegramdata")
+    return  "mysql://{}:{}@127.0.0.1/{}".format(MysqlData["user"],passw,data["database_name"])
 
 
-
-def getMysqlConfig():
+def get_mysql_config():
     mydb = mysql.connector.connect(
         host=MysqlData["host"],
         user=MysqlData["user"],
         password=MysqlData["password"],
-        database="telegramdata",
+        database=data["database_name"],
     )
     return mydb
 
 
-def getTelegramId():
-    return TelegramBotId
+def get_telegram_id():
+    return data["telegram_bot_id"]
 def get_myid():
     return data['myid']

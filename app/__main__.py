@@ -29,7 +29,7 @@ from sqlalchemy.orm.session import Session
 from typing import IO
 
 my_id=get_myid()
-myapi = get_config.getTelegramId()  # 机器人api
+myapi = get_config.get_telegram_id()  # 机器人api
 # public_IO:IO|None=None #供用户发送 document 形式的　图片用　
 session:Session=init_session()
 
@@ -59,7 +59,7 @@ logger = logging.getLogger(__name__)
 handler =TimedRotatingFileHandler('log/my_log.log', when='midnight', interval=1, backupCount=7)
 logger.addHandler(handler)
 
-mydb = get_config.getMysqlConfig()
+mydb = get_config.get_mysql_config()
 #初始化数据库
 mysqlop.initdb(mydb)
 
@@ -129,7 +129,7 @@ def error_handler(update: Update, context: CallbackContext):
 
     except mysql.connector.errors.OperationalError as e:  # 连接断开 重新链接
         logger.warning(f"数据库链接发生错误: {e}")
-        mydb = get_config.getMysqlConfig()
+        mydb = get_config.get_mysql_config()
         exception_occurred=True
     except sqlalchemy.exc.PendingRollbackError as e:
         session.rollback()  #回滚
@@ -311,35 +311,6 @@ def button_update(update: Update, context: CallbackContext):
 
     session.commit()
 
-
-
-#过滤恶意用户
-def filter_user(update: Update, context: CallbackContext):
-
-        #记录用户
-        user:User= update.effective_user
-        existing_user_log: app.model.models.User | None = session.get(app.model.models.User, update.effective_user.id)
-        #如果不存在
-        if not existing_user_log:
-            new_user=app.model.models.User(uid=user.id,full_name=user.full_name,link=user.link,language_code=user.language_code)
-            session.add(new_user)
-
-        #如果和数据里不一样
-        if existing_user_log:
-          if user.full_name !=existing_user_log.full_name:
-             existing_user_log.full_name=user.full_name
-
-          if user.link != existing_user_log.link:
-              existing_user_log.link = user.link
-
-        session.commit()
-
-        #过滤用户
-        existing_user: BanUserLogo | None = session.get(BanUserLogo, update.effective_user.id)
-        if  existing_user:
-            logger.warning("非法私聊用户,禁止使用机器人: {}".format(update))
-            raise DispatcherHandlerStop()
-
 def parse_document(update: Update, context: CallbackContext):
     same_primary_key = update.effective_user.id
     existing_user: CreateThemeLogo | None = session.get(CreateThemeLogo, same_primary_key)
@@ -375,7 +346,7 @@ def start(update: Update, context: CallbackContext):
 
 if __name__ == "__main__":
 
-    dispatcher.add_handler(MessageHandler(Filters.all, filter_user), group=-1)
+    # dispatcher.add_handler(MessageHandler(Filters.all, filter_user), group=-1)
 
     dispatcher.add_handler(MessageHandler(Filters.document,parse_document))
 

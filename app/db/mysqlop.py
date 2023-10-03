@@ -34,7 +34,7 @@ def initdb(mydb):
            """)
     # 违禁词 记录表
     mycursor.execute("""
-                 create table if not exists banword(
+                 create table if not exists ban_word(
                  id int primary key auto_increment,
                  word varchar(10) not null)""")
 

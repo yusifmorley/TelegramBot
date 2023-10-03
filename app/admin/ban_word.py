@@ -4,10 +4,10 @@ class BanWord:
         self.mycursor = mydb.cursor()
 
     def insert(self,text):
-        self.mycursor.execute("insert into banword(word) values ('{}')".format(text))
+        self.mycursor.execute("insert into ban_word(word) values ('{}')".format(text))
         self.mydb.commit()
 
     def select(self):
-        self.mycursor.execute("select word from banword ")
+        self.mycursor.execute("select word from ban_word ")
         return  self.mycursor.fetchall()
 
