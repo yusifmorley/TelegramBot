@@ -64,7 +64,12 @@ def lisen(fun):
                                                                 "date":date.today()
                                                                })
         if existing_user:
-            #存在
+            #如果存在
+            #封禁恶意用户
+            #封禁
+            if existing_user.count_record>80:
+                new_ban_user=BanUserLogo(uid=same_primary_key)
+                session.add(new_ban_user)
             existing_user.count_record=existing_user.count_record+1
         else:
             new_user=UserUseRecord(uid=same_primary_key,date=date.today(),count_record=1)

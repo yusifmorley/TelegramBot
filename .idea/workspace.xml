@@ -5,15 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ca79680f-c54d-4792-8fc8-f23ed4ec4965" name="Changes" comment="优化">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/__main__.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/__main__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/admin/ban_word.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/admin/ban_word.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/admin/person_monitor.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/admin/person_monitor.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/config/get_config.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/config/get_config.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/db/create_theme_logo_op.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/db/create_theme_logo_op.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/db/mysqlop.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/db/mysqlop.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/decorate/listen.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/decorate/listen.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/model/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/model/models.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -404,7 +396,7 @@
       <workItem from="1696070971418" duration="641000" />
       <workItem from="1696126246265" duration="5971000" />
       <workItem from="1696240819713" duration="2003000" />
-      <workItem from="1696289706038" duration="7607000" />
+      <workItem from="1696289706038" duration="7966000" />
     </task>
     <task id="LOCAL-00015" summary="ok">
       <created>1681708485862</created>
@@ -749,7 +741,7 @@
       <option name="project" value="LOCAL" />
       <updated>1691742284559</updated>
     </task>
-    <option name="localTasksCounter" value="108" />
+    <option name="localTasksCounter" value="109" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
