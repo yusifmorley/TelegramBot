@@ -9,8 +9,8 @@ from sqlalchemy import BigInteger, Column, Date
 from datetime import date
 session:Session=init_session()
 #用户使用监听
-def lisen(fun):
-    def addlisen(update:Update,context:ContextTypes.context):
+def listen(fun):
+    def add_listen(update:Update,context:ContextTypes.context):
 
         existing_user: BanUserLogo | None = session.get(BanUserLogo, update.effective_user.id)
         # 如果用户被封禁
@@ -77,7 +77,7 @@ def lisen(fun):
 
         session.commit()
 
-    return addlisen
+    return add_listen
 
 if __name__=="__main__":
     print("d")

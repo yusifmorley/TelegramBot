@@ -18,7 +18,7 @@ from app.admin.person_monitor import MonitorPerson
 from app.config import get_config
 from app.config.get_config import get_myid
 from app.db import mysqlop
-from app.decorate.listen import lisen
+from app.decorate.listen import listen
 from app.theme import get_radom_link, get_android, get_desktop
 from app.admin import admin_function, ban_word
 from  app.theme import get_ios
@@ -93,7 +93,7 @@ def admin_handle(update: Update, context: CallbackContext):  # 管理员
     user = update.effective_message.from_user
     mon_per.run(user.id, user.first_name + " " + user.first_name, text, update, context, ban_words, logger)
 
-@lisen
+@listen
 def get_ran_theme(update: Update, context: CallbackContext):
     path = get_radom_link.get_random_theme()
 
@@ -151,7 +151,7 @@ def error_handler(update: Update, context: CallbackContext):
 
             exception_occurred=False
 
-@lisen
+@listen
 def get_android_theme(update: Update, context: CallbackContext):
     path=get_android.get_android_theme()
     fd= open("src/Theme/android-theme/" + path, "rb")
@@ -163,7 +163,7 @@ def get_android_theme(update: Update, context: CallbackContext):
         context.bot.send_photo(chat_id=update.effective_chat.id,photo=preview_bytes)
     context.bot.send_message(chat_id=update.effective_chat.id, text="这是您的主题文件，亲～")
 
-@lisen
+@listen
 def get_desktop_theme(update: Update, context: CallbackContext):
     path = get_desktop.get_desktop_theme()
     fd = open("src/Theme/desktop-theme/" + path, "rb")
@@ -174,13 +174,13 @@ def get_desktop_theme(update: Update, context: CallbackContext):
     if preview_bytes:
         context.bot.send_photo(chat_id=update.effective_chat.id, photo=preview_bytes)
     context.bot.send_message(chat_id=update.effective_chat.id, text="这是您的主题文件，亲～")
-@lisen
+@listen
 def get_ios_theme(update: Update, context: CallbackContext):
     path = get_ios.get_random_theme()
     context.bot.send_message(chat_id=update.effective_chat.id, text=path.rstrip("\n"))
     context.bot.send_message(chat_id=update.effective_chat.id, text="这是您的主题文件，亲～")
 
-@lisen
+@listen
 def create_attheme(update: Update, context: CallbackContext):
     same_primary_key = update.effective_user.id
     existing_user: CreateThemeLogo | None = session.get(CreateThemeLogo, same_primary_key)
@@ -195,7 +195,6 @@ def create_attheme(update: Update, context: CallbackContext):
 
 #用户发送图片
 def base_photo(update: Update, context: CallbackContext,doucment_pt:str|None=None):
-   pic_file : File|None=None
    picbytes = None
    picp= None
    same_primary_key = update.effective_user.id
@@ -216,7 +215,7 @@ def base_photo(update: Update, context: CallbackContext,doucment_pt:str|None=Non
    else:
 
        pid= update.effective_message.photo[-1].file_id  #最后一个是完整图片
-       pic_file:File=bot.get_file(pid)
+       pic_file=bot.get_file(pid)
        user_id=update.effective_user.id
        #io重用
        bio=BytesIO()
@@ -251,8 +250,8 @@ def base_photo(update: Update, context: CallbackContext,doucment_pt:str|None=Non
    # pic_file.download("src/Photo/"+file_id+".jpg")
 #解决 颜色三个状态
 def button_update(update: Update, context: CallbackContext):
+
     data=None
-    color_arr:list|None=None
     query = update.callback_query
     user_id = update.effective_user.id
     original_reply_markup = query.message.reply_markup
@@ -348,7 +347,7 @@ if __name__ == "__main__":
 
     # dispatcher.add_handler(MessageHandler(Filters.all, filter_user), group=-1)
 
-    dispatcher.add_handler(MessageHandler(Filters.document,parse_document))
+    dispatcher.add_handler(MessageHandler(Filters.document.category("image"),parse_document))
 
         #基于图片创建 attheme主题
     dispatcher.add_handler(CommandHandler('create_attheme_base_pic', create_attheme))
