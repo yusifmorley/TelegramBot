@@ -22,7 +22,6 @@ def get_desktop_theme():   #获取随机主题链接
 
 def get_desktop_preview(theme_name, fd):
     res = get_preview.get_from("desktop", theme_name, fd)
-
     if res is not None:
 
         return res
