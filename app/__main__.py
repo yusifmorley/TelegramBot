@@ -322,6 +322,7 @@ def parse_document(update: Update, context: CallbackContext):
 
     document = update.message.document
     # 获取文档的文件名
+
     file_name:str = document.file_name
     if  '.jpg' not  in file_name and 'png' not  in file_name :
         return
