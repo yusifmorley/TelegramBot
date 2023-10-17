@@ -21,4 +21,4 @@ def get_from(theme_type,theme_name,theme_data):
         return None
 
 if __name__ =="__main__":
-    print(quote("CrackBerry • By Linebeck.tdesktop-theme"))
+    print(quote("CrackBerry • By Linebeck.tdesktop-theme_file"))

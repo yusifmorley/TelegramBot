@@ -28,7 +28,11 @@ class MonitorPerson:
 
         #排除来自频道的消息
         if hasattr(update,"message") and hasattr(update.message,"chat"):
-            if update.message.chat.type==Chat.CHANNEL:
+
+            if update.effective_message.chat.type == Chat.CHANNEL:
+                return
+
+            if update.message.sender_chat.type==Chat.CHANNEL or update.message.forward_from_chat.type==Chat.CHANNEL:
                 return
 
         #对@进行特殊处理

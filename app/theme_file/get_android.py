@@ -12,6 +12,7 @@ def get_android_theme():   #获取随机主题链接
      #每一次都随即打乱
     if len(set_android) ==0:
         init_android()
+
     global current
     current=set_android.pop()
     return current

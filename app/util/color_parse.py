@@ -1,3 +1,4 @@
+
 def parse_hex(hex_str):
     return int(hex_str, 16)
 
