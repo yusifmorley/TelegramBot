@@ -50,7 +50,6 @@ commands = [
     telegram.BotCommand('create_attheme_base_pic', ' 基于图片创建attheme主题'),
     telegram.BotCommand('create_tdesktop_base_pic',
                         '基于图片创建 tdesktop 主题')
-
 ]
 bot:Bot=updater.bot
 bot.set_my_commands(commands)
@@ -313,8 +312,6 @@ def parse_document(update: Update, context: CallbackContext):
 def start(update: Update, context: CallbackContext):
     context.bot.send_message(chat_id=update.effective_chat.id,text=strinfo)
     logger.info("可能为私聊 {}".format(str(update)))
-
-#创建桌面主题标记  5 6 7
 
 if __name__ == "__main__":
 

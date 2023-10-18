@@ -31,7 +31,7 @@ class MonitorPerson:
 
             if update.effective_message.chat.type == Chat.CHANNEL:
                 return
-
+        if hasattr(update, "message") and hasattr(update.message, "sender_chat") and hasattr(update.message.sender_chat, "type"):
             if update.message.sender_chat.type==Chat.CHANNEL or update.message.forward_from_chat.type==Chat.CHANNEL:
                 return
 
