@@ -211,6 +211,7 @@ def create_tdesktop(update: Update, context: CallbackContext):
 
 #用户发送图片
 def base_photo(update: Update, context: CallbackContext,doucment_pt:str|None=None):
+   #只有图片
    picbytes = None
    picp= None
    same_primary_key = update.effective_user.id
@@ -282,10 +283,16 @@ def parse_document(update: Update, context: CallbackContext):
     same_primary_key = update.effective_user.id
     existing_user: CreateThemeLogo | None = session.get(CreateThemeLogo, same_primary_key)
 
+    #文档里带图片
+
     if not existing_user:
         return
 
     if existing_user and existing_user.flag == 0:
+        return
+
+    if not hasattr(update.message,"document"):
+        base_photo(update, context)
         return
 
     document = update.message.document
@@ -319,9 +326,11 @@ if __name__ == "__main__":
 
     dispatcher.add_handler(MessageHandler(Filters.document.category("image"),parse_document))
 
+    dispatcher.add_handler(MessageHandler(Filters.photo, base_photo))
+
         #基于图片创建 attheme主题
     dispatcher.add_handler(CommandHandler('create_attheme_base_pic', create_attheme))
-    dispatcher.add_handler(MessageHandler(Filters.photo, base_photo))
+
     dispatcher.add_handler(CallbackQueryHandler(button_update))
        #基于图片创建 tdesktop主题
     dispatcher.add_handler(CommandHandler('create_tdesktop_base_pic', create_tdesktop))
