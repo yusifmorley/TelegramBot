@@ -1,4 +1,6 @@
 import os
+import traceback
+
 import MySQLdb
 from PIL import Image
 import sqlalchemy.exc
@@ -120,11 +122,7 @@ def combin_theme(update: Update, context: CallbackContext):
 #错误处理
 def error_handler(update: Update, context: CallbackContext):
     global exception_occurred ,mydb
-
     try:
-
-        logger.error(context.error)
-        logger.error(update)
         raise context.error
 
     except mysql.connector.errors.OperationalError as e:  # 连接断开 重新链接
@@ -147,7 +145,8 @@ def error_handler(update: Update, context: CallbackContext):
     finally:
         if exception_occurred:
             # 异常发生时的清理操作
-            context.bot.send_message(chat_id=my_id, text=f"出错了 {context.error},\n{update}")
+            info = traceback.format_exc()
+            context.bot.send_message(chat_id=my_id, text=f"出错了 {context.error},\n{update} \n{info}")
 
             exception_occurred=False
 

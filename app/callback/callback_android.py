@@ -45,7 +45,7 @@ def callback_android_handle(update: Update, context: CallbackContext):
        existing_user.color_1=color_arr[0]
        existing_user.color_2=color_arr[1]
        existing_user.color_3=color_arr[2]
-       reply_markup = InlineKeyboardMarkup(get_transparent_ky())
+       reply_markup = get_transparent_ky()
        query.edit_message_caption(caption="嗯嗯！您可以继续选择", reply_markup=reply_markup)
        session.commit()
        return
@@ -54,7 +54,7 @@ def callback_android_handle(update: Update, context: CallbackContext):
         if existing_user.color_2:
             if not existing_user.color_3:
                 existing_user.color_3 = query.data
-                reply_markup = InlineKeyboardMarkup(get_transparent_ky())
+                reply_markup = get_transparent_ky()
                 query.edit_message_caption(caption="嗯嗯！您可以继续选择", reply_markup=reply_markup)
         else:
             existing_user.color_2=query.data
