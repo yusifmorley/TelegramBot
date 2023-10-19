@@ -153,7 +153,7 @@ def error_handler(update: Update, context: CallbackContext):
 @listen
 def get_android_theme(update: Update, context: CallbackContext):
     path=get_android.get_android_theme()
-    fd= open("src/Theme/android-theme_file/" + path, "rb")
+    fd= open("src/Theme/android-theme/" + path, "rb")
     data=fd.read()
     fd.close()
     preview_bytes=get_android.get_android_preview(path,data)
@@ -165,7 +165,7 @@ def get_android_theme(update: Update, context: CallbackContext):
 @listen
 def get_desktop_theme(update: Update, context: CallbackContext):
     path = get_desktop.get_desktop_theme()
-    fd = open("src/Theme/desktop-theme_file/" + path, "rb")
+    fd = open("src/Theme/desktop-theme/" + path, "rb")
     data = fd.read()
     fd.close()
     preview_bytes = get_desktop.get_desktop_preview(path, data)

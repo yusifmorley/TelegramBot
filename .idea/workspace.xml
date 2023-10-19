@@ -6,8 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="ca79680f-c54d-4792-8fc8-f23ed4ec4965" name="Changes" comment="图片识别优化">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/__main__.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/__main__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/callback/callback_android.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/callback/callback_android.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -424,7 +422,8 @@
       <workItem from="1697443495498" duration="5122000" />
       <workItem from="1697522971405" duration="2812000" />
       <workItem from="1697534077023" duration="1130000" />
-      <workItem from="1697598917834" duration="3329000" />
+      <workItem from="1697598917834" duration="4277000" />
+      <workItem from="1697618172389" duration="1930000" />
     </task>
     <task id="LOCAL-00015" summary="ok">
       <created>1681708485862</created>
@@ -769,7 +768,7 @@
       <option name="project" value="LOCAL" />
       <updated>1691742284559</updated>
     </task>
-    <option name="localTasksCounter" value="119" />
+    <option name="localTasksCounter" value="120" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -824,22 +823,22 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/app/__main__.py</url>
-          <line>212</line>
+          <line>214</line>
           <option name="timeStamp" value="30" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/app/__main__.py</url>
-          <line>211</line>
+          <line>213</line>
           <option name="timeStamp" value="31" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/app/__main__.py</url>
-          <line>279</line>
+          <line>281</line>
           <option name="timeStamp" value="32" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/app/__main__.py</url>
-          <line>280</line>
+          <line>282</line>
           <option name="timeStamp" value="33" />
         </line-breakpoint>
       </breakpoints>
