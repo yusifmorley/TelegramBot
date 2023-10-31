@@ -41,7 +41,7 @@ request_kwargs={}
 if os.environ.get('ENV')=='dev':
     request_kwargs={
     'proxy_url': 'http://127.0.0.1:10810/'}
-    myapi='6520279001:AAFlM8bPclv-dZvSERAbLihBNlMNVz2KRK0' #测试机器人
+    myapi='6520279001:AAFlM8bPclv-dZvSERAbLihBNlMNVz2KRK0' #测试机器人id
 
 updater = Updater(token=myapi, use_context=True,request_kwargs=request_kwargs)
 commands = [
@@ -211,11 +211,10 @@ def create_tdesktop(update: Update, context: CallbackContext):
 #用户发送图片
 def base_photo(update: Update, context: CallbackContext,doucment_pt:str|None=None):
    #只有图片
-   picbytes = None
-   picp= None
+   pic_bytes = None
    same_primary_key = update.effective_user.id
-   existing_user: CreateThemeLogo | None = session.get(CreateThemeLogo, same_primary_key)
 
+   existing_user: CreateThemeLogo | None = session.get(CreateThemeLogo, same_primary_key)
    if not existing_user:
        return
 
@@ -225,9 +224,9 @@ def base_photo(update: Update, context: CallbackContext,doucment_pt:str|None=Non
    if update.message.document:
         if doucment_pt:
            fd= open(doucment_pt,'rb')
-           picbytes= fd.read()
+           pic_bytes= fd.read()
            fd.close()
-           picp=doucment_pt
+           existing_user.pic_path=doucment_pt
    else:
 
        pid= update.effective_message.photo[-1].file_id  #最后一个是完整图片
@@ -236,18 +235,20 @@ def base_photo(update: Update, context: CallbackContext,doucment_pt:str|None=Non
        #io重用
        bio=BytesIO()
        #写入图片
-       picp="src/Photo/"+str(user_id)+".png"
-       fp =open(picp,"wb")
+       pic_p="src/Photo/"+str(user_id)+".png"
+       fp =open(pic_p,"wb")
 
        pic_file.download(out=bio)
        fp.write(bio.getvalue())
        fp.close()
        #更新数据库
 
-       picbytes = bio.getvalue()
+       pic_bytes = bio.getvalue()
        bio.close()
 
-   content: list = get_attheme_color_pic(picbytes)
+       existing_user.pic_path = pic_p
+
+   content: list = get_attheme_color_pic(pic_bytes)
    #生成键盘
 
    if  existing_user.flag != 4:
@@ -261,7 +262,7 @@ def base_photo(update: Update, context: CallbackContext,doucment_pt:str|None=Non
                                                           reply_markup=reply_markup)
 
    # 如果记录已存在，执行 变更 picpath
-   existing_user.pic_path=picp
+
    existing_user.callback_id = call_message.message_id
    session.commit()
 
@@ -304,7 +305,7 @@ def parse_document(update: Update, context: CallbackContext):
     try:
 
        file_obj:File= document.get_file()
-       file_path:str='src/Photo/'+document.file_name
+       file_path:str="src/Photo/"+str(update.effective_user.id)+".png"
        public_IO:IO= file_obj.download(file_path)
        Image.open(public_IO)
 
@@ -313,6 +314,7 @@ def parse_document(update: Update, context: CallbackContext):
        update.message.reply_text(f"您发送了非法文件")
        return
     update.message.reply_text("嗯嗯！这确实是一个图片")
+
     base_photo(update,context,file_path)
 
 def start(update: Update, context: CallbackContext):

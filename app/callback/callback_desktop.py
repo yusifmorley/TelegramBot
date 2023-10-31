@@ -5,6 +5,7 @@ from telegram.ext import CallbackContext
 from app.model.models import CreateThemeLogo, init_session
 from app.util.create_atheme import get_attheme, get_transparent_ky
 from app.util.create_desktop import get_tdektop
+import app.util.file_name_gen as f_n
 
 session:Session=init_session()
 def callback_desktop_handle(update: Update, context: CallbackContext):
@@ -32,7 +33,7 @@ def callback_desktop_handle(update: Update, context: CallbackContext):
 
         data = get_tdektop(by, lis)
 
-        usr_file = str(user_id) + ".tdesktop-theme"
+        usr_file = f_n.gen_name(user_id) + ".tdesktop-theme"
 
         context.bot.send_document(chat_id=update.effective_chat.id, document=data, filename=usr_file)
 
