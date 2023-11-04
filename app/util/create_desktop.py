@@ -23,30 +23,26 @@ def get_tdektop(pic_byte, color_list):
         return None
 
 def get_desktop_kyb(arr:list[str]):
-    autocolor:list=[]
+    autocolor: list = []
     autocolor1: list = []
     if len(arr) == 5:
         for x in arr:
-            if not is_light(parse_color(x[1:])): #如果有一个是暗色
+            if not is_light(parse_color(x[1:])):  # 如果有一个是暗色
                 autocolor.append(x)
-                autocolor.append('#FFFFFF')
                 autocolor.append('#FFFFFF')
                 break
         if len(autocolor) == 0:  # 全是亮色
             autocolor.append(arr[0])
             autocolor.append('#000000')
-            autocolor.append('#000000')
 
         for x in arr:
-            if  is_light(parse_color(x[1:])):  #如果有一个是亮色
+            if is_light(parse_color(x[1:])):  # 如果有一个是亮色
                 autocolor1.append(x)
-                autocolor1.append('#000000')
                 autocolor1.append('#000000')
                 break
 
         if len(autocolor1) == 0:  # 全是暗色
             autocolor1.append(arr[0])
-            autocolor1.append('#FFFFFF')
             autocolor1.append('#FFFFFF')
 
         keyboard = [
@@ -61,7 +57,9 @@ def get_desktop_kyb(arr:list[str]):
             [
                 InlineKeyboardButton("白", callback_data='#FFFFFF'),
                 InlineKeyboardButton("黑", callback_data='#000000'),
-                 ],
+                InlineKeyboardButton("随机暗色", callback_data=",".join(autocolor)),
+                InlineKeyboardButton("随机亮色", callback_data=",".join(autocolor1))
+            ],
         ]
         return InlineKeyboardMarkup(keyboard)
     else:

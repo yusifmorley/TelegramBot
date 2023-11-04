@@ -21,43 +21,47 @@ class MonitorPerson:
         if update.effective_message.chat.type ==Chat.GROUP or  update.effective_message.chat.type ==Chat.SUPERGROUP :
         # 是否有权限删除
             if bot_delete_permission(update, context) == 0:
-                return
+                return False
 
             if bot_restrict_permission(update, context) == 0:
-                return
+                return False
 
         #排除来自频道的消息
         if hasattr(update,"message") and hasattr(update.message,"chat"):
-
             if update.effective_message.chat.type == Chat.CHANNEL:
-                return
+                return False
+
         if hasattr(update, "message") and hasattr(update.message, "sender_chat") and hasattr(update.message.sender_chat, "type"):
             if update.message.sender_chat.type==Chat.CHANNEL or update.message.forward_from_chat.type==Chat.CHANNEL:
-                return
+                return False
 
         #对@进行特殊处理
         if '@' in text and "/" not in text:
             admin_function.block_person(update, context, "@")
+            return True
 
         #对 t.me 链接特殊处理
         if  't.me' in text:
             if update.effective_chat.username in text:
-                return
+                return False
 
 
         #防止误删来自频道的消息
         if  "addtheme" in text:
-            return
+            return False
 
         #判断是否触违禁词
         os = admin_function.delete_txt(banword, text)
         if os:  # 若存在违禁词
             admin_function.block_person(update, context, os)
             logger.info(os)  # 记录
-            return
+            return True
 
         #判断text 是否有重复
         if text in self.text_list:
             admin_function.block_person(update, context, "重复")
+            return True
+
         else:
             self.__contain_list__(text)
+            return False

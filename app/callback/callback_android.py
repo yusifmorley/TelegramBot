@@ -5,10 +5,10 @@ from telegram.ext import CallbackContext
 from app.model.models import CreateThemeLogo, init_session
 from app.util.create_atheme import get_attheme, get_transparent_ky
 import app.util.file_name_gen as f_n
-
+import app.util.get_time as g_t
 session:Session=init_session()
 def callback_android_handle(update: Update, context: CallbackContext):
-    data=None
+    data = None
     query = update.callback_query
     user_id = update.effective_user.id
     original_reply_markup = query.message.reply_markup
@@ -34,7 +34,7 @@ def callback_android_handle(update: Update, context: CallbackContext):
         elif query.data == "tran":
             data = get_attheme(by, lis, True)
 
-        usr_file =f_n.gen_name(user_id) + ".attheme"
+        usr_file =f_n.gen_name(g_t.get_now()) + ".attheme"
 
         context.bot.send_document(chat_id=update.effective_chat.id, document=data, filename=usr_file)
         context.bot.send_message(chat_id=update.effective_chat.id, text="这是您的主题文件，亲～")

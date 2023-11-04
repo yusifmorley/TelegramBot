@@ -213,6 +213,12 @@ def base_photo(update: Update, context: CallbackContext,doucment_pt:str|None=Non
    #只有图片
    pic_bytes = None
    same_primary_key = update.effective_user.id
+   if hasattr(update.message,"caption"):
+       text = update.message.caption
+       user = update.effective_user.id
+       boo= mon_per.run(user.id, user.first_name + " " + user.first_name, text, update, context, ban_words, logger)
+       if boo:
+           return
 
    existing_user: CreateThemeLogo | None = session.get(CreateThemeLogo, same_primary_key)
    if not existing_user:
@@ -228,7 +234,6 @@ def base_photo(update: Update, context: CallbackContext,doucment_pt:str|None=Non
            fd.close()
            existing_user.pic_path=doucment_pt
    else:
-
        pid= update.effective_message.photo[-1].file_id  #最后一个是完整图片
        pic_file=bot.get_file(pid)
        user_id=update.effective_user.id
