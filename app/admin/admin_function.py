@@ -1,9 +1,12 @@
 # 管理功能
 from telegram import ChatPermissions, ChatMember
+from telegram.error import BadRequest
 from telegram.ext import CallbackContext
-
+from app.logger.t_log import get_logger
 from app.model.models import init_session,BanUserLogo
 from telegram import Update
+
+log=get_logger()
 
 #是否存在违禁词
 def delete_txt(txt, str):
@@ -36,8 +39,12 @@ def block_person(update:Update, context: CallbackContext, ban_word):
                             ban_word=ban_word
                             ))
     session.commit()
-    context.bot.delete_message(message_id=update.effective_message.message_id, chat_id=update.effective_chat.id)
-    context.bot.restrict_chat_member(chat_id=update.effective_chat.id,
+    try:
+       context.bot.delete_message(message_id=update.effective_message.message_id, chat_id=update.effective_chat.id)
+    except BadRequest as br :
+        log.warn(br.message)
+    finally:
+        context.bot.restrict_chat_member(chat_id=update.effective_chat.id,
                                      user_id=update.effective_user.id,
                                      permissions=ChatPermissions(can_send_messages=False,
                                                                  can_send_media_messages=False))
