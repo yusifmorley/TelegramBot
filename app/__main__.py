@@ -215,10 +215,11 @@ def base_photo(update: Update, context: CallbackContext,doucment_pt:str|None=Non
    same_primary_key = update.effective_user.id
    if hasattr(update.message,"caption"):
        text = update.message.caption
-       user = update.effective_user
-       boo= mon_per.run(user.id, user.first_name + " " + user.first_name, text, update, context, ban_words, logger)
-       if boo:
-           return
+       if text:
+           user = update.effective_user
+           boo= mon_per.run(user.id, user.first_name + " " + user.first_name, text, update, context, ban_words, logger)
+           if boo:
+               return
 
    existing_user: CreateThemeLogo | None = session.get(CreateThemeLogo, same_primary_key)
    if not existing_user:
