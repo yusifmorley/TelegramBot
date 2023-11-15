@@ -145,18 +145,19 @@ def error_handler(update: Update, context: CallbackContext):
     except telegram.error.BadRequest as e:
         logger.warning(f"错误请求: {e}")
         exception_occurred = True
-    except ConnectionError|NewConnectionError as e:
+    except (ConnectionError, NewConnectionError) as e:
         logger.warning(f"网络错误: {e}")
     except MySQLdb.DataError as e:
         session.rollback()
         logger.warning(f"数据插入错误: {e}")
-
+    except Exception as e:
+        # 捕获其他未明确指定的异常类型
+        logger.error(f"未捕获的异常: {e}")
     finally:
         if exception_occurred:
             # 异常发生时的清理操作
             info = traceback.format_exc()
             context.bot.send_message(chat_id=my_id, text=f"出错了 {context.error},\n{update} \n{info}")
-
             exception_occurred=False
 
 @listen
