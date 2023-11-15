@@ -92,6 +92,15 @@ def on_join(update: Update, context: CallbackContext):
 def admin_handle(update: Update, context: CallbackContext):  # 管理员
 
     text = update.effective_message.text
+    if 'addtheme' in text:
+        theme_link = update.message.text
+        chat_id = update.message.chat_id
+        # 下载主题文件
+        bot = context.bot
+        theme_file = bot.get_file(theme_link)
+        # 发送主题文件给用户
+        bot.send_document(chat_id=chat_id, document=theme_file.file_id)
+        return
     user = update.effective_message.from_user
     mon_per.run(user.id, user.first_name + " " + user.first_name, text, update, context, ban_words, logger)
 
