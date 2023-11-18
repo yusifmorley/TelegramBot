@@ -32,7 +32,7 @@ class MonitorPerson:
                 if update.effective_message.chat.link=="https://t.me/moleydimu":
                   return False
 
-        if hasattr(update, "message") and hasattr(update.message, "sender_chat") and hasattr(update.message.sender_chat, "type"):
+        if hasattr(update, "message") and hasattr(update.message, "sender_chat") and hasattr(update.message.sender_chat, "type") and  hasattr(update.message.forward_from_chat, "type")  :
             if update.message.sender_chat.type==Chat.CHANNEL or update.message.forward_from_chat.type==Chat.CHANNEL:
                 return False
 

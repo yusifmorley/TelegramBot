@@ -148,6 +148,7 @@ def error_handler(update: Update, context: CallbackContext):
 
     except ConnectionError|NewConnectionError as e:
         logger.warning(f"网络错误: {e}")
+
     except MySQLdb.DataError as e:
         session.rollback()
         logger.warning(f"数据插入错误: {e}")
@@ -157,7 +158,6 @@ def error_handler(update: Update, context: CallbackContext):
             # 异常发生时的清理操作
             info = traceback.format_exc()
             context.bot.send_message(chat_id=my_id, text=f"出错了 {context.error},\n{update} \n{info}")
-
             exception_occurred=False
 
 @listen
