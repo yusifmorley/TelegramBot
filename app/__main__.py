@@ -146,7 +146,7 @@ def error_handler(update: Update, context: CallbackContext):
     except telegram.error.BadRequest as e:
         logger.warning(f"错误请求: {e}")
 
-    except ConnectionError|NewConnectionError as e:
+    except (ConnectionError,NewConnectionError) as e:
         logger.warning(f"网络错误: {e}")
 
     except MySQLdb.DataError as e:
