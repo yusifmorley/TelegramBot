@@ -132,19 +132,20 @@ def combin_theme(update: Update, context: CallbackContext):
 def error_handler(update: Update, context: CallbackContext):
     global exception_occurred ,mydb
     try:
+        exception_occurred = True
         raise context.error
 
     except mysql.connector.errors.OperationalError as e:  # 连接断开 重新链接
         logger.warning(f"数据库链接发生错误: {e}")
         mydb = get_config.get_mysql_config()
-        exception_occurred=True
+
     except sqlalchemy.exc.PendingRollbackError as e:
         session.rollback()  #回滚
         logger.warning(f"数据库提交发生错误: {e}")
-        exception_occurred = True
+
     except telegram.error.BadRequest as e:
         logger.warning(f"错误请求: {e}")
-        exception_occurred = True
+
     except ConnectionError|NewConnectionError as e:
         logger.warning(f"网络错误: {e}")
     except MySQLdb.DataError as e:
