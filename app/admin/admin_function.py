@@ -53,16 +53,16 @@ def block_person(update:Update, context: CallbackContext, ban_word):
 def bot_delete_permission(update: Update, context: CallbackContext):
     # 机器人id
     bot_user_id = context.bot.get_me().id
-
+    if hasattr(update.message,"chat_id"):
     # 群组的 Chat ID
-    chat_id = update.message.chat_id
+        chat_id = update.message.chat_id
 
-    chat_memeber: ChatMember = context.bot.get_chat_member(chat_id, bot_user_id)
+        chat_memeber: ChatMember = context.bot.get_chat_member(chat_id, bot_user_id)
 
-    if not chat_memeber.can_delete_messages:
-        return 0
+        if  chat_memeber.can_delete_messages:
+            return 1
 
-    return 1
+    return 0
 #判断是否有封锁用户的权限
 def bot_restrict_permission(update: Update, context: CallbackContext):
     # 机器人id
