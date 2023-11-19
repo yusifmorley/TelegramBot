@@ -288,6 +288,11 @@ def button_update(update: Update, context: CallbackContext):
 
     same_primary_key = update.effective_user.id
     existing_user: CreateThemeLogo | None = session.get(CreateThemeLogo, same_primary_key)
+    query = update.callback_query
+    #检查
+    if not existing_user or  query.message.message_id != existing_user.callback_id:
+        query.answer("此键盘不属于你，点击无效呢！")
+        return
 
     if existing_user.flag == 1:
         callback_android.callback_android_handle(update, context)

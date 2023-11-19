@@ -17,10 +17,6 @@ def callback_desktop_handle(update: Update, context: CallbackContext):
     same_primary_key = user_id
     existing_user: CreateThemeLogo | None = session.get(CreateThemeLogo, same_primary_key)
 
-    if not existing_user or query.message.message_id != existing_user.callback_id:
-        query.answer("此键盘不属于你，点击无效呢！")
-        return
-
     #全部随机
     if len(query.data)>8:
        color_arr= query.data.split(",")
