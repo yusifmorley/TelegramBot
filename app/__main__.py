@@ -31,6 +31,9 @@ from typing import IO
 from app.util.create_desktop import get_desktop_kyb
 from app.util.db_op import clear
 
+my_github:str=(""
+               ""
+               "")
 
 my_id=get_myid()
 myapi = get_config.get_telegram_id()  # 机器人api
@@ -339,8 +342,37 @@ def parse_document(update: Update, context: CallbackContext):
     base_photo(update,context,file_path)
 
 def start(update: Update, context: CallbackContext):
-    context.bot.send_message(chat_id=update.effective_chat.id,text=strinfo)
-    logger.info("可能为私聊 {}".format(str(update)))
+    args = context.args
+    if args:
+        path=args[0]
+        if path.endswith("tdesktop-theme"):
+            fd = open("src/Theme/desktop-theme/" + path, "rb")
+            data = fd.read()
+            fd.close()
+            preview_bytes = get_desktop.get_desktop_preview(path, data)
+            context.bot.send_document(chat_id=update.effective_chat.id, document=data, filename=path)
+            if preview_bytes:
+                context.bot.send_photo(chat_id=update.effective_chat.id, photo=preview_bytes)
+            context.bot.send_message(chat_id=update.effective_chat.id, text="这是您的主题文件，亲～")
+
+        if path.endswith("attheme"):
+            path = get_android.get_android_theme()
+            fd = open("src/Theme/android-theme/" + path, "rb")
+            data = fd.read()
+            fd.close()
+            preview_bytes = get_android.get_android_preview(path, data)
+            context.bot.send_document(chat_id=update.effective_chat.id, document=data, filename=path)
+            if preview_bytes:
+                context.bot.send_photo(chat_id=update.effective_chat.id, photo=preview_bytes)
+            context.bot.send_message(chat_id=update.effective_chat.id, text="这是您的主题文件，亲～")
+
+        update.message.reply_text(f'Command arguments: {args}')
+
+
+    else:
+        #优化说明显示
+        context.bot.send_message(chat_id=update.effective_chat.id,text=strinfo)
+        logger.info("可能为私聊 {}".format(str(update)))
 
 if __name__ == "__main__":
 

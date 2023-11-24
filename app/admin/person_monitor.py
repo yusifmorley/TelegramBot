@@ -2,7 +2,7 @@ from telegram.ext import CallbackContext
 
 from app.admin import admin_function
 from telegram import Update, Chat
-
+from app.config.get_config import get_myid
 from app.admin.admin_function import bot_delete_permission, bot_restrict_permission
 
 
@@ -17,6 +17,9 @@ class MonitorPerson:
         self.text_list.append(text)
 
     def run(self, usr_id, user_name, text, update:Update, context: CallbackContext,banword,logger):
+        if usr_id==get_myid():
+            return  False
+
         #如果是组 或者超级组
         if update.effective_message.chat.type ==Chat.GROUP or  update.effective_message.chat.type ==Chat.SUPERGROUP :
         # 是否有权限删除
