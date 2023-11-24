@@ -17,16 +17,14 @@ desk_list = ['DarkTheme@themesbyAsif.tdesktop-theme',
              'Sponge Bob.tdesktop-theme',
              ]
 
-
-def print_subdirectories(directory_path=desk_dir_root):
+def sync_dp(directory_path=desk_dir_root):
     lis = os.listdir(directory_path)
     for x in desk_list:
+        filename = x
         x = x.replace(".tdesktop-theme", "")
         if x in lis:
             pass
         else:
-            filename = x
-            x = x.replace(".tdesktop-theme", "")
             target_dir = os.path.join(desk_dir_root, x)  # 当前目录
             os.makedirs(target_dir)
             # 复制文件

@@ -4,13 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ca79680f-c54d-4792-8fc8-f23ed4ec4965" name="Changes" comment="优化键盘逻辑">
-      <change afterPath="$PROJECT_DIR$/app/util/sync_public_attheme.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/util/sync_public_desk.py" afterDir="false" />
+    <list default="true" id="ca79680f-c54d-4792-8fc8-f23ed4ec4965" name="Changes" comment="生成公共目录">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/__main__.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/__main__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/admin/person_monitor.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/admin/person_monitor.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/test.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/util/sync_public_attheme.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/util/sync_public_attheme.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/util/sync_public_desk.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/util/sync_public_desk.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -458,7 +455,7 @@
       <workItem from="1700799532940" duration="297000" />
       <workItem from="1700802797329" duration="54000" />
       <workItem from="1700803172753" duration="96000" />
-      <workItem from="1700805493369" duration="913000" />
+      <workItem from="1700805493369" duration="2759000" />
     </task>
     <task id="LOCAL-00015" summary="ok">
       <created>1681708485862</created>
@@ -803,7 +800,7 @@
       <option name="project" value="LOCAL" />
       <updated>1691742284559</updated>
     </task>
-    <option name="localTasksCounter" value="134" />
+    <option name="localTasksCounter" value="135" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -826,7 +823,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="错误通知" />
     <MESSAGE value="排除来自频道的消息" />
     <MESSAGE value="命令优化" />
     <MESSAGE value="对document 形式的图片处理优化" />
@@ -851,7 +847,8 @@
     <MESSAGE value="优化异常" />
     <MESSAGE value="优化错误" />
     <MESSAGE value="优化键盘逻辑" />
-    <option name="LAST_COMMIT_MESSAGE" value="优化键盘逻辑" />
+    <MESSAGE value="生成公共目录" />
+    <option name="LAST_COMMIT_MESSAGE" value="生成公共目录" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/TelegramBot$test__1_.coverage" NAME="test (1) Coverage Results" MODIFIED="1684974249454" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/app" />

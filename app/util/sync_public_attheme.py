@@ -9,19 +9,16 @@ orgin_dir = "src/Theme/android-theme"
 desk_dir_root = 'src/myserver_bot_public/attheme'
 
 # 展示的主题列表
-attheme_list = [
-             ]
+attheme_list = ['']
 
-
-def print_subdirectories(directory_path=desk_dir_root):
+def sunc_ap(directory_path=desk_dir_root):
     lis = os.listdir(directory_path)
     for x in attheme_list:
+        filename = x
         x = x.replace(".attheme", "")
         if x in lis:
             pass
         else:
-            filename = x
-            x = x.replace(".attheme", "")
             target_dir = os.path.join(desk_dir_root, x)  # 当前目录
             os.makedirs(target_dir)
             # 复制文件
