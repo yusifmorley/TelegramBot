@@ -1,3 +1,4 @@
+import base64
 import os
 import traceback
 
@@ -30,6 +31,7 @@ from typing import IO
 
 from app.util.create_desktop import get_desktop_kyb
 from app.util.db_op import clear
+from app.util.sync_public_desk import sync_dp
 
 my_github:str=(""
                ""
@@ -344,29 +346,29 @@ def parse_document(update: Update, context: CallbackContext):
 def start(update: Update, context: CallbackContext):
     args = context.args
     if args:
-        path=args[0]
+        path = base64.b64decode(args[0]).decode()
         if path.endswith("tdesktop-theme"):
-            fd = open("src/Theme/desktop-theme/" + path, "rb")
-            data = fd.read()
-            fd.close()
-            preview_bytes = get_desktop.get_desktop_preview(path, data)
-            context.bot.send_document(chat_id=update.effective_chat.id, document=data, filename=path)
-            if preview_bytes:
-                context.bot.send_photo(chat_id=update.effective_chat.id, photo=preview_bytes)
-            context.bot.send_message(chat_id=update.effective_chat.id, text="这是您的主题文件，亲～")
+            with open("src/myserver_bot_public/desk/" + path, "rb") as fd:
+                data = fd.read()
+                ppath = path.replace("tdesktop-theme", "jpg")
+                with open("src/myserver_bot_public/desk/" +ppath, "rb") as pd: #图片加载
+                    preview_bytes = pd.read()
+                    context.bot.send_document(chat_id=update.effective_chat.id, document=data, filename=path)
+                    if preview_bytes:
+                        context.bot.send_photo(chat_id=update.effective_chat.id, photo=preview_bytes)
+                    context.bot.send_message(chat_id=update.effective_chat.id, text="这是您的主题文件，亲～")
 
         if path.endswith("attheme"):
-            path = get_android.get_android_theme()
-            fd = open("src/Theme/android-theme/" + path, "rb")
-            data = fd.read()
-            fd.close()
-            preview_bytes = get_android.get_android_preview(path, data)
-            context.bot.send_document(chat_id=update.effective_chat.id, document=data, filename=path)
-            if preview_bytes:
-                context.bot.send_photo(chat_id=update.effective_chat.id, photo=preview_bytes)
-            context.bot.send_message(chat_id=update.effective_chat.id, text="这是您的主题文件，亲～")
-
-        update.message.reply_text(f'Command arguments: {args}')
+            with open("src/myserver_bot_public/attheme/" + path, "rb") as fd:
+                data = fd.read()
+                ppath = path.replace("attheme", "jpg")
+                with open("src/myserver_bot_public/attheme/" + ppath, "rb") as pd:  # 图片加载
+                    preview_bytes = pd.read()
+                    context.bot.send_document(chat_id=update.effective_chat.id, document=data, filename=path)
+                    if preview_bytes:
+                        context.bot.send_photo(chat_id=update.effective_chat.id, photo=preview_bytes)
+                    context.bot.send_message(chat_id=update.effective_chat.id, text="这是您的主题文件，亲～")
+        # update.message.reply_text(f'Command arguments: {args}')
 
 
     else:
@@ -375,7 +377,7 @@ def start(update: Update, context: CallbackContext):
         logger.info("可能为私聊 {}".format(str(update)))
 
 if __name__ == "__main__":
-
+    sync_dp()
     # dispatcher.add_handler(MessageHandler(Filters.all, filter_user), group=-1)
 
     dispatcher.add_handler(MessageHandler(Filters.document.category("image"),parse_document))
