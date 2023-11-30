@@ -35,13 +35,16 @@ def sync_dp(directory_path=desk_dir_root):
             orgin_file = os.path.join(orgin_dir, filename)
             target_file = os.path.join(desk_dir_root, x, filename)
             target_preview_jpg = os.path.join(desk_dir_root, x, x + ".jpg")
-            shutil.copyfile(orgin_file, target_file)
             # 生成预览
             with open(orgin_file, "rb") as fd:
                 preview_bytes = get_from("desk", filename, fd.read())
-                with open(target_preview_jpg, "wb") as pf:
-                    pf.write(preview_bytes)
-            log.info("公共目录 %s 生成成功", filename)
+                if preview_bytes:
+                    shutil.copyfile(orgin_file, target_file)
+                    with open(target_preview_jpg, "wb") as pf:
+                        pf.write(preview_bytes)
+                    log.info("公共目录 %s 生成成功", filename)
+                else:
+                    log.warn("!!!!!!公共目录 %s 生成失败!!!!", filename)
     log.info("---公共目录完整---")
 
 

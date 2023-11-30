@@ -1,17 +1,26 @@
-from telegram import Update, Chat, User
-from telegram.ext import ContextTypes, DispatcherHandlerStop
+from telegram import Update, Chat, User, TelegramError
+from telegram.ext import ContextTypes, DispatcherHandlerStop, CallbackContext
 from sqlalchemy.orm.session import Session
-
 import app
 from app.admin.admin_function import bot_delete_permission, bot_restrict_permission
 from app.model.models import init_session, CreateThemeLogo, UserUseRecord, BanUserLogo, GroupInfo
 from sqlalchemy import BigInteger, Column, Date
 from datetime import date
+
 session:Session=init_session()
 #用户使用监听
 def listen(fun):
-    def add_listen(update:Update,context:ContextTypes.context):
+    def add_listen(update:Update,context: CallbackContext):
+        #检测用户是否关注了频道
+        #必须把机器人引入频道 赋予管理权限
+        try:
+          context.bot.getChatMember('@moleydimu',update.effective_user.id)
 
+        except TelegramError as te:
+
+            pass
+
+        #向数据库查询用户
         existing_user: BanUserLogo | None = session.get(BanUserLogo, update.effective_user.id)
         # 如果用户被封禁
         if existing_user:
