@@ -14,3 +14,5 @@ __pycache__
 !/src/ThemeLink/.gitkeep
 新功能.txt
 /app/stand_alone/
+*.attheme
+*.tdesktop-theme

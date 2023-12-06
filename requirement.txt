@@ -1,7 +1,0 @@
-imageio==2.19.2
-mysql-connector-python==8.0.29
-numpy==1.22.3
-Pillow==9.1.1
-pyjnius==1.4.1
-python-telegram-bot==13.11
-requests==2.27.1

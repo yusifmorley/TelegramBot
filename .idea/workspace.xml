@@ -5,13 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ca79680f-c54d-4792-8fc8-f23ed4ec4965" name="Changes" comment="优化">
-      <change afterPath="$PROJECT_DIR$/src/myserver_bot_public/attheme/Carbon_v1.3/Carbon_v1.3.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/myserver_bot_public/attheme/.gitkeep" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/myserver_bot_public/desk/.gitkeep" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/TelegramBot.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/TelegramBot.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/__main__.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/__main__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/util/file_name_gen.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/util/file_name_gen.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/util/get_time.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/util/get_time.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/theme_file/get_ios.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/theme_file/get_ios.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/theme_file/get_radom_link.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/theme_file/get_radom_link.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/util/sync_public_attheme.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/util/sync_public_attheme.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/util/sync_public_desk.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/util/sync_public_desk.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirement.txt" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,14 +67,14 @@
     "WebServerToolWindowFactoryState": "false",
     "git-widget-placeholder": "main",
     "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "F:/Project/pycharmProject/TelegramBot",
+    "last_opened_file_path": "F:/Project/pycharmProject/TelegramBot/src/myserver_bot_public/attheme",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "run.code.analysis.last.selected.profile": "aDefault",
-    "settings.editor.selected.configurable": "org.jetbrains.plugins.github.ui.GithubSettingsConfigurable",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable",
     "vue.rearranger.settings.migration": "true"
   },
   "keyToStringList": {
@@ -228,6 +233,14 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <list>
+      <item itemvalue="Python.dev" />
+      <item itemvalue="Python.__main__" />
+      <item itemvalue="Python.get_preview" />
+      <item itemvalue="Python.get_time" />
+      <item itemvalue="Python.listen" />
+      <item itemvalue="Python.stand_lone" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="Python.stand_lone" />
@@ -483,6 +496,13 @@
       <workItem from="1701765257564" duration="2934000" />
       <workItem from="1701861983797" duration="5000" />
       <workItem from="1701862722500" duration="632000" />
+      <workItem from="1701863375872" duration="585000" />
+      <workItem from="1701864252878" duration="377000" />
+      <workItem from="1701864640444" duration="493000" />
+      <workItem from="1701865146194" duration="211000" />
+      <workItem from="1701865366917" duration="193000" />
+      <workItem from="1701865596298" duration="1365000" />
+      <workItem from="1701866983414" duration="662000" />
     </task>
     <task id="LOCAL-00015" summary="ok">
       <created>1681708485862</created>
@@ -827,7 +847,7 @@
       <option name="project" value="LOCAL" />
       <updated>1691742284559</updated>
     </task>
-    <option name="localTasksCounter" value="138" />
+    <option name="localTasksCounter" value="139" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -894,8 +914,8 @@
     </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/TelegramBot$dev.coverage" NAME="dev 覆盖结果" MODIFIED="1701343745625" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/TelegramBot$listen.coverage" NAME="listen 覆盖结果" MODIFIED="1695191486858" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/app/decorate" />
+    <SUITE FILE_PATH="coverage/TelegramBot$dev.coverage" NAME="dev 覆盖结果" MODIFIED="1701867434559" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/TelegramBot$stand_lone.coverage" NAME="stand_lone 覆盖结果" MODIFIED="1700999054074" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/app/stand_alone" />
     <SUITE FILE_PATH="coverage/TelegramBot$test__1_.coverage" NAME="test (1) Coverage Results" MODIFIED="1684974249454" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/app" />
     <SUITE FILE_PATH="coverage/TelegramBot$create_atheme.coverage" NAME="create_atheme Coverage Results" MODIFIED="1693475668786" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/app/util" />

@@ -381,8 +381,6 @@ def start(update: Update, context: CallbackContext):
                         context.bot.send_photo(chat_id=update.effective_chat.id, photo=preview_bytes)
                     context.bot.send_message(chat_id=update.effective_chat.id, text="这是您的主题文件，亲～")
         # update.message.reply_text(f'Command arguments: {args}')
-
-
     else:
         # 优化说明显示
         context.bot.send_message(chat_id=update.effective_chat.id, text=strinfo)
@@ -390,6 +388,7 @@ def start(update: Update, context: CallbackContext):
 
 
 if __name__ == "__main__":
+    logger.info("运行本项目必须开启ThemeFactory")
     # 同步 桌面主题
     sync_dp()
     sunc_ap()

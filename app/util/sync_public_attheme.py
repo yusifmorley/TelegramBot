@@ -13,7 +13,8 @@ log = get_logger()
 attheme_list = ['Carbon_v1.3.attheme',
                 'Bright Green by @arsLan4k1390 (2).attheme',
                 'Patina on Mauve by @ThemerBot.attheme',
-                'pastae purbae (1).attheme'
+                'pastae purbae (1).attheme',
+                'Sy5XO by @CreateAtthemeBot.attheme'
                 ]
 
 
