@@ -42,7 +42,7 @@ def sync_dp(directory_path=desk_dir_root):
                     shutil.copyfile(orgin_file, target_file)
                     with open(target_preview_jpg, "wb") as pf:
                         pf.write(preview_bytes)
-                    log.info("公共目录 %s 生成成功", filename)
+                        log.info("公共目录 %s 生成成功", filename)
                 else:
                     log.warn("!!!!!!公共目录 %s 生成失败!!!!", filename)
     log.info("---公共目录完整---")

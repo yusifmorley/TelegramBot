@@ -1,5 +1,5 @@
 import datetime
 
-#获取当前时间
+#鑾峰彇褰撳墠鏃堕棿
 def get_now():
     return datetime.datetime.now()

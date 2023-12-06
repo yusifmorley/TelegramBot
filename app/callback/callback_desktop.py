@@ -8,7 +8,9 @@ from app.util.create_desktop import get_tdektop
 import app.util.file_name_gen as f_n
 import app.util.get_time as g_t
 
-session:Session=init_session()
+session: Session = init_session()
+
+
 def callback_desktop_handle(update: Update, context: CallbackContext):
     data = None
     query = update.callback_query
@@ -17,24 +19,24 @@ def callback_desktop_handle(update: Update, context: CallbackContext):
     same_primary_key = user_id
     existing_user: CreateThemeLogo | None = session.get(CreateThemeLogo, same_primary_key)
 
-    #全部随机
-    if len(query.data)>8:
-       color_arr= query.data.split(",")
-       query.message.delete()
-       # 2 创建 主题 发送主题
-       picp = "src/Photo/" + str(user_id) + ".png"
-       fp = open(picp, "rb")
-       by = fp.read()
-       fp.close()
-       data = get_tdektop(by, color_arr)
-       usr_file = f_n.gen_name(g_t.get_now()) + ".tdesktop-theme"
-       context.bot.send_document(chat_id=update.effective_chat.id, document=data, filename=usr_file)
-       context.bot.send_message(chat_id=update.effective_chat.id, text="这是您的主题文件，亲～")
-       existing_user.flag = 0  # 置0
-       session.commit()
-       return
+    # 全部随机
+    if len(query.data) > 8:
+        color_arr = query.data.split(",")
+        query.message.delete()
+        # 2 创建 主题 发送主题
+        picp = "src/Photo/" + str(user_id) + ".png"
+        fp = open(picp, "rb")
+        by = fp.read()
+        fp.close()
+        data = get_tdektop(by, color_arr)
+        usr_file = f_n.gen_name(g_t.get_now()) + ".tdesktop-theme"
+        context.bot.send_document(chat_id=update.effective_chat.id, document=data, filename=usr_file)
+        context.bot.send_message(chat_id=update.effective_chat.id, text="这是您的主题文件，亲～")
+        existing_user.flag = 0  # 置0
+        session.commit()
+        return
 
-    #表明 这是第二次
+    # 表明 这是第二次
     if existing_user.color_1:
         # 1 删除call back
         query.message.delete()

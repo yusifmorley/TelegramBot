@@ -4,12 +4,13 @@ import yaml
 from app.admin import ban_word
 from app.decorate.mysql_dr import mysql_w
 
+
 @mysql_w
 def initdb(mydb):
     mycursor = mydb.cursor()
     mycursor.execute("show tables;")
     if len(mycursor.fetchall()) < 3:
-        #创建 主题创建信息表
+        # 创建 主题创建信息表
         mycursor.execute(
             """create table if not exists  create_theme_logo( 
                     uid bigint not null, 
@@ -39,6 +40,3 @@ def initdb(mydb):
                  word varchar(10) not null)""")
 
     print("数据库表已创建")
-
-
-

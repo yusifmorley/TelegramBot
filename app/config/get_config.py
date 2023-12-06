@@ -12,10 +12,11 @@ with open("setup.cfg", "r") as f:
     if os.environ.get('ENV') == 'dev':
         MysqlData["password"] = 'root'
 
+
 def get_engine_str():
-    passw:str=MysqlData["password"]
-    passw=passw.replace("@","%40")
-    return  "mysql://{}:{}@127.0.0.1/{}".format(MysqlData["user"],passw,data["database_name"])
+    passw: str = MysqlData["password"]
+    passw = passw.replace("@", "%40")
+    return "mysql://{}:{}@127.0.0.1/{}".format(MysqlData["user"], passw, data["database_name"])
 
 
 def get_mysql_config():
@@ -30,5 +31,7 @@ def get_mysql_config():
 
 def get_telegram_id():
     return data["telegram_bot_id"]
+
+
 def get_myid():
     return data['myid']

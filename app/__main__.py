@@ -2,7 +2,6 @@ import base64
 import os
 import traceback
 
-import MySQLdb
 from PIL import Image
 import sqlalchemy.exc
 import telegram
@@ -22,7 +21,7 @@ from app.decorate.listen import listen
 from app.logger import t_log
 from app.theme_file import get_radom_link, get_android, get_desktop
 from app.admin import admin_function, ban_word
-from  app.theme_file import get_ios
+from app.theme_file import get_ios
 from app.util.create_atheme import get_attheme_color_pic, get_kyb, get_attheme, get_transparent_ky
 from io import BytesIO
 from app.model.models import init_session, CreateThemeLogo, BanUserLogo
@@ -31,24 +30,25 @@ from typing import IO
 
 from app.util.create_desktop import get_desktop_kyb
 from app.util.db_op import clear
+from app.util.sync_public_attheme import sunc_ap
 from app.util.sync_public_desk import sync_dp
 
-my_github:str=(""
-               ""
-               "")
+my_github: str = (""
+                  ""
+                  "")
 
-my_id=get_myid()
+my_id = get_myid()
 myapi = get_config.get_telegram_id()  # 机器人api
 # public_IO:IO|None=None #供用户发送 document 形式的　图片用　
-session:Session=init_session()
+session: Session = init_session()
 
-request_kwargs={}
-if os.environ.get('ENV')=='dev':
-    request_kwargs={
-    'proxy_url': 'http://127.0.0.1:10810/'}
-    myapi='6520279001:AAFlM8bPclv-dZvSERAbLihBNlMNVz2KRK0' #测试机器人id
+request_kwargs = {}
+if os.environ.get('ENV') == 'dev':
+    request_kwargs = {
+        'proxy_url': 'http://127.0.0.1:10810/'}
+    myapi = '6520279001:AAFlM8bPclv-dZvSERAbLihBNlMNVz2KRK0'  # 测试机器人id
 
-updater = Updater(token=myapi, use_context=True,request_kwargs=request_kwargs)
+updater = Updater(token=myapi, use_context=True, request_kwargs=request_kwargs)
 commands = [
     telegram.BotCommand('getrandomtheme', '随机获取一个安卓或桌面种类的主题链接(有时主题可能不适用于您的设备)'),
     telegram.BotCommand('getandroidtheme', '随机获取一个安卓主题文件'),
@@ -58,37 +58,39 @@ commands = [
     telegram.BotCommand('create_tdesktop_base_pic',
                         '基于图片创建 tdesktop 主题')
 ]
-bot:Bot=updater.bot
+bot: Bot = updater.bot
 bot.set_my_commands(commands)
 dispatcher = updater.dispatcher
 
-#日志
-logger= t_log.get_logger()
+# 日志
+logger = t_log.get_logger()
 
-#数据库
+# 数据库
 mydb = get_config.get_mysql_config()
-#初始化数据库
+# 初始化数据库
 mysqlop.initdb(mydb)
 
-#获取 banword 对象
+# 获取 banword 对象
 BanWordObject = ban_word.BanWord(mydb)
 
-#获取所有违禁词
+# 获取所有违禁词
 ban_words = admin_function.get_ban_word(BanWordObject)
 
-#监控10个人
-mon_per=MonitorPerson(10)
+# 监控10个人
+mon_per = MonitorPerson(10)
 
-strinfo="您可以输入以下命令：\n"+\
-        "/getrandomtheme , '随机获取一个随机种类的主题链接(有时主题可能不适用于您的设备)\n'"+\
-        "/getandroidtheme', '随机获取一个安卓主题文件\n"+\
-        "/getdesktoptheme', '随机获取一个桌面主题文件\n"+\
-        "/getiostheme', '随机获取一个IOS主题链接"
+strinfo = "您可以输入以下命令：\n" + \
+          "/getrandomtheme , '随机获取一个随机种类的主题链接(有时主题可能不适用于您的设备)\n'" + \
+          "/getandroidtheme', '随机获取一个安卓主题文件\n" + \
+          "/getdesktoptheme', '随机获取一个桌面主题文件\n" + \
+          "/getiostheme', '随机获取一个IOS主题链接"
 exception_occurred = False
+
+
 # 合并主题和背景
 def on_join(update: Update, context: CallbackContext):
-    #如果没有权限
-    if app.admin.admin_function.bot_delete_permission(update,context)==0:
+    # 如果没有权限
+    if app.admin.admin_function.bot_delete_permission(update, context) == 0:
         return
 
     context.bot.delete_message(chat_id=update.effective_chat.id, message_id=update.effective_message.message_id)
@@ -109,6 +111,7 @@ def admin_handle(update: Update, context: CallbackContext):  # 管理员
     user = update.effective_message.from_user
     mon_per.run(user.id, user.first_name + " " + user.first_name, text, update, context, ban_words, logger)
 
+
 @listen
 def get_ran_theme(update: Update, context: CallbackContext):
     path = get_radom_link.get_random_theme()
@@ -120,7 +123,7 @@ def get_ran_theme(update: Update, context: CallbackContext):
 def write_ban_word(update: Update, context: CallbackContext):
     if update.message.from_user.id != 507467074:
         context.bot.send_message(chat_id=update.effective_chat.id,
-                                 text="您不是管理员！\n" +strinfo )
+                                 text="您不是管理员！\n" + strinfo)
         return
     global ban_words
     admin_function.write_ban_word(BanWordObject, context.args[0])
@@ -132,10 +135,12 @@ def write_ban_word(update: Update, context: CallbackContext):
 
 def combin_theme(update: Update, context: CallbackContext):
     context.bot.send_message(chat_id=update.effective_chat.id,
-                             text="您不是管理员！\n" +strinfo)
-#错误处理
+                             text="您不是管理员！\n" + strinfo)
+
+
+# 错误处理
 def error_handler(update: Update, context: CallbackContext):
-    global exception_occurred ,mydb
+    global exception_occurred, mydb
     try:
         exception_occurred = True
         raise context.error
@@ -145,37 +150,35 @@ def error_handler(update: Update, context: CallbackContext):
         mydb = get_config.get_mysql_config()
 
     except sqlalchemy.exc.PendingRollbackError as e:
-        session.rollback()  #回滚
+        session.rollback()  # 回滚
         logger.warning(f"数据库提交发生错误: {e}")
 
     except telegram.error.BadRequest as e:
         logger.warning(f"错误请求: {e}")
 
-    except (ConnectionError,NewConnectionError) as e:
+    except (ConnectionError, NewConnectionError) as e:
         logger.warning(f"网络错误: {e}")
-
-    except MySQLdb.DataError as e:
-        session.rollback()
-        logger.warning(f"数据插入错误: {e}")
 
     finally:
         if exception_occurred:
             # 异常发生时的清理操作
             info = traceback.format_exc()
             context.bot.send_message(chat_id=my_id, text=f"出错了 {context.error},\n{update} \n{info}")
-            exception_occurred=False
+            exception_occurred = False
+
 
 @listen
 def get_android_theme(update: Update, context: CallbackContext):
-    path=get_android.get_android_theme()
-    fd= open("src/Theme/android-theme/" + path, "rb")
-    data=fd.read()
+    path = get_android.get_android_theme()
+    fd = open("src/Theme/android-theme/" + path, "rb")
+    data = fd.read()
     fd.close()
-    preview_bytes=get_android.get_android_preview(path,data)
-    context.bot.send_document(chat_id=update.effective_chat.id, document=data,filename=path)
+    preview_bytes = get_android.get_android_preview(path, data)
+    context.bot.send_document(chat_id=update.effective_chat.id, document=data, filename=path)
     if preview_bytes:
-        context.bot.send_photo(chat_id=update.effective_chat.id,photo=preview_bytes)
+        context.bot.send_photo(chat_id=update.effective_chat.id, photo=preview_bytes)
     context.bot.send_message(chat_id=update.effective_chat.id, text="这是您的主题文件，亲～")
+
 
 @listen
 def get_desktop_theme(update: Update, context: CallbackContext):
@@ -184,15 +187,18 @@ def get_desktop_theme(update: Update, context: CallbackContext):
     data = fd.read()
     fd.close()
     preview_bytes = get_desktop.get_desktop_preview(path, data)
-    context.bot.send_document(chat_id=update.effective_chat.id, document=data,filename=path)
+    context.bot.send_document(chat_id=update.effective_chat.id, document=data, filename=path)
     if preview_bytes:
         context.bot.send_photo(chat_id=update.effective_chat.id, photo=preview_bytes)
     context.bot.send_message(chat_id=update.effective_chat.id, text="这是您的主题文件，亲～")
+
+
 @listen
 def get_ios_theme(update: Update, context: CallbackContext):
     path = get_ios.get_random_theme()
     context.bot.send_message(chat_id=update.effective_chat.id, text=path.rstrip("\n"))
     context.bot.send_message(chat_id=update.effective_chat.id, text="这是您的主题文件，亲～")
+
 
 @listen
 def create_attheme(update: Update, context: CallbackContext):
@@ -200,14 +206,16 @@ def create_attheme(update: Update, context: CallbackContext):
     existing_user: CreateThemeLogo | None = session.get(CreateThemeLogo, same_primary_key)
     if existing_user:
         clear(existing_user)
-        existing_user.flag=1
+        existing_user.flag = 1
 
     else:
-        new_user = CreateThemeLogo(uid=same_primary_key,flag=1)
+        new_user = CreateThemeLogo(uid=same_primary_key, flag=1)
         session.add(new_user)
 
     session.commit()
     context.bot.send_message(chat_id=update.effective_chat.id, text="请发送您的图片")
+
+
 @listen
 def create_tdesktop(update: Update, context: CallbackContext):
     same_primary_key = update.effective_user.id
@@ -223,79 +231,81 @@ def create_tdesktop(update: Update, context: CallbackContext):
     context.bot.send_message(chat_id=update.effective_chat.id, text="请发送您的图片")
 
 
-#用户发送图片
-def base_photo(update: Update, context: CallbackContext,doucment_pt:str|None=None):
-   #只有图片
-   pic_bytes = None
-   same_primary_key = update.effective_user.id
-   if hasattr(update.message,"caption"):
-       text = update.message.caption
-       if text:
-           user = update.effective_user
-           boo= mon_per.run(user.id, user.first_name + " " + user.first_name, text, update, context, ban_words, logger)
-           if boo:
-               return
+# 用户发送图片
+def base_photo(update: Update, context: CallbackContext, doucment_pt: str | None = None):
+    # 只有图片
+    pic_bytes = None
+    same_primary_key = update.effective_user.id
+    if hasattr(update.message, "caption"):
+        text = update.message.caption
+        if text:
+            user = update.effective_user
+            boo = mon_per.run(user.id, user.first_name + " " + user.first_name, text, update, context, ban_words,
+                              logger)
+            if boo:
+                return
 
-   existing_user: CreateThemeLogo | None = session.get(CreateThemeLogo, same_primary_key)
-   if not existing_user:
-       return
+    existing_user: CreateThemeLogo | None = session.get(CreateThemeLogo, same_primary_key)
+    if not existing_user:
+        return
 
-   if existing_user and existing_user.flag == 0:
-       return
+    if existing_user and existing_user.flag == 0:
+        return
 
-   if update.message.document:
+    if update.message.document:
         if doucment_pt:
-           fd= open(doucment_pt,'rb')
-           pic_bytes= fd.read()
-           fd.close()
-           existing_user.pic_path=doucment_pt
-   else:
-       pid= update.effective_message.photo[-1].file_id  #最后一个是完整图片
-       pic_file=bot.get_file(pid)
-       user_id=update.effective_user.id
-       #io重用
-       bio=BytesIO()
-       #写入图片
-       pic_p="src/Photo/"+str(user_id)+".png"
-       fp =open(pic_p,"wb")
+            fd = open(doucment_pt, 'rb')
+            pic_bytes = fd.read()
+            fd.close()
+            existing_user.pic_path = doucment_pt
+    else:
+        pid = update.effective_message.photo[-1].file_id  # 最后一个是完整图片
+        pic_file = bot.get_file(pid)
+        user_id = update.effective_user.id
+        # io重用
+        bio = BytesIO()
+        # 写入图片
+        pic_p = "src/Photo/" + str(user_id) + ".png"
+        fp = open(pic_p, "wb")
 
-       pic_file.download(out=bio)
-       fp.write(bio.getvalue())
-       fp.close()
-       #更新数据库
+        pic_file.download(out=bio)
+        fp.write(bio.getvalue())
+        fp.close()
+        # 更新数据库
 
-       pic_bytes = bio.getvalue()
-       bio.close()
+        pic_bytes = bio.getvalue()
+        bio.close()
 
-       existing_user.pic_path = pic_p
+        existing_user.pic_path = pic_p
 
-   content: list = get_attheme_color_pic(pic_bytes)
-   #生成键盘
+    content: list = get_attheme_color_pic(pic_bytes)
+    # 生成键盘
 
-   if  existing_user.flag != 4:
+    if existing_user.flag != 4:
 
-       reply_markup = get_kyb(content[0])
-       call_message: Message = update.message.reply_photo(content[1], caption="首先，请选择主题的背景颜色",
-                                                         reply_markup=reply_markup)
-   else:
-       reply_markup = get_desktop_kyb(content[0])
-       call_message: Message = update.message.reply_photo(content[1], caption="首先，请选择主题的背景颜色",
-                                                          reply_markup=reply_markup)
+        reply_markup = get_kyb(content[0])
+        call_message: Message = update.message.reply_photo(content[1], caption="首先，请选择主题的背景颜色",
+                                                           reply_markup=reply_markup)
+    else:
+        reply_markup = get_desktop_kyb(content[0])
+        call_message: Message = update.message.reply_photo(content[1], caption="首先，请选择主题的背景颜色",
+                                                           reply_markup=reply_markup)
 
-   # 如果记录已存在，执行 变更 picpath
+    # 如果记录已存在，执行 变更 picpath
 
-   existing_user.callback_id = call_message.message_id
-   session.commit()
+    existing_user.callback_id = call_message.message_id
+    session.commit()
 
-   # pic_file.download("src/Photo/"+file_id+".jpg")
-#解决 颜色三个状态
+    # pic_file.download("src/Photo/"+file_id+".jpg")
+
+
+# 解决 颜色三个状态
 def button_update(update: Update, context: CallbackContext):
-
     same_primary_key = update.effective_user.id
     existing_user: CreateThemeLogo | None = session.get(CreateThemeLogo, same_primary_key)
     query = update.callback_query
-    #检查
-    if not existing_user or  query.message.message_id != existing_user.callback_id:
+    # 检查
+    if not existing_user or query.message.message_id != existing_user.callback_id:
         query.answer("此键盘不属于你，点击无效呢！")
         return
 
@@ -305,11 +315,12 @@ def button_update(update: Update, context: CallbackContext):
     if existing_user.flag == 4:
         callback_desktop.callback_desktop_handle(update, context)
 
+
 def parse_document(update: Update, context: CallbackContext):
     same_primary_key = update.effective_user.id
     existing_user: CreateThemeLogo | None = session.get(CreateThemeLogo, same_primary_key)
 
-    #文档里带图片
+    # 文档里带图片
 
     if not existing_user:
         return
@@ -317,31 +328,32 @@ def parse_document(update: Update, context: CallbackContext):
     if existing_user and existing_user.flag == 0:
         return
 
-    if not hasattr(update.message,"document"):
+    if not hasattr(update.message, "document"):
         base_photo(update, context)
         return
 
     document = update.message.document
     # 获取文档的文件名
 
-    file_name:str = document.file_name
-    if  '.jpg' not  in file_name and 'png' not  in file_name :
+    file_name: str = document.file_name
+    if '.jpg' not in file_name and 'png' not in file_name:
         return
 
     try:
 
-       file_obj:File= document.get_file()
-       file_path:str="src/Photo/"+str(update.effective_user.id)+".png"
-       public_IO:IO= file_obj.download(file_path)
-       Image.open(public_IO)
+        file_obj: File = document.get_file()
+        file_path: str = "src/Photo/" + str(update.effective_user.id) + ".png"
+        public_IO: IO = file_obj.download(file_path)
+        Image.open(public_IO)
 
-    except Exception :
-       # 如果无法打开图像，它不是一个有效的图像文件
-       update.message.reply_text(f"您发送了非法文件")
-       return
+    except Exception:
+        # 如果无法打开图像，它不是一个有效的图像文件
+        update.message.reply_text(f"您发送了非法文件")
+        return
     update.message.reply_text("嗯嗯！这确实是一个图片")
 
-    base_photo(update,context,file_path)
+    base_photo(update, context, file_path)
+
 
 def start(update: Update, context: CallbackContext):
     args = context.args
@@ -351,7 +363,7 @@ def start(update: Update, context: CallbackContext):
             with open("src/myserver_bot_public/desk/" + path, "rb") as fd:
                 data = fd.read()
                 ppath = path.replace("tdesktop-theme", "jpg")
-                with open("src/myserver_bot_public/desk/" +ppath, "rb") as pd: #图片加载
+                with open("src/myserver_bot_public/desk/" + ppath, "rb") as pd:  # 图片加载
                     preview_bytes = pd.read()
                     context.bot.send_document(chat_id=update.effective_chat.id, document=data, filename=path)
                     if preview_bytes:
@@ -372,26 +384,27 @@ def start(update: Update, context: CallbackContext):
 
 
     else:
-        #优化说明显示
-        context.bot.send_message(chat_id=update.effective_chat.id,text=strinfo)
+        # 优化说明显示
+        context.bot.send_message(chat_id=update.effective_chat.id, text=strinfo)
         logger.info("可能为私聊 {}".format(str(update)))
 
+
 if __name__ == "__main__":
+    # 同步 桌面主题
     sync_dp()
+    sunc_ap()
+    # 同步 安卓主题
     # dispatcher.add_handler(MessageHandler(Filters.all, filter_user), group=-1)
-
-    dispatcher.add_handler(MessageHandler(Filters.document.category("image"),parse_document))
-
+    dispatcher.add_handler(MessageHandler(Filters.document.category("image"), parse_document))
     dispatcher.add_handler(MessageHandler(Filters.photo, base_photo))
-
-        #基于图片创建 attheme主题
+    # 基于图片创建 attheme主题
     dispatcher.add_handler(CommandHandler('create_attheme_base_pic', create_attheme))
 
     dispatcher.add_handler(CallbackQueryHandler(button_update))
-       #基于图片创建 tdesktop主题
+    # 基于图片创建 tdesktop主题
     dispatcher.add_handler(CommandHandler('create_tdesktop_base_pic', create_tdesktop))
 
-        #随机获取主题
+    # 随机获取主题
     dispatcher.add_handler(CommandHandler('getandroidtheme', get_android_theme))
     dispatcher.add_handler(CommandHandler('getiostheme', get_ios_theme))
     dispatcher.add_handler(CommandHandler('getdesktoptheme', get_desktop_theme))

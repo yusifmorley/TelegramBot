@@ -5,9 +5,12 @@
     <file url="file://$PROJECT_DIR$/app/callback/callback_desktop.py" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/logger/t_log.py" charset="GBK" />
     <file url="file://$PROJECT_DIR$/app/stand_alone/stand_lone.py" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/test.py" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/util/color_parse.py" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/util/create_desktop.py" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/util/db_op.py" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/util/file_name_gen.py" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/util/get_time.py" charset="UTF-8" />
     <file url="PROJECT" charset="UTF-8" />
   </component>
 </project>
