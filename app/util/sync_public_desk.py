@@ -17,6 +17,16 @@ desk_list = [
              'darkify.tdesktop-theme',
              'YoualiAzul.tdesktop-theme',
              'Sponge Bob.tdesktop-theme',
+             'Wood.tdesktop-theme',
+             'awesome (7).tdesktop-theme',
+             'DarkByNull.tdesktop-theme',
+             'null-core-theme-v0.1.tdesktop-theme',
+             'S1.tdesktop-theme',
+             'CUTIE MOLANG.tdesktop-theme',
+             'Landscape Moonlight (3).tdesktop-theme',
+             'Desktop Dark Legacy.tdesktop-theme',
+             'Digital Night.tdesktop-theme',
+             '10 Dark Breeze (v7.3).tdesktop-theme'
              ]
 
 def sync_dp(directory_path=desk_dir_root):

@@ -9,12 +9,17 @@ orgin_dir = "src/Theme/android-theme"
 # 公共目录
 desk_dir_root = 'src/myserver_bot_public/attheme'
 log = get_logger()
-# 展示的主题列表
+#展示的主题列表
+#注意 文件名里最好没有空格
 attheme_list = ['Carbon_v1.3.attheme',
                 'Bright Green by @arsLan4k1390 (2).attheme',
                 'Patina on Mauve by @ThemerBot.attheme',
                 'pastae purbae (1).attheme',
-                'Sy5XO by @CreateAtthemeBot.attheme'
+                'Sy5XO by @CreateAtthemeBot.attheme',
+                'RootLinux-Halloween-V8.attheme',
+                'Dark_Mild Blue+Fiery Red.attheme',
+                'Kenyan Copper on Shark by @TempThemerBot.attheme',
+                'Chelsea.attheme'
                 ]
 
 
