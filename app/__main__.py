@@ -15,6 +15,7 @@ import app.model.models
 from app.admin.person_monitor import MonitorPerson
 from app.callback import callback_android, callback_desktop
 from app.config import get_config
+from app.config.command_list import get_command, get_command_str
 from app.config.get_config import get_myid
 from app.db import mysqlop
 from app.decorate.listen import listen
@@ -33,9 +34,7 @@ from app.util.db_op import clear
 from app.util.sync_public_attheme import sunc_ap
 from app.util.sync_public_desk import sync_dp
 
-my_github: str = (""
-                  ""
-                  "")
+my_github: str = ("欢迎使用主题生成机器人\n")
 
 my_id = get_myid()
 myapi = get_config.get_telegram_id()  # 机器人api
@@ -49,15 +48,7 @@ if os.environ.get('ENV') == 'dev':
     myapi = '6520279001:AAFlM8bPclv-dZvSERAbLihBNlMNVz2KRK0'  # 测试机器人id
 
 updater = Updater(token=myapi, use_context=True, request_kwargs=request_kwargs)
-commands = [
-    telegram.BotCommand('getrandomtheme', '随机获取一个安卓或桌面种类的主题链接(有时主题可能不适用于您的设备)'),
-    telegram.BotCommand('getandroidtheme', '随机获取一个安卓主题文件'),
-    telegram.BotCommand('getdesktoptheme', '随机获取一个桌面主题文件'),
-    telegram.BotCommand('getiostheme', '随机获取一个IOS主题链接'),
-    telegram.BotCommand('create_attheme_base_pic', ' 基于图片创建attheme主题'),
-    telegram.BotCommand('create_tdesktop_base_pic',
-                        '基于图片创建 tdesktop 主题')
-]
+commands =get_command()
 bot: Bot = updater.bot
 bot.set_my_commands(commands)
 dispatcher = updater.dispatcher
@@ -79,14 +70,7 @@ ban_words = admin_function.get_ban_word(BanWordObject)
 # 监控10个人
 mon_per = MonitorPerson(10)
 
-strinfo = "您可以输入以下命令：\n" + \
-          "/getrandomtheme , '随机获取一个随机种类的主题链接(有时主题可能不适用于您的设备)\n'" + \
-          "/getandroidtheme', '随机获取一个安卓主题文件\n" + \
-          "/getdesktoptheme', '随机获取一个桌面主题文件\n" + \
-          "/getiostheme', '随机获取一个IOS主题链接"
-exception_occurred = False
-
-
+strinfo = get_command_str()
 # 合并主题和背景
 def on_join(update: Update, context: CallbackContext):
     # 如果没有权限
@@ -109,7 +93,9 @@ def admin_handle(update: Update, context: CallbackContext):  # 管理员
         bot.send_document(chat_id=chat_id, document=theme_file.file_id)
         return
     user = update.effective_message.from_user
-    mon_per.run(user.id, user.first_name + " " + user.first_name, text, update, context, ban_words, logger)
+    if hasattr(user,"id"):
+
+        mon_per.run(user.id, user.first_name + " " + user.first_name, text, update, context, ban_words, logger)
 
 
 @listen
@@ -140,9 +126,8 @@ def combin_theme(update: Update, context: CallbackContext):
 
 # 错误处理
 def error_handler(update: Update, context: CallbackContext):
-    global exception_occurred, mydb
+    global  mydb
     try:
-        exception_occurred = True
         raise context.error
 
     except mysql.connector.errors.OperationalError as e:  # 连接断开 重新链接
@@ -160,12 +145,12 @@ def error_handler(update: Update, context: CallbackContext):
         logger.warning(f"网络错误: {e}")
 
     finally:
-        if exception_occurred:
+        session.close()
+        app.model.models.reflush()
+        logger.warning("已经重置 session ")
             # 异常发生时的清理操作
-            info = traceback.format_exc()
-            context.bot.send_message(chat_id=my_id, text=f"出错了 {context.error},\n{update} \n{info}")
-            exception_occurred = False
-
+        info = traceback.format_exc()
+        context.bot.send_message(chat_id=my_id, text=f"出错了 {context.error},\n{update} \n{info}")
 
 @listen
 def get_android_theme(update: Update, context: CallbackContext):
@@ -314,6 +299,7 @@ def button_update(update: Update, context: CallbackContext):
 
     if existing_user.flag == 4:
         callback_desktop.callback_desktop_handle(update, context)
+
 
 
 def parse_document(update: Update, context: CallbackContext):

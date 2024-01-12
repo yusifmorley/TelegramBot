@@ -17,16 +17,23 @@ class MonitorPerson:
         self.text_list.append(text)
 
     def run(self, usr_id, user_name, text, update:Update, context: CallbackContext,banword,logger):
+        #排除 管理员 的 消息
         if usr_id==get_myid():
             return  False
+
+        #如果是私聊
+        if update.effective_message.chat.type == Chat.PRIVATE:
+            return False
 
         #如果是组 或者超级组
         if update.effective_message.chat.type ==Chat.GROUP or  update.effective_message.chat.type ==Chat.SUPERGROUP :
         # 是否有权限删除
             if bot_delete_permission(update, context) == 0:
+                #没有权限 结束
                 return False
 
             if bot_restrict_permission(update, context) == 0:
+                # 没有权限 结束`
                 return False
 
         #排除来自频道的消息
