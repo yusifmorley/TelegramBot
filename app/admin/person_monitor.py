@@ -39,7 +39,9 @@ class MonitorPerson:
         #排除来自频道的消息
         if hasattr(update,"message") and hasattr(update.message,"chat"):
             if update.effective_message.chat.type == Chat.CHANNEL:
-                if update.effective_message.chat.link=="https://t.me/moleydimu":
+                return False
+
+            if update.effective_message.chat.link=="https://t.me/moleydimu":
                   return False
 
         if hasattr(update, "message") and hasattr(update.message, "sender_chat") and hasattr(update.message.sender_chat, "type") and  hasattr(update.message.forward_from_chat, "type")  :

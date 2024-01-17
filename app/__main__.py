@@ -5,7 +5,7 @@ import traceback
 from PIL import Image
 import sqlalchemy.exc
 import telegram
-from telegram import Update, Bot, File, InlineKeyboardMarkup, Message
+from telegram import Update, Bot, File, InlineKeyboardMarkup, Message, Chat
 from telegram.ext import Updater, CallbackContext, CallbackQueryHandler
 from telegram.ext import MessageHandler, Filters
 from telegram.ext import CommandHandler
@@ -219,6 +219,9 @@ def create_tdesktop(update: Update, context: CallbackContext):
 # 用户发送图片
 def base_photo(update: Update, context: CallbackContext, doucment_pt: str | None = None):
     # 只有图片
+    if update.effective_message.chat.type == Chat.CHANNEL:
+        return
+
     pic_bytes = None
     same_primary_key = update.effective_user.id
     if hasattr(update.message, "caption"):
