@@ -57,8 +57,8 @@ def get_desktop_kyb(arr:list[str]):
             [
                 InlineKeyboardButton("白", callback_data='#FFFFFF'),
                 InlineKeyboardButton("黑", callback_data='#000000'),
-                InlineKeyboardButton("随机暗色", callback_data=",".join(autocolor)),
-                InlineKeyboardButton("随机亮色", callback_data=",".join(autocolor1))
+                InlineKeyboardButton("随机亮色", callback_data=",".join(autocolor)),
+                InlineKeyboardButton("随机暗色", callback_data=",".join(autocolor1))
             ],
         ]
         return InlineKeyboardMarkup(keyboard)
