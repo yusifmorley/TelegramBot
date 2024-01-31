@@ -82,6 +82,9 @@ def on_join(update: Update, context: CallbackContext):
 
 def admin_handle(update: Update, context: CallbackContext):  # 管理员
 
+    if update.effective_message.chat.id !=-1001313322278:
+        return
+
     text = update.effective_message.text
     if 'addtheme' in text:
         theme_link = update.message.text
@@ -94,8 +97,7 @@ def admin_handle(update: Update, context: CallbackContext):  # 管理员
         return
     user = update.effective_message.from_user
 
-    if update.effective_message.chat.id !=-1001313322278:
-        return
+
 
 
     if update.effective_message.chat.type == Chat.GROUP or update.effective_message.chat.type == Chat.SUPERGROUP:
