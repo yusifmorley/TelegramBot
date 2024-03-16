@@ -96,10 +96,7 @@ def admin_handle(update: Update, context: CallbackContext):  # 管理员
         bot.send_document(chat_id=chat_id, document=theme_file.file_id)
         return
     user = update.effective_message.from_user
-
-
-
-
+    
     if update.effective_message.chat.type == Chat.GROUP or update.effective_message.chat.type == Chat.SUPERGROUP:
         if hasattr(user, "id"):
             mon_per.run(user.id, user.first_name + " " + user.first_name, text, update, context, ban_words, logger)
