@@ -20,6 +20,7 @@ from app.config.get_config import get_myid
 from app.db import mysqlop
 from app.decorate.listen import listen
 from app.logger import t_log
+from app.server.theme_http import run
 from app.theme_file import get_radom_link, get_android, get_desktop
 from app.admin import admin_function, ban_word
 from app.theme_file import get_ios
@@ -386,6 +387,7 @@ def start(update: Update, context: CallbackContext):
 if __name__ == "__main__":
     logger.info("运行本项目必须开启ThemeFactory")
     # 同步 桌面主题
+    run()
     sync_dp()
     sunc_ap()
     # 同步 安卓主题

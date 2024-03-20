@@ -22,12 +22,14 @@ for x in attheme_ls:
     attheme_list.append(x.t_preview_name)
 
 lis = os.listdir(desk_dir_root)
+
+
 # 展示的主题列表
 # 注意 文件名里最好没有空格
 
 
 def sunc_ap(directory_path=desk_dir_root):
-
+    global lis
     for x in attheme_list:
         filename = x
         x = x.replace(".attheme", "")
@@ -53,13 +55,14 @@ def sunc_ap(directory_path=desk_dir_root):
                         log.info("公共目录 %s 生成成功", filename)
                 else:
                     log.warn("!!!!!!公共目录 %s 生成失败!!!!", filename)
-            global lis
-            lis = os.listdir(desk_dir_root)
+
+                lis = os.listdir(desk_dir_root)
     log.info("---公共目录完整---")
 
 
 def android_add_by_name(aname):
     # aname 是 xxx.attheme
+    global lis
     x = aname
     filename = x
     x = x.replace(".attheme", "")
@@ -86,6 +89,4 @@ def android_add_by_name(aname):
             else:
                 log.warn("!!!!!!公共目录 %s 生成失败!!!!", filename)
 
-        global lis
-        lis = os.listdir(desk_dir_root)
-
+            lis = os.listdir(desk_dir_root)

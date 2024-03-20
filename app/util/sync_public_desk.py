@@ -27,6 +27,7 @@ for x in desk_ls:
 
 
 def sync_dp(directory_path=desk_dir_root):
+    global lis
     lis = os.listdir(directory_path)
     for x in desk_list:
         filename = x
@@ -52,11 +53,12 @@ def sync_dp(directory_path=desk_dir_root):
                         log.info("公共目录 %s 生成成功", filename)
                 else:
                     log.warn("!!!!!!公共目录 %s 生成失败!!!!", filename)
-            global  lis
+
             lis= os.listdir(desk_dir_root)
     log.info("---公共目录完整---")
 
 def desk_add_by_name(tdesk_name):
+    global lis
     x=tdesk_name
     filename = x
     x = x.replace(".tdesktop-theme", "")
@@ -81,7 +83,7 @@ def desk_add_by_name(tdesk_name):
                     log.info("公共目录 %s 生成成功", filename)
             else:
                 log.warn("!!!!!!公共目录 %s 生成失败!!!!", filename)
-        global lis
+
         lis = os.listdir(desk_dir_root)
 
 
