@@ -387,7 +387,9 @@ def start(update: Update, context: CallbackContext):
 if __name__ == "__main__":
     logger.info("运行本项目必须开启ThemeFactory")
     # 同步 桌面主题
-    run()
+
+
+
     sync_dp()
     sunc_ap()
     # 同步 安卓主题
@@ -420,3 +422,4 @@ if __name__ == "__main__":
         dispatcher.add_error_handler(error_handler)
 
     updater.start_polling()
+    run()

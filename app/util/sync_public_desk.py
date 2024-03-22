@@ -86,5 +86,8 @@ def desk_add_by_name(tdesk_name):
 
         lis = os.listdir(desk_dir_root)
 
+def delete(str):
+    shutil.rmtree(os.path.join(desk_dir_root,str))
+
 
 

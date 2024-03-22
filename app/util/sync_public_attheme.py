@@ -90,3 +90,5 @@ def android_add_by_name(aname):
                 log.warn("!!!!!!公共目录 %s 生成失败!!!!", filename)
 
             lis = os.listdir(desk_dir_root)
+def delete(str):
+    shutil.rmtree(os.path.join(desk_dir_root,str))

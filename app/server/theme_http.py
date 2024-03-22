@@ -7,9 +7,10 @@ from sqlalchemy.orm import Session
 from app.model.models import init_session, ThemeUploadRecord
 from app.logger.t_log import get_logger
 from app.util.get_preview import get_from
-from app.util.sync_public_attheme import android_add_by_name
-from app.util.sync_public_desk import desk_add_by_name
+from app.util.sync_public_attheme import android_add_by_name, delete
+from app.util.sync_public_desk import desk_add_by_name, delete as d_delete
 import ast
+
 session: Session = init_session()
 log = get_logger()
 
@@ -23,6 +24,17 @@ class MyRequestHandler(BaseHTTPRequestHandler):
         try:
             # 解析 JSON 数据
             json_data = json.loads(post_data.decode('utf-8'))
+            if json_data['path'] == "delete":  # 确定路径
+                date = json.loads(json_data['date'])
+                name: str = date['name']
+                le = name.split("/")
+                if date['kind'] == '0':  # attheme
+                    session.query(ThemeUploadRecord).filter(ThemeUploadRecord.t_preview_name == le[1]).delete()
+                    delete(le[0])
+                else:
+                    session.query(ThemeUploadRecord).filter(ThemeUploadRecord.t_preview_name == le[1]).delete()
+                    d_delete(le[0])
+                session.commit()
             if json_data['path'] == "theme":  # 确定路径
                 date = json.loads(json_data['date'])
                 if date['hasFile']:  # 注意 传输的是二进制文件
@@ -39,7 +51,7 @@ class MyRequestHandler(BaseHTTPRequestHandler):
                         session.add(tup)
                         sync(date['name'], 0, 1)
                     else:
-                        tup = ThemeUploadRecord(id=None, t_preview_name=date['name'],  type='tdesktop',strc= 0)
+                        tup = ThemeUploadRecord(id=None, t_preview_name=date['name'], type='tdesktop', strc=0)
                         session.add(tup)
                         sync(date['name'], 1, 1)
                     session.commit()
@@ -123,4 +135,3 @@ def sync(filename, type, flag, bytes=None):  # 生成合适 的mybackstage目录
                 fj.write(preview_bytes)
         else:  # 处理 文件名
             desk_add_by_name(filename)
-
