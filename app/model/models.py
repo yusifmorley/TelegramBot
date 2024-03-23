@@ -1,6 +1,4 @@
 # coding: utf-8
-from tkinter.tix import INTEGER
-
 from sqlalchemy import BigInteger, Column, Date, Integer, text, create_engine
 from sqlalchemy.dialects.mysql import ENUM, INTEGER, MEDIUMTEXT, TINYINT, VARCHAR
 from sqlalchemy.ext.declarative import declarative_base
