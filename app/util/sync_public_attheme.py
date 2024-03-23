@@ -76,7 +76,7 @@ def android_add_by_name(aname):
         # 复制文件
         orgin_file = os.path.join(orgin_dir, filename)
         target_file = os.path.join(desk_dir_root, x, filename)
-        target_preview_jpg = os.path.join(desk_dir_root, x, filename + ".jpg")
+        target_preview_jpg = os.path.join(desk_dir_root, x, x + ".jpg")
 
         # 生成预览
         with open(orgin_file, "rb") as fd:
