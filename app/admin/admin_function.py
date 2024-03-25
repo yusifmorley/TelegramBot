@@ -1,5 +1,5 @@
 # 管理功能
-from telegram import ChatPermissions, ChatMember
+from telegram import ChatPermissions, ChatMember, Chat, ChatMemberAdministrator
 from telegram.error import BadRequest
 from telegram.ext import CallbackContext
 from app.logger.t_log import get_logger
@@ -55,14 +55,15 @@ def block_person(update: Update, context: CallbackContext, ban_word):
 
 
 # 判断是否有删除消息的权限
-def bot_delete_permission(update: Update, context: CallbackContext):
+async def bot_delete_permission(update: Update, context: CallbackContext):
     # 机器人id
-    bot_user_id = context.bot.get_me().id
+    bot_user_id = await context.bot.get_me()
+    bot_user_id = bot_user_id.id
     if hasattr(update.message, "chat_id"):
         # 群组的 Chat ID
         chat_id = update.message.chat_id
 
-        chat_memeber: ChatMember = context.bot.get_chat_member(chat_id, bot_user_id)
+        chat_memeber = await context.bot.get_chat_member(chat_id=chat_id, user_id=bot_user_id)
 
         if chat_memeber.can_delete_messages:
             return 1
@@ -71,15 +72,13 @@ def bot_delete_permission(update: Update, context: CallbackContext):
 
 
 # 判断是否有封锁用户的权限
-def bot_restrict_permission(update: Update, context: CallbackContext):
+async def bot_restrict_permission(update: Update, context: CallbackContext):
     # 机器人id
-    bot_user_id = context.bot.get_me().id
-
+    bot_user_id = await context.bot.get_me()
+    bot_user_id = bot_user_id.id
     # 群组的 Chat ID
     chat_id = update.message.chat_id
-
-    chat_memeber: ChatMember = context.bot.get_chat_member(chat_id, bot_user_id)
-
+    chat_memeber = await context.bot.get_chat_member(chat_id=chat_id, user_id=bot_user_id)
     if not chat_memeber.can_restrict_members:
         return 0
 

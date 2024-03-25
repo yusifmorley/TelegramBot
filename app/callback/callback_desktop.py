@@ -11,7 +11,7 @@ import app.util.get_time as g_t
 session: Session = init_session()
 
 
-def callback_desktop_handle(update: Update, context: CallbackContext):
+async def callback_desktop_handle(update: Update, context: CallbackContext):
     data = None
     query = update.callback_query
     user_id = update.effective_user.id
@@ -22,7 +22,7 @@ def callback_desktop_handle(update: Update, context: CallbackContext):
     # 全部随机
     if len(query.data) > 8:
         color_arr = query.data.split(",")
-        query.message.delete()
+        await query.message.delete()
         # 2 创建 主题 发送主题
         picp = "src/Photo/" + str(user_id) + ".png"
         fp = open(picp, "rb")
@@ -30,8 +30,8 @@ def callback_desktop_handle(update: Update, context: CallbackContext):
         fp.close()
         data = get_tdektop(by, color_arr)
         usr_file = f_n.gen_name(g_t.get_now()) + ".tdesktop-theme"
-        context.bot.send_document(chat_id=update.effective_chat.id, document=data, filename=usr_file)
-        context.bot.send_message(chat_id=update.effective_chat.id, text="这是您的主题文件，亲～")
+        await context.bot.send_document(chat_id=update.effective_chat.id, document=data, filename=usr_file)
+        await context.bot.send_message(chat_id=update.effective_chat.id, text="这是您的主题文件，亲～")
         existing_user.flag = 0  # 置0
         session.commit()
         return
@@ -39,7 +39,7 @@ def callback_desktop_handle(update: Update, context: CallbackContext):
     # 表明 这是第二次
     if existing_user.color_1:
         # 1 删除call back
-        query.message.delete()
+        await query.message.delete()
         # 2 创建 主题 发送主题
         picp = "src/Photo/" + str(user_id) + ".png"
         fp = open(picp, "rb")
@@ -51,9 +51,9 @@ def callback_desktop_handle(update: Update, context: CallbackContext):
 
         usr_file = f_n.gen_name(g_t.get_now()) + ".tdesktop-theme"
 
-        context.bot.send_document(chat_id=update.effective_chat.id, document=data, filename=usr_file)
+        await context.bot.send_document(chat_id=update.effective_chat.id, document=data, filename=usr_file)
 
-        context.bot.send_message(chat_id=update.effective_chat.id, text="这是您的主题文件，亲～")
+        await context.bot.send_message(chat_id=update.effective_chat.id, text="这是您的主题文件，亲～")
 
         existing_user.flag = 0  # 置0
 
@@ -62,5 +62,5 @@ def callback_desktop_handle(update: Update, context: CallbackContext):
 
     # 如果是全部随机
     existing_user.color_1 = query.data
-    query.edit_message_caption(caption="嗯！请设置次要颜色", reply_markup=original_reply_markup)
+    await query.edit_message_caption(caption="嗯！请设置次要颜色", reply_markup=original_reply_markup)
     session.commit()

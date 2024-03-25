@@ -1,7 +1,8 @@
+from telegram.constants import ChatType
 from telegram.ext import CallbackContext
 
 from app.admin import admin_function
-from telegram import Update, Chat
+from telegram import Update, Chat, MessageOrigin
 from app.config.get_config import get_myid
 from app.admin.admin_function import bot_delete_permission, bot_restrict_permission
 
@@ -44,10 +45,9 @@ class MonitorPerson:
             if update.effective_message.chat.link == "https://t.me/moleydimu":
                 return False
 
-        if hasattr(update, "message") and hasattr(update.message, "sender_chat") and hasattr(update.message.sender_chat,
-                                                                                             "type") and hasattr(
-                update.message.forward_from_chat, "type"):
-            if update.message.sender_chat.type == Chat.CHANNEL or update.message.forward_from_chat.type == Chat.CHANNEL:
+        if hasattr(update, "message") and hasattr(update.message, "sender_chat") and hasattr(update.message,
+                                                                                             "forward_origin") and hasattr(update.message.forward_origin, "type"):
+            if update.message.forward_origin.type == MessageOrigin.CHANNEL :
                 return False
 
         # 对@进行特殊处理

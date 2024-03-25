@@ -34,6 +34,12 @@ from app.util.db_op import clear
 from app.util.sync_public_attheme import sunc_ap
 from app.util.sync_public_desk import sync_dp
 
+import logging
+
+logging.getLogger("httpx").setLevel(logging.WARNING)
+
+logger = logging.getLogger(__name__)
+
 my_github: str = "欢迎使用主题生成机器人\n"
 my_id = get_myid()
 myapi = get_config.get_telegram_id()  # 机器人api
@@ -301,10 +307,10 @@ async def button_update(update: Update, context: ContextTypes.DEFAULT_TYPE):
         return
 
     if existing_user.flag == 1:
-        callback_android.callback_android_handle(update, context)
+        await callback_android.callback_android_handle(update, context)
 
     if existing_user.flag == 4:
-        callback_desktop.callback_desktop_handle(update, context)
+        await callback_desktop.callback_desktop_handle(update, context)
 
 
 async def parse_document(update: Update, context: ContextTypes.DEFAULT_TYPE):

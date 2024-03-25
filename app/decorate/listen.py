@@ -1,5 +1,6 @@
-from telegram import Update, Chat, User, TelegramError
-from telegram.ext import ContextTypes, DispatcherHandlerStop, CallbackContext
+from telegram import Update, Chat, User
+from telegram.error import TelegramError
+from telegram.ext import ContextTypes, CallbackContext
 from sqlalchemy.orm.session import Session
 import app
 from app.admin.admin_function import bot_delete_permission, bot_restrict_permission
@@ -10,12 +11,12 @@ session: Session = init_session()
 
 # 用户使用监听
 def listen(fun):
-    def add_listen(update: Update, context: CallbackContext):
+    async def add_listen(update: Update, context: ContextTypes.DEFAULT_TYPE):
         # 检测用户是否关注了频道
         # 必须把机器人引入频道 赋予管理权限
         try:
 
-            context.bot.getChatMember('@moleydimu', update.effective_user.id)
+            await context.bot.getChatMember('@moleydimu', update.effective_user.id)
 
         except TelegramError as te:
         #如果发生错误 说明用户未加入群组
@@ -30,7 +31,7 @@ def listen(fun):
             # raise DispatcherHandlerStop()
 
         # 执行函数
-        fun(update, context)
+        await fun(update, context)
 
         # 记录群组使用
         if update.effective_chat.type == Chat.GROUP or update.effective_chat.type == Chat.SUPERGROUP:
