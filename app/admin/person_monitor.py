@@ -11,70 +11,70 @@ class MonitorPerson:
         self.monitor_person = monitor_person_num
         self.text_list = []
 
-    def __contain_list__(self,text):
-        if len(self.text_list)>self.monitor_person:
-            del  self.text_list[0]  #删除首个元素
+    def __contain_list__(self, text):
+        if len(self.text_list) > self.monitor_person:
+            del self.text_list[0]  # 删除首个元素
         self.text_list.append(text)
 
-    def run(self, usr_id, user_name, text, update:Update, context: CallbackContext,banword,logger):
-        #排除 管理员 的 消息
-        if usr_id==get_myid():
-            return  False
+    def run(self, usr_id, user_name, text, update: Update, context: CallbackContext, banword, logger):
+        # 排除 管理员 的 消息
+        if usr_id == get_myid():
+            return False
 
-        #如果是私聊
+        # 如果是私聊
         if update.effective_message.chat.type == Chat.PRIVATE:
             return False
 
-        #如果是组 或者超级组
-        if update.effective_message.chat.type ==Chat.GROUP or  update.effective_message.chat.type ==Chat.SUPERGROUP :
-        # 是否有权限删除
+        # 如果是组 或者超级组
+        if update.effective_message.chat.type == Chat.GROUP or update.effective_message.chat.type == Chat.SUPERGROUP:
+            # 是否有权限删除
             if bot_delete_permission(update, context) == 0:
-                #没有权限 结束
+                # 没有权限 结束
                 return False
 
             if bot_restrict_permission(update, context) == 0:
                 # 没有权限 结束`
                 return False
 
-        #排除来自频道的消息
-        if hasattr(update,"message") and hasattr(update.message,"chat"):
+        # 排除来自频道的消息
+        if hasattr(update, "message") and hasattr(update.message, "chat"):
             if update.effective_message.chat.type == Chat.CHANNEL:
                 return False
 
-            if update.effective_message.chat.link=="https://t.me/moleydimu":
-                  return False
-
-        if hasattr(update, "message") and hasattr(update.message, "sender_chat") and hasattr(update.message.sender_chat, "type") and  hasattr(update.message.forward_from_chat, "type")  :
-            if update.message.sender_chat.type==Chat.CHANNEL or update.message.forward_from_chat.type==Chat.CHANNEL:
+            if update.effective_message.chat.link == "https://t.me/moleydimu":
                 return False
 
-        #对@进行特殊处理
+        if hasattr(update, "message") and hasattr(update.message, "sender_chat") and hasattr(update.message.sender_chat,
+                                                                                             "type") and hasattr(
+                update.message.forward_from_chat, "type"):
+            if update.message.sender_chat.type == Chat.CHANNEL or update.message.forward_from_chat.type == Chat.CHANNEL:
+                return False
+
+        # 对@进行特殊处理
         if '@' in text and "/" not in text:
             admin_function.block_person(update, context, "@")
             return True
 
-        #对 t.me 链接特殊处理
-        if  't.me' in text:
+        # 对 t.me 链接特殊处理
+        if 't.me' in text:
             if update.effective_chat.username in text:
                 return False
 
-
-        #防止误删来自频道的消息
-        if  "addtheme" in text:
+        # 防止误删来自频道的消息
+        if "addtheme" in text:
             return False
 
-        #判断是否触违禁词
+        # 判断是否触违禁词
         os = admin_function.delete_txt(banword, text)
         if os:  # 若存在违禁词
             admin_function.block_person(update, context, os)
             logger.info(os)  # 记录
             return True
 
-        #判断text 是否有重复
-        if text in self.text_list:
-            admin_function.block_person(update, context, "重复")
-            return True
-
-        else:
-            self.__contain_list__(text)
-            return False
+        # 判断text 是否有重复
+        # if text in self.text_list:
+        #     admin_function.block_person(update, context, "重复")
+        #     return True
+        # else:
+        #     self.__contain_list__(text)
+        #     return False
