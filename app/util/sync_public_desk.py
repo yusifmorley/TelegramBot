@@ -19,11 +19,21 @@ session: Session = init_session()
 
 lis = os.listdir(desk_dir_root)
 
-desk_ls = session.query(ThemeUploadRecord).filter(ThemeUploadRecord.type == 'tdesktop').all()
+desk_ls = session.query(ThemeUploadRecord).filter(ThemeUploadRecord.type == 'tdesktop' and ThemeUploadRecord.strc == 0
+                                                  ).all()
 # 展示的主题列表
 desk_list = []
 for x in desk_ls:
     desk_list.append(x.t_preview_name)
+
+
+def get_desk_list():
+    di = dict()
+    for x in desk_ls:
+        l: str = x.t_preview_name
+        p = l.split(".")
+        di.update({p[0]: p[1]})
+    return di
 
 
 def sync_dp(directory_path=desk_dir_root):
@@ -54,12 +64,13 @@ def sync_dp(directory_path=desk_dir_root):
                 else:
                     log.warn("!!!!!!公共目录 %s 生成失败!!!!", filename)
 
-            lis= os.listdir(desk_dir_root)
+            lis = os.listdir(desk_dir_root)
     log.info("---公共目录完整---")
+
 
 def desk_add_by_name(tdesk_name):
     global lis
-    x=tdesk_name
+    x = tdesk_name
     filename = x
     x = x.replace(".tdesktop-theme", "")
     if x in lis:
@@ -86,8 +97,6 @@ def desk_add_by_name(tdesk_name):
 
         lis = os.listdir(desk_dir_root)
 
+
 def delete(str):
-    shutil.rmtree(os.path.join(desk_dir_root,str))
-
-
-
+    shutil.rmtree(os.path.join(desk_dir_root, str))

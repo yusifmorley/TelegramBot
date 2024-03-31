@@ -15,7 +15,8 @@ log = get_logger()
 
 session: Session = init_session()
 
-attheme_ls = session.query(ThemeUploadRecord).filter(ThemeUploadRecord.type == 'android').all()
+attheme_ls = session.query(ThemeUploadRecord).filter(
+    ThemeUploadRecord.type == 'android' and ThemeUploadRecord.strc == 0).all()
 # 展示的主题列表
 attheme_list = []
 for x in attheme_ls:
@@ -26,6 +27,14 @@ lis = os.listdir(desk_dir_root)
 
 # 展示的主题列表
 # 注意 文件名里最好没有空格
+
+def get_attheme_list():
+    di = dict()
+    for x in attheme_ls:
+        l: str = x.t_preview_name
+        p = l.split(".")
+        di.update({p[0]: p[1]})
+    return di
 
 
 def sunc_ap(directory_path=desk_dir_root):
@@ -90,5 +99,7 @@ def android_add_by_name(aname):
                 log.warn("!!!!!!公共目录 %s 生成失败!!!!", filename)
 
             lis = os.listdir(desk_dir_root)
+
+
 def delete(str):
-    shutil.rmtree(os.path.join(desk_dir_root,str))
+    shutil.rmtree(os.path.join(desk_dir_root, str))

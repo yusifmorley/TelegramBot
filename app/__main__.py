@@ -1,11 +1,13 @@
 import base64
 import os
 import traceback
+from threading import Thread
+
 from PIL import Image
 import sqlalchemy.exc
 import telegram
 from telegram import Update, Bot, File, Message, Chat
-from telegram.ext import Updater, CallbackContext, CallbackQueryHandler, ContextTypes, Application
+from telegram.ext import CallbackContext, CallbackQueryHandler, ContextTypes, Application
 from telegram.ext import MessageHandler, filters
 from telegram.ext import CommandHandler
 import mysql.connector
@@ -27,12 +29,10 @@ from app.util.create_atheme import get_attheme_color_pic, get_kyb, get_attheme, 
 from io import BytesIO
 from app.model.models import init_session, CreateThemeLogo, BanUserLogo
 from sqlalchemy.orm.session import Session
-from typing import IO
-
 from app.util.create_desktop import get_desktop_kyb
 from app.util.db_op import clear
-from app.util.sync_public_attheme import sunc_ap
-from app.util.sync_public_desk import sync_dp
+from app.util.sync_public_attheme import sunc_ap, get_attheme_list
+from app.util.sync_public_desk import sync_dp, get_desk_list
 
 import logging
 
@@ -74,6 +74,8 @@ ban_words = admin_function.get_ban_word(BanWordObject)
 mon_per = MonitorPerson(10)
 
 str_info = get_command_str()
+
+lic: dict = dict(get_desk_list(), **get_attheme_list())
 
 
 # 合并主题和背景
@@ -354,28 +356,33 @@ async def parse_document(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     args = context.args
     if args:
-        path = base64.b64decode(args[0]).decode()
-        if path.endswith("tdesktop-theme"):
-            with open("src/myserver_bot_public/desk/" + path, "rb") as fd:
+        ppath = args[0]
+        type = lic.get(ppath)
+        dic = ppath
+        ath = ppath + "." + type  # 文件路径
+        pth = ppath + "." + "jpg"
+        if ath.endswith("tdesktop-theme"):
+            ods = "src/myserver_bot_public/desk/"
+            with open(os.path.join(ods, dic, ath), "rb") as fd:
                 data = fd.read()
-                ppath = path.replace("tdesktop-theme", "jpg")
-                with open("src/myserver_bot_public/desk/" + ppath, "rb") as pd:  # 图片加载
+                with open(os.path.join(ods, dic, pth), "rb") as pd:  # 图片加载
                     preview_bytes = pd.read()
-                    await context.bot.send_document(chat_id=update.effective_chat.id, document=data, filename=path)
+                    await context.bot.send_document(chat_id=update.effective_chat.id, document=data, filename=ath)
                     if preview_bytes:
                         await context.bot.send_photo(chat_id=update.effective_chat.id, photo=preview_bytes)
                     await context.bot.send_message(chat_id=update.effective_chat.id, text="这是您的主题文件，亲～")
 
-        if path.endswith("attheme"):
-            with open("src/myserver_bot_public/attheme/" + path, "rb") as fd:
+        if ath.endswith("attheme"):
+            ods = "src/myserver_bot_public/attheme/"
+            with open(os.path.join(ods, dic, ath), "rb") as fd:
                 data = fd.read()
-                ppath = path.replace("attheme", "jpg")
-                with open("src/myserver_bot_public/attheme/" + ppath, "rb") as pd:  # 图片加载
+                with open(os.path.join(ods, dic, pth), "rb") as pd:  # 图片加载
                     preview_bytes = pd.read()
-                    await context.bot.send_document(chat_id=update.effective_chat.id, document=data, filename=path)
+                    await context.bot.send_document(chat_id=update.effective_chat.id, document=data, filename=ath)
                     if preview_bytes:
                         await context.bot.send_photo(chat_id=update.effective_chat.id, photo=preview_bytes)
                     await context.bot.send_message(chat_id=update.effective_chat.id, text="这是您的主题文件，亲～")
+
         # await update.message.reply_text(f'Command arguments: {args}')
     else:
         # 优化说明显示
@@ -417,5 +424,9 @@ if __name__ == "__main__":
     if os.environ.get('ENV') != 'dev':
         application.add_error_handler(error_handler)
 
+    # 开启辅助线程
+    server = Thread(target=run)
+    # run_on(port_number) #Run in main thread
+    # server.daemon = True # Do not make us wait for you to exit
+    server.start()
     application.run_polling()
-    run()

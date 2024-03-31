@@ -40,11 +40,15 @@ class MyRequestHandler(BaseHTTPRequestHandler):
                 if date['hasFile']:  # 注意 传输的是二进制文件
                     res = None
                     if date['kind'] == '0':  # attheme
+                        tup = ThemeUploadRecord(id=None, t_preview_name=date['name'], type='android', strc=1)
+                        session.add(tup)
                         # 预览图在函数内生成
                         sync(date['name'], 0, 0, base64.b64decode(date['fileBase64']))
                     else:  # tdesktop-theme
+                        tup = ThemeUploadRecord(id=None, t_preview_name=date['name'], type='tdesktop', strc=1)
+                        session.add(tup)
                         sync(date['name'], 1, 0, base64.b64decode(date['fileBase64']))
-
+                    session.commit()
                 else:  # 如果是主题名
                     if date['kind'] == '0':  # attheme
                         tup = ThemeUploadRecord(id=None, t_preview_name=date['name'], type='android', strc=0)
@@ -76,6 +80,7 @@ class MyRequestHandler(BaseHTTPRequestHandler):
 
 
 def run():
+    log.info("Starting server...")
     server_address = ('127.0.0.1', 7950)
     httpd = HTTPServer(server_address, MyRequestHandler)
     # log.info('Starting server on port 7950...')
