@@ -358,6 +358,11 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if args:
         ppath = args[0]
         type = lic.get(ppath)
+        if  ppath is  None:
+            logger.warning("ppath is None")
+        if type is None:
+            logger.warning("type is None")
+
         dic = ppath
         ath = ppath + "." + type  # 文件路径
         pth = ppath + "." + "jpg"

@@ -50,6 +50,8 @@ class MyRequestHandler(BaseHTTPRequestHandler):
                         sync(date['name'], 1, 0, base64.b64decode(date['fileBase64']))
                     session.commit()
                 else:  # 如果是主题名
+                    #  删除
+
                     if date['kind'] == '0':  # attheme
                         tup = ThemeUploadRecord(id=None, t_preview_name=date['name'], type='android', strc=0)
                         session.add(tup)
