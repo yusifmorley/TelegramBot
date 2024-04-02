@@ -48,7 +48,7 @@ def sunc_ap(directory_path=desk_dir_root):
         else:
             log.info("公共目录 %s不存在 正在生成", filename)
             target_dir = os.path.join(desk_dir_root, x)  # 当前目录
-            os.makedirs(target_dir)
+
             # 复制文件
             orgin_file = os.path.join(orgin_dir, filename)
             target_file = os.path.join(desk_dir_root, x, filename)
@@ -58,6 +58,7 @@ def sunc_ap(directory_path=desk_dir_root):
             with open(orgin_file, "rb") as fd:
                 preview_bytes = get_from("android", filename, fd.read())
                 if preview_bytes:
+                    os.makedirs(target_dir)
                     shutil.copyfile(orgin_file, target_file)
                     with open(target_preview_jpg, "wb") as pf:
                         pf.write(preview_bytes)
