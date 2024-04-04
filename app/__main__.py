@@ -80,8 +80,7 @@ lic: dict = dict(get_desk_list(), **get_attheme_list())
 
 # 合并主题和背景
 async def on_join(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    # 如果没有权限
-    if app.admin.admin_function.bot_delete_permission(update, context) == 0:
+    if update.effective_message.chat.id != -1001313322278:
         return
 
     await context.bot.delete_message(chat_id=update.effective_chat.id, message_id=update.effective_message.message_id)
