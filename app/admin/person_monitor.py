@@ -22,6 +22,8 @@ class MonitorPerson:
         if usr_id == get_myid():
             return False
 
+        if update.effective_message.chat.id != -1001313322278:
+            return
         # 如果是私聊
         if update.effective_message.chat.type == Chat.PRIVATE:
             return False

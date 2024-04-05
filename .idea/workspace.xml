@@ -4,8 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ca79680f-c54d-4792-8fc8-f23ed4ec4965" name="Changes" comment="管理网站接口优化">
+    <list default="true" id="ca79680f-c54d-4792-8fc8-f23ed4ec4965" name="Changes" comment="on_join 优化">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/admin/person_monitor.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/admin/person_monitor.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -593,6 +594,8 @@
       <workItem from="1711941398765" duration="3937000" />
       <workItem from="1712027634097" duration="2959000" />
       <workItem from="1712042136979" duration="3107000" />
+      <workItem from="1712199349279" duration="1072000" />
+      <workItem from="1712281940216" duration="894000" />
     </task>
     <task id="LOCAL-00015" summary="ok">
       <created>1681708485862</created>
@@ -937,7 +940,7 @@
       <option name="project" value="LOCAL" />
       <updated>1691742284559</updated>
     </task>
-    <option name="localTasksCounter" value="159" />
+    <option name="localTasksCounter" value="160" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -960,7 +963,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="优化AttributeError" />
     <MESSAGE value="优化错误处理" />
     <MESSAGE value="优化机器" />
     <MESSAGE value="创建主题的uml" />
@@ -985,49 +987,50 @@
     <MESSAGE value="取消重复词检测" />
     <MESSAGE value="异步优化" />
     <MESSAGE value="管理网站接口优化" />
-    <option name="LAST_COMMIT_MESSAGE" value="管理网站接口优化" />
+    <MESSAGE value="on_join 优化" />
+    <option name="LAST_COMMIT_MESSAGE" value="on_join 优化" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/app/__main__.py</url>
-          <line>380</line>
+          <line>379</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/app/__main__.py</url>
-          <line>382</line>
+          <line>381</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/app/__main__.py</url>
-          <line>384</line>
+          <line>383</line>
           <option name="timeStamp" value="3" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/app/__main__.py</url>
-          <line>386</line>
+          <line>385</line>
           <option name="timeStamp" value="4" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/app/__main__.py</url>
-          <line>387</line>
+          <line>386</line>
           <option name="timeStamp" value="5" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/app/__main__.py</url>
-          <line>381</line>
+          <line>380</line>
           <option name="timeStamp" value="6" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/app/__main__.py</url>
-          <line>356</line>
+          <line>355</line>
           <option name="timeStamp" value="7" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/app/__main__.py</url>
-          <line>358</line>
+          <line>357</line>
           <option name="timeStamp" value="8" />
         </line-breakpoint>
       </breakpoints>
