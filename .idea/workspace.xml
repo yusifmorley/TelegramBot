@@ -4,9 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ca79680f-c54d-4792-8fc8-f23ed4ec4965" name="Changes" comment="on_join 优化">
+    <list default="true" id="ca79680f-c54d-4792-8fc8-f23ed4ec4965" name="Changes" comment="权限优化">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/admin/person_monitor.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/admin/person_monitor.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -235,8 +234,8 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Python.dev" />
       <item itemvalue="Python.__main__" />
+      <item itemvalue="Python.dev" />
       <item itemvalue="Python.get_time" />
       <item itemvalue="Python.listen" />
       <item itemvalue="Python.stand_lone" />
@@ -595,7 +594,7 @@
       <workItem from="1712027634097" duration="2959000" />
       <workItem from="1712042136979" duration="3107000" />
       <workItem from="1712199349279" duration="1072000" />
-      <workItem from="1712281940216" duration="894000" />
+      <workItem from="1712281940216" duration="1898000" />
     </task>
     <task id="LOCAL-00015" summary="ok">
       <created>1681708485862</created>
@@ -940,7 +939,7 @@
       <option name="project" value="LOCAL" />
       <updated>1691742284559</updated>
     </task>
-    <option name="localTasksCounter" value="160" />
+    <option name="localTasksCounter" value="161" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -963,7 +962,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="优化错误处理" />
     <MESSAGE value="优化机器" />
     <MESSAGE value="创建主题的uml" />
     <MESSAGE value="透明主题创建" />
@@ -988,7 +986,8 @@
     <MESSAGE value="异步优化" />
     <MESSAGE value="管理网站接口优化" />
     <MESSAGE value="on_join 优化" />
-    <option name="LAST_COMMIT_MESSAGE" value="on_join 优化" />
+    <MESSAGE value="权限优化" />
+    <option name="LAST_COMMIT_MESSAGE" value="权限优化" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

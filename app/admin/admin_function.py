@@ -51,7 +51,7 @@ def block_person(update: Update, context: CallbackContext, ban_word):
         context.bot.restrict_chat_member(chat_id=update.effective_chat.id,
                                          user_id=update.effective_user.id,
                                          permissions=ChatPermissions(can_send_messages=False,
-                                                                     can_send_media_messages=False))
+                                                                     can_send_other_messages=False))
 
 
 # 判断是否有删除消息的权限
