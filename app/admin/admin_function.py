@@ -1,14 +1,12 @@
 # 管理功能
-from telegram import ChatPermissions, ChatMember, Chat, ChatMemberAdministrator
+from telegram import ChatPermissions
 from telegram.error import BadRequest
 from telegram.ext import CallbackContext
 from app.logger.t_log import get_logger
-from app.model.models import init_session, BanUserLogo
+from app.model.models import init_session, BanUserLogo, BanWord
 from telegram import Update
 
 log = get_logger()
-
-
 # 是否存在违禁词
 def delete_txt(txt, str):
     for x in txt:
@@ -22,7 +20,7 @@ def get_ban_word(ban_word_object):  # 获取
     lis = []
     words = ban_word_object.select()
     for x in words:
-        lis.append(x[0])
+        lis.append(x.word)
     return lis
 
 

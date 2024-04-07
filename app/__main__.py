@@ -2,15 +2,13 @@ import base64
 import os
 import traceback
 from threading import Thread
-
 from PIL import Image
 import sqlalchemy.exc
 import telegram
 from telegram import Update, Bot, File, Message, Chat
-from telegram.ext import CallbackContext, CallbackQueryHandler, ContextTypes, Application
+from telegram.ext import CallbackContext, CallbackQueryHandler, ContextTypes, Application, ApplicationBuilder
 from telegram.ext import MessageHandler, filters
 from telegram.ext import CommandHandler
-import mysql.connector
 from urllib3.exceptions import NewConnectionError
 import app.model.models
 from app.admin.person_monitor import MonitorPerson
@@ -18,12 +16,11 @@ from app.callback import callback_android, callback_desktop
 from app.config import get_config
 from app.config.command_list import get_command, get_command_str
 from app.config.get_config import get_myid
-from app.db import mysqlop
 from app.decorate.listen import listen
 from app.logger import t_log
 from app.server.theme_http import run
 from app.theme_file import get_radom_link, get_android, get_desktop
-from app.admin import admin_function, ban_word
+from app.admin import admin_function, ban_word_op
 from app.theme_file import get_ios
 from app.util.create_atheme import get_attheme_color_pic, get_kyb, get_attheme, get_transparent_ky
 from io import BytesIO
@@ -51,7 +48,8 @@ if os.environ.get('ENV') == 'dev':
     proxy_url = "http://127.0.0.1:10810/"
     myapi = '6520279001:AAFlM8bPclv-dZvSERAbLihBNlMNVz2KRK0'  # 测试机器人id
 
-application = Application.builder().token(myapi).proxy_url(proxy_url).build()
+
+application = ApplicationBuilder().token(myapi).proxy(proxy_url).build()
 commands = get_command()
 bot: Bot = application.bot
 bot.set_my_commands(commands)
@@ -59,16 +57,10 @@ bot.set_my_commands(commands)
 # 日志
 logger = t_log.get_logger()
 
-# 数据库
-mydb = get_config.get_mysql_config()
-# 初始化数据库
-mysqlop.initdb(mydb)
-
 # 获取 banword 对象
-BanWordObject = ban_word.BanWord(mydb)
-
+bwo = ban_word_op.BanWord_OP(session)
 # 获取所有违禁词
-ban_words = admin_function.get_ban_word(BanWordObject)
+ban_words = admin_function.get_ban_word(bwo)
 
 # 监控10个人
 mon_per = MonitorPerson(10)
@@ -124,8 +116,8 @@ async def write_ban_word(update: Update, context: ContextTypes.DEFAULT_TYPE):
                                        text="您不是管理员！\n" + str_info)
         return
     global ban_words
-    admin_function.write_ban_word(BanWordObject, context.args[0])
-    ban_words = admin_function.get_ban_word(BanWordObject)
+    admin_function.write_ban_word(bwo, context.args[0])
+    ban_words = admin_function.get_ban_word(bwo)
     await context.bot.send_message(chat_id=update.effective_chat.id,
                                    text="成功添加新的违禁词：" + context.args[0])
     await context.bot.delete_message(message_id=update.effective_message.message_id, chat_id=update.effective_chat.id)
@@ -141,10 +133,6 @@ async def error_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     global mydb
     try:
         raise context.error
-
-    except mysql.connector.errors.OperationalError as e:  # 连接断开 重新链接
-        logger.warning(f"数据库链接发生错误: {e}")
-        mydb = get_config.get_mysql_config()
 
     except sqlalchemy.exc.PendingRollbackError as e:
         session.rollback()  # 回滚

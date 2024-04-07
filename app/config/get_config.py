@@ -19,14 +19,6 @@ def get_engine_str():
     return "mysql://{}:{}@127.0.0.1/{}".format(MysqlData["user"], passw, data["database_name"])
 
 
-def get_mysql_config():
-    mydb = mysql.connector.connect(
-        host=MysqlData["host"],
-        user=MysqlData["user"],
-        password=MysqlData["password"],
-        database=data["database_name"],
-    )
-    return mydb
 
 
 def get_telegram_id():
