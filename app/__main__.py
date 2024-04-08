@@ -48,7 +48,6 @@ if os.environ.get('ENV') == 'dev':
     proxy_url = "http://127.0.0.1:10810/"
     myapi = '6520279001:AAFlM8bPclv-dZvSERAbLihBNlMNVz2KRK0'  # 测试机器人id
 
-
 application = ApplicationBuilder().token(myapi).proxy(proxy_url).build()
 commands = get_command()
 bot: Bot = application.bot
@@ -116,6 +115,11 @@ async def write_ban_word(update: Update, context: ContextTypes.DEFAULT_TYPE):
                                        text="您不是管理员！\n" + str_info)
         return
     global ban_words
+    if context.args[0] in ban_words:
+        await context.bot.send_message(chat_id=update.effective_chat.id,
+                                       text="违禁词已经存在：" + context.args[0])
+        return
+
     admin_function.write_ban_word(bwo, context.args[0])
     ban_words = admin_function.get_ban_word(bwo)
     await context.bot.send_message(chat_id=update.effective_chat.id,
@@ -130,7 +134,7 @@ async def combin_theme(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 # 错误处理
 async def error_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    global mydb
+
     try:
         raise context.error
 
@@ -344,14 +348,14 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     args = context.args
     if args:
         ppath = args[0]
-        type = lic.get(ppath)
-        if  ppath is  None:
+        type_t = lic.get(ppath)
+        if ppath is None:
             logger.warning("ppath is None")
-        if type is None:
-            logger.warning("type is None")
+        if type_t is None:
+            logger.warning("type_t is None")
 
         dic = ppath
-        ath = ppath + "." + type  # 文件路径
+        ath = ppath + "." + type_t  # 文件路径
         pth = ppath + "." + "jpg"
         if ath.endswith("tdesktop-theme"):
             ods = "src/myserver_bot_public/desk/"
@@ -359,7 +363,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 data = fd.read()
                 with open(os.path.join(ods, dic, pth), "rb") as pd:  # 图片加载
                     preview_bytes = pd.read()
-                    await context.bot.send_document(chat_id=update.effective_chat.id, document=data, filename=ath)
+                    await context.bot.send_document(chat_id=update.effective_chat.id, document=data, filename=ath[30:])
                     if preview_bytes:
                         await context.bot.send_photo(chat_id=update.effective_chat.id, photo=preview_bytes)
                     await context.bot.send_message(chat_id=update.effective_chat.id, text="这是您的主题文件，亲～")
