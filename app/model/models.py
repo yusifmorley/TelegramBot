@@ -10,8 +10,11 @@ from app.config import get_config
 # pip install mysqlclient
 # sqlacodegen mysql://root:root@localhost/bot_data  > models.py
 # ubuntu 需要安装依赖  apt-get install python3.11-dev libmysqlclient-dev
+
 Base = declarative_base()
-engine = create_engine(get_config.get_engine_str())
+
+
+engine = create_engine(get_config.get_engine_str(),pool_pre_ping=True)
 DBSession = sessionmaker(bind=engine)
 seesion = DBSession()
 class BanUserLogo(Base):
