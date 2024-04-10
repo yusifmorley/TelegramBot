@@ -96,7 +96,8 @@ async def admin_handle(update: Update, context: ContextTypes.DEFAULT_TYPE):  # �
 
     if update.effective_message.chat.type == Chat.GROUP or update.effective_message.chat.type == Chat.SUPERGROUP:
         if hasattr(user, "id"):
-            mon_per.run(user.id, user.first_name + " " + user.first_name, text, update, context, ban_words, logger)
+            await  mon_per.run(user.id, user.first_name + " " + user.first_name, text, update, context, ban_words,
+                               logger)
     else:
         return
 
@@ -134,7 +135,6 @@ async def combin_theme(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 # 错误处理
 async def error_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
-
     try:
         raise context.error
 

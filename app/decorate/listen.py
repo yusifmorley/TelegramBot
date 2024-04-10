@@ -9,6 +9,7 @@ from datetime import date
 
 session: Session = init_session()
 
+
 # 用户使用监听
 def listen(fun):
     async def add_listen(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -19,7 +20,7 @@ def listen(fun):
             await context.bot.getChatMember('@moleydimu', update.effective_user.id)
 
         except TelegramError as te:
-        #如果发生错误 说明用户未加入群组
+            # 如果发生错误 说明用户未加入群组
             pass
 
         # 向数据库查询用户

@@ -13,10 +13,11 @@ from app.config import get_config
 
 Base = declarative_base()
 
-
-engine = create_engine(get_config.get_engine_str(),pool_pre_ping=True)
+engine = create_engine(get_config.get_engine_str(), pool_pre_ping=True)
 DBSession = sessionmaker(bind=engine)
 seesion = DBSession()
+
+
 class BanUserLogo(Base):
     __tablename__ = 'ban_user_logo'
 
@@ -80,9 +81,11 @@ class UserUseRecord(Base):
     date = Column(Date, primary_key=True, nullable=False, comment='日期')
     count_record = Column(Integer, comment='使用次数')
 
+
 def init_session():
     return seesion  # 返回seesion实例
 
+
 def reflush():
-    global  seesion
+    global seesion
     seesion = DBSession()

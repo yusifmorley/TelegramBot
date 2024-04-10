@@ -17,7 +17,7 @@ class MonitorPerson:
             del self.text_list[0]  # 删除首个元素
         self.text_list.append(text)
 
-    def run(self, usr_id, user_name, text, update: Update, context: CallbackContext, banword, logger):
+    async def run(self, usr_id, user_name, text, update: Update, context: CallbackContext, banword, logger):
         # 排除 管理员 的 消息
         if usr_id == get_myid():
             return False
@@ -31,11 +31,11 @@ class MonitorPerson:
         # 如果是组 或者超级组
         if update.effective_message.chat.type == Chat.GROUP or update.effective_message.chat.type == Chat.SUPERGROUP:
             # 是否有权限删除
-            if bot_delete_permission(update, context) == 0:
+            if await bot_delete_permission(update, context) == 0:
                 # 没有权限 结束
                 return False
 
-            if bot_restrict_permission(update, context) == 0:
+            if await bot_restrict_permission(update, context) == 0:
                 # 没有权限 结束`
                 return False
 
@@ -48,8 +48,9 @@ class MonitorPerson:
                 return False
 
         if hasattr(update, "message") and hasattr(update.message, "sender_chat") and hasattr(update.message,
-                                                                                             "forward_origin") and hasattr(update.message.forward_origin, "type"):
-            if update.message.forward_origin.type == MessageOrigin.CHANNEL :
+                                                                                             "forward_origin") and hasattr(
+            update.message.forward_origin, "type"):
+            if update.message.forward_origin.type == MessageOrigin.CHANNEL:
                 return False
 
         # 对@进行特殊处理

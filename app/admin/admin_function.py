@@ -7,6 +7,8 @@ from app.model.models import init_session, BanUserLogo, BanWord
 from telegram import Update
 
 log = get_logger()
+
+
 # 是否存在违禁词
 def delete_txt(txt, str):
     for x in txt:
@@ -31,7 +33,7 @@ def write_ban_word(ban_word_object, str):
 
 # 封禁用户
 # 在调用词方法之前请检查 机器人是否有相关权限
-def block_person(update: Update, context: CallbackContext, ban_word):
+async def block_person(update: Update, context: CallbackContext, ban_word):
     session = init_session()
     existing_user: BanUserLogo | None = session.get(BanUserLogo, update.effective_user.id)
     if not existing_user:
@@ -42,14 +44,15 @@ def block_person(update: Update, context: CallbackContext, ban_word):
                                 ))
     session.commit()
     try:
-        context.bot.delete_message(message_id=update.effective_message.message_id, chat_id=update.effective_chat.id)
+        await context.bot.delete_message(message_id=update.effective_message.message_id,
+                                         chat_id=update.effective_chat.id)
     except BadRequest as br:
         log.warn(br.message)
     finally:
-        context.bot.restrict_chat_member(chat_id=update.effective_chat.id,
-                                         user_id=update.effective_user.id,
-                                         permissions=ChatPermissions(can_send_messages=False,
-                                                                     can_send_other_messages=False))
+        await context.bot.restrict_chat_member(chat_id=update.effective_chat.id,
+                                               user_id=update.effective_user.id,
+                                               permissions=ChatPermissions(can_send_messages=False,
+                                                                           can_send_other_messages=False))
 
 
 # 判断是否有删除消息的权限
