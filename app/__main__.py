@@ -30,13 +30,11 @@ from app.util.create_desktop import get_desktop_kyb
 from app.util.db_op import clear
 from app.util.sync_public_attheme import sunc_ap, get_attheme_list
 from app.util.sync_public_desk import sync_dp, get_desk_list
-
 import logging
 
+# 日志
 logging.getLogger("httpx").setLevel(logging.WARNING)
-
-logger = logging.getLogger(__name__)
-
+logger = t_log.get_logging().getLogger(__name__)
 my_github: str = "欢迎使用主题生成机器人\n"
 my_id = get_myid()
 myapi = get_config.get_telegram_id()  # 机器人api
@@ -51,11 +49,6 @@ if os.environ.get('ENV') == 'dev':
 application = ApplicationBuilder().token(myapi).proxy(proxy_url).build()
 commands = get_command()
 bot: Bot = application.bot
-bot.set_my_commands(commands)
-
-# 日志
-logger = t_log.get_logger()
-
 # 获取 banword 对象
 bwo = ban_word_op.BanWord_OP(session)
 # 获取所有违禁词
@@ -63,11 +56,11 @@ ban_words = admin_function.get_ban_word(bwo)
 
 # 监控10个人
 mon_per = MonitorPerson(10)
-
 str_info = get_command_str()
-
 lic: dict = dict(get_desk_list(), **get_attheme_list())
 
+async def d_command():
+    await bot.set_my_commands(commands)
 
 # 合并主题和背景
 async def on_join(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -388,6 +381,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 if __name__ == "__main__":
     logger.info("运行本项目必须开启ThemeFactory")
+    d_command()
     # 同步 桌面主题
     sync_dp()
     sunc_ap()
