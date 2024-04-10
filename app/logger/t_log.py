@@ -1,12 +1,16 @@
 import logging
 from logging.handlers import TimedRotatingFileHandler
 
-logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-                    level=logging.INFO)  # 日志
-logger = logging.getLogger("__mian__")
 handler = TimedRotatingFileHandler('log/my_log.log', when='midnight', interval=1, backupCount=7)
-logger.addHandler(handler)
+logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+                    level=logging.INFO, handlers=[handler])  # 日志
+logger = logging.getLogger("__mian__")
 
 
+# 遗留代码
 def get_logger():
     return logger
+
+
+def get_logging():
+    return logging

@@ -2,11 +2,11 @@
 from telegram import ChatPermissions
 from telegram.error import BadRequest
 from telegram.ext import CallbackContext
-from app.logger.t_log import get_logger
+from app.logger.t_log import get_logging
 from app.model.models import init_session, BanUserLogo, BanWord
 from telegram import Update
 
-log = get_logger()
+log = get_logging().getLogger(__name__)
 
 
 # 是否存在违禁词
@@ -81,6 +81,7 @@ async def bot_restrict_permission(update: Update, context: CallbackContext):
     chat_id = update.message.chat_id
     chat_memeber = await context.bot.get_chat_member(chat_id=chat_id, user_id=bot_user_id)
     if not chat_memeber.can_restrict_members:
+
         return 0
 
     return 1

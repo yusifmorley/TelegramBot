@@ -5,8 +5,9 @@ from app.admin import admin_function
 from telegram import Update, Chat, MessageOrigin
 from app.config.get_config import get_myid
 from app.admin.admin_function import bot_delete_permission, bot_restrict_permission
+from app.logger.t_log import get_logging
 
-
+log = get_logging().getLogger(__name__)
 class MonitorPerson:
     def __init__(self, monitor_person_num):  # monitor_person为监听人个数
         self.monitor_person = monitor_person_num
@@ -23,7 +24,7 @@ class MonitorPerson:
             return False
 
         if update.effective_message.chat.id != -1001313322278:
-            return
+            return False
         # 如果是私聊
         if update.effective_message.chat.type == Chat.PRIVATE:
             return False
@@ -32,10 +33,10 @@ class MonitorPerson:
         if update.effective_message.chat.type == Chat.GROUP or update.effective_message.chat.type == Chat.SUPERGROUP:
             # 是否有权限删除
             if await bot_delete_permission(update, context) == 0:
-                # 没有权限 结束
                 return False
 
             if await bot_restrict_permission(update, context) == 0:
+
                 # 没有权限 结束`
                 return False
 
@@ -55,7 +56,7 @@ class MonitorPerson:
 
         # 对@进行特殊处理
         if '@' in text and "/" not in text:
-            admin_function.block_person(update, context, "@")
+            await admin_function.block_person(update, context, "@")
             return True
 
         # 对 t.me 链接特殊处理
@@ -70,7 +71,7 @@ class MonitorPerson:
         # 判断是否触违禁词
         os = admin_function.delete_txt(banword, text)
         if os:  # 若存在违禁词
-            admin_function.block_person(update, context, os)
+            await admin_function.block_person(update, context, os)
             logger.info(os)  # 记录
             return True
 
