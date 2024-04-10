@@ -55,7 +55,7 @@ bwo = ban_word_op.BanWord_OP(session)
 ban_words = admin_function.get_ban_word(bwo)
 
 # 监控10个人
-mon_per = MonitorPerson(10)
+mon_per = MonitorPerson()
 str_info = get_command_str()
 lic: dict = dict(get_desk_list(), **get_attheme_list())
 

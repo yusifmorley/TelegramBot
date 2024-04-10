@@ -16,3 +16,4 @@ __pycache__
 /app/stand_alone/
 *.attheme
 *.tdesktop-theme
+.idea/**

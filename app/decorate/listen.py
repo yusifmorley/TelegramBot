@@ -4,21 +4,23 @@ from telegram.ext import ContextTypes, CallbackContext
 from sqlalchemy.orm.session import Session
 import app
 from app.admin.admin_function import bot_delete_permission, bot_restrict_permission
+from app.logger.t_log import get_logging
 from app.model.models import init_session, CreateThemeLogo, UserUseRecord, BanUserLogo, GroupInfo
 from datetime import date
 
 session: Session = init_session()
 
+logger = get_logging().getLogger(__name__)
+
 
 # 用户使用监听
+# 如果被封禁了就不可使用机器人
 def listen(fun):
     async def add_listen(update: Update, context: ContextTypes.DEFAULT_TYPE):
         # 检测用户是否关注了频道
         # 必须把机器人引入频道 赋予管理权限
         try:
-
             await context.bot.getChatMember('@moleydimu', update.effective_user.id)
-
         except TelegramError as te:
             # 如果发生错误 说明用户未加入群组
             pass
@@ -27,9 +29,8 @@ def listen(fun):
         existing_user: BanUserLogo | None = session.get(BanUserLogo, update.effective_user.id)
         # 如果用户被封禁
         if existing_user:
+            logger.warning("非法私聊用户,禁止使用机器人 update为: {}".format(update))
             return
-            # logger.warning("非法私聊用户,禁止使用机器人: {}".format(update))
-            # raise DispatcherHandlerStop()
 
         # 执行函数
         await fun(update, context)
@@ -90,7 +91,3 @@ def listen(fun):
         session.commit()
 
     return add_listen
-
-
-if __name__ == "__main__":
-    print("d")

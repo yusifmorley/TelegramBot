@@ -43,16 +43,14 @@ async def block_person(update: Update, context: CallbackContext, ban_word):
                                 ban_word=ban_word
                                 ))
     session.commit()
-    try:
-        await context.bot.delete_message(message_id=update.effective_message.message_id,
+
+    a = await context.bot.delete_message(message_id=update.effective_message.message_id,
                                          chat_id=update.effective_chat.id)
-    except BadRequest as br:
-        log.warn(br.message)
-    finally:
-        await context.bot.restrict_chat_member(chat_id=update.effective_chat.id,
+    b = await context.bot.restrict_chat_member(chat_id=update.effective_chat.id,
                                                user_id=update.effective_user.id,
                                                permissions=ChatPermissions(can_send_messages=False,
                                                                            can_send_other_messages=False))
+    return a and b
 
 
 # 判断是否有删除消息的权限
@@ -81,7 +79,6 @@ async def bot_restrict_permission(update: Update, context: CallbackContext):
     chat_id = update.message.chat_id
     chat_memeber = await context.bot.get_chat_member(chat_id=chat_id, user_id=bot_user_id)
     if not chat_memeber.can_restrict_members:
-
         return 0
 
     return 1
