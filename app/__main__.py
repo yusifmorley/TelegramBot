@@ -16,6 +16,7 @@ from app.callback import callback_android, callback_desktop
 from app.config import get_config
 from app.config.command_list import get_command, get_command_str
 from app.config.get_config import get_myid
+from app.constant_obj.ThemeType import get_theme_list
 from app.decorate.listen import listen
 from app.logger import t_log
 from app.server.theme_http import run
@@ -57,10 +58,14 @@ ban_words = admin_function.get_ban_word(bwo)
 # 监控10个人
 mon_per = MonitorPerson()
 str_info = get_command_str()
-lic: dict = dict(get_desk_list(), **get_attheme_list())
+# lic: dict | None = None
+# 获取对象
+ty_lis = get_theme_list()
+
 
 async def d_command():
     await bot.set_my_commands(commands)
+
 
 # 合并主题和背景
 async def on_join(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -341,6 +346,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     args = context.args
     if args:
         ppath = args[0]
+        lic = ty_lis.get_ty_list()
         type_t = lic.get(ppath)
         if ppath is None:
             logger.warning("ppath is None")

@@ -4,17 +4,17 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
 import base64
 from sqlalchemy.orm import Session
+
+from app.constant_obj.ThemeType import get_theme_list
 from app.model.models import init_session, ThemeUploadRecord
 from app.logger.t_log import get_logger
 from app.util.get_preview import get_from
 from app.util.sync_public_attheme import android_add_by_name, delete
 from app.util.sync_public_desk import desk_add_by_name, delete as d_delete
-import ast
 
 session: Session = init_session()
 log = get_logger()
-
-
+ty_lis = get_theme_list()
 class MyRequestHandler(BaseHTTPRequestHandler):
     def do_POST(self):
 
@@ -70,7 +70,11 @@ class MyRequestHandler(BaseHTTPRequestHandler):
             response = {'status': 'success', 'message': 'JSON data received successfully'}
             self.wfile.write(json.dumps(response)
                              .encode('utf-8'))
+
+            # 刷新 type字典
+            ty_lis.flushdict()
         except json.JSONDecodeError as e:
+            log.error("json 解析错误 : %s".format(e))
             # JSON 解析失败的处理
             self.send_response(400)
             self.send_header('Content-type', 'application/json')
