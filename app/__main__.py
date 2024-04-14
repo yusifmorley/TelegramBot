@@ -175,7 +175,7 @@ async def get_desktop_theme(update: Update, context: ContextTypes.DEFAULT_TYPE):
     data = fd.read()
     fd.close()
     preview_bytes = get_desktop.get_desktop_preview(path, data)
-    await context.bot.send_document(chat_id=update.effective_chat.id, document=data, filename=path)
+    await context.bot.send_document(chat_id=update.effective_chat.id, document=data, filename=path[30:])
     if preview_bytes:
         await context.bot.send_photo(chat_id=update.effective_chat.id, photo=preview_bytes)
     await context.bot.send_message(chat_id=update.effective_chat.id, text="这是您的主题文件，亲～")
