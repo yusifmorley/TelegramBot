@@ -20,6 +20,7 @@ def get_from(theme_type, theme_name, theme_data):
     if content != b'fail':
         return content
     else:
+
         return None
 
 

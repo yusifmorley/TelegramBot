@@ -27,8 +27,13 @@ lis = os.listdir(desk_dir_root)
 
 # 展示的主题列表
 # 注意 文件名里最好没有空格
+def flush_dic():
+    global lis
+    lis = os.listdir(desk_dir_root)
+
 
 def get_attheme_list():
+    flush_dic()
     di = dict()
     for x in attheme_ls:
         l: str = x.t_preview_name

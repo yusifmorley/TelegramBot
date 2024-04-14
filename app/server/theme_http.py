@@ -116,11 +116,14 @@ def sync(filename, type, flag, bytes=None):  # 生成合适 的mybackstage目录
             target_preview_jpg = os.path.join(desk_dir_root, x, x + ".jpg")
 
             preview_bytes = get_from("android", filename, bytes)
-
+            if preview_bytes is None:
+                log.error("生成预览失败")
             with open(target_file, 'wb') as fp:
                 fp.write(bytes)  # 写入二进制文件
+
             with open(target_preview_jpg, 'wb') as fj:
                 fj.write(preview_bytes)
+
 
         else:  # 处理 文件名
             android_add_by_name(filename)
@@ -140,9 +143,13 @@ def sync(filename, type, flag, bytes=None):  # 生成合适 的mybackstage目录
             target_file = os.path.join(desk_dir_root, x, filename)
             target_preview_jpg = os.path.join(desk_dir_root, x, x + ".jpg")
             preview_bytes = get_from("desk", filename, bytes)
+            if preview_bytes is None:
+                log.error("生成预览失败")
             with open(target_file, 'wb') as fp:
                 fp.write(bytes)  # 写入二进制文件
+
             with open(target_preview_jpg, 'wb') as fj:
                 fj.write(preview_bytes)
+
         else:  # 处理 文件名
             desk_add_by_name(filename)

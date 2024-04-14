@@ -26,8 +26,12 @@ desk_list = []
 for x in desk_ls:
     desk_list.append(x.t_preview_name)
 
+def flush_dic():
+    global lis
+    lis = os.listdir(desk_dir_root)
 
 def get_desk_list():
+    flush_dic()
     di = dict()
     for x in desk_ls:
         l: str = x.t_preview_name
