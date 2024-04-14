@@ -14,7 +14,7 @@ class ThemeType(object):
     def flushdict(self):
         self.lic = dict(get_desk_list(), **get_attheme_list())
         logger.info("刷新type字典完成")
-        logger.info("大小为 %s ".format(str(len(self.lic))))
+        logger.info("大小为 {} ".format(str(len(self.lic))))
 
     def get_ty_list(self):
         return self.lic
