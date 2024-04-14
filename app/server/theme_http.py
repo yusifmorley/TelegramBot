@@ -113,7 +113,7 @@ def sync(filename, type, flag, bytes=None):  # 生成合适 的mybackstage目录
             os.makedirs(target_dir)
             # 创建目标目录 创建目标
             target_file = os.path.join(desk_dir_root, x, filename)
-            target_preview_jpg = os.path.join(desk_dir_root, x, filename + ".jpg")
+            target_preview_jpg = os.path.join(desk_dir_root, x, x + ".jpg")
 
             preview_bytes = get_from("android", filename, bytes)
 
@@ -138,7 +138,7 @@ def sync(filename, type, flag, bytes=None):  # 生成合适 的mybackstage目录
             os.makedirs(target_dir)
             # 创建目标目录 创建目标
             target_file = os.path.join(desk_dir_root, x, filename)
-            target_preview_jpg = os.path.join(desk_dir_root, x, filename + ".jpg")
+            target_preview_jpg = os.path.join(desk_dir_root, x, x + ".jpg")
             preview_bytes = get_from("desk", filename, bytes)
             with open(target_file, 'wb') as fp:
                 fp.write(bytes)  # 写入二进制文件

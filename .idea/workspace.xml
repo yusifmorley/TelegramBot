@@ -4,12 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ca79680f-c54d-4792-8fc8-f23ed4ec4965" name="Changes" comment="权限优化">
-      <change afterPath="$PROJECT_DIR$/app/constant_obj/ThemeType.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/__main__.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/__main__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/server/theme_http.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/server/theme_http.py" afterDir="false" />
-    </list>
+    <list default="true" id="ca79680f-c54d-4792-8fc8-f23ed4ec4965" name="Changes" comment="逻辑优化" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -238,8 +233,8 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Python.dev" />
       <item itemvalue="Python.__main__" />
+      <item itemvalue="Python.dev" />
       <item itemvalue="Python.get_time" />
       <item itemvalue="Python.listen" />
       <item itemvalue="Python.stand_lone" />
@@ -607,7 +602,7 @@
       <workItem from="1712738599066" duration="3137000" />
       <workItem from="1712925828986" duration="771000" />
       <workItem from="1712989368590" duration="4490000" />
-      <workItem from="1713016535962" duration="1694000" />
+      <workItem from="1713016535962" duration="1843000" />
     </task>
     <task id="LOCAL-00015" summary="ok">
       <created>1681708485862</created>
@@ -952,7 +947,7 @@
       <option name="project" value="LOCAL" />
       <updated>1691742284559</updated>
     </task>
-    <option name="localTasksCounter" value="169" />
+    <option name="localTasksCounter" value="170" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -975,7 +970,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="透明主题创建" />
     <MESSAGE value="用户记录" />
     <MESSAGE value="用户记录优化" />
     <MESSAGE value="日志优化" />
@@ -1000,7 +994,8 @@
     <MESSAGE value="文件名优化" />
     <MESSAGE value=" 异步优化" />
     <MESSAGE value="权限优化" />
-    <option name="LAST_COMMIT_MESSAGE" value="权限优化" />
+    <MESSAGE value="逻辑优化" />
+    <option name="LAST_COMMIT_MESSAGE" value="逻辑优化" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/TelegramBot$setup.coverage" NAME="setup Coverage Results" MODIFIED="1671084881986" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
