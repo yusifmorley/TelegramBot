@@ -9,10 +9,12 @@ class ThemeType(object):
     def __init__(self):
         self.lic = None
         self.flushdict()
+        logger.info("字典type字典初始化完成,大小为 %s ".format(str(len(self.lic))))
 
     def flushdict(self):
         self.lic = dict(get_desk_list(), **get_attheme_list())
         logger.info("刷新type字典完成")
+        logger.info("大小为 %s ".format(str(len(self.lic))))
 
     def get_ty_list(self):
         return self.lic
