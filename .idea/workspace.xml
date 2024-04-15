@@ -4,7 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ca79680f-c54d-4792-8fc8-f23ed4ec4965" name="Changes" comment="修复文件夹同步" />
+    <list default="true" id="ca79680f-c54d-4792-8fc8-f23ed4ec4965" name="Changes" comment="文件名修复">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/util/sync_public_attheme.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/util/sync_public_attheme.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/util/sync_public_desk.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/util/sync_public_desk.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -233,8 +237,8 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Python.__main__" />
       <item itemvalue="Python.dev" />
+      <item itemvalue="Python.__main__" />
       <item itemvalue="Python.get_time" />
       <item itemvalue="Python.listen" />
       <item itemvalue="Python.stand_lone" />
@@ -604,6 +608,9 @@
       <workItem from="1712989368590" duration="4490000" />
       <workItem from="1713016535962" duration="1843000" />
       <workItem from="1713067835641" duration="5177000" />
+      <workItem from="1713085565492" duration="277000" />
+      <workItem from="1713153336926" duration="72000" />
+      <workItem from="1713171906705" duration="727000" />
     </task>
     <task id="LOCAL-00015" summary="ok">
       <created>1681708485862</created>
@@ -948,7 +955,7 @@
       <option name="project" value="LOCAL" />
       <updated>1691742284559</updated>
     </task>
-    <option name="localTasksCounter" value="176" />
+    <option name="localTasksCounter" value="177" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -971,7 +978,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="日志优化" />
     <MESSAGE value="create_tdesktop_base_pic命令实现" />
     <MESSAGE value="图片识别优化" />
     <MESSAGE value="目录优化" />
@@ -996,7 +1002,8 @@
     <MESSAGE value="逻辑优化" />
     <MESSAGE value="添加日志" />
     <MESSAGE value="修复文件夹同步" />
-    <option name="LAST_COMMIT_MESSAGE" value="修复文件夹同步" />
+    <MESSAGE value="文件名修复" />
+    <option name="LAST_COMMIT_MESSAGE" value="文件名修复" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

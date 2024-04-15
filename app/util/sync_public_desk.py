@@ -33,8 +33,8 @@ def flush_dic():
 def get_desk_list():
     flush_dic()
     di = dict()
-    for x in desk_ls:
-        l: str = x.t_preview_name
+    for x in desk_list:
+        l: str = x
         p = l.split(".")
         di.update({p[0]: p[1]})
     return di
