@@ -27,17 +27,17 @@ desk_list = []
 for x in desk_ls:
     desk_list.append(x.t_preview_name)
 
+
 def flush_dic():
     global lis
     lis = os.listdir(desk_dir_root)
+
 
 def get_desk_list():
     flush_dic()
     di = dict()
     for x in lis:
-        l: str = x
-        p = l.split(".")
-        di.update({p[0]: p[1]})
+        di.update({x: "tdesktop-theme"})
     return di
 
 
