@@ -18,9 +18,10 @@ desk_dir_root = 'src/myserver_bot_public/desk'
 session: Session = init_session()
 
 lis = os.listdir(desk_dir_root)
-
+# 数据库信息
 desk_ls = session.query(ThemeUploadRecord).filter(ThemeUploadRecord.type == 'tdesktop' and ThemeUploadRecord.strc == 0
                                                   ).all()
+# 必要，保存session数据
 # 展示的主题列表
 desk_list = []
 for x in desk_ls:
@@ -33,7 +34,7 @@ def flush_dic():
 def get_desk_list():
     flush_dic()
     di = dict()
-    for x in desk_list:
+    for x in lis:
         l: str = x
         p = l.split(".")
         di.update({p[0]: p[1]})

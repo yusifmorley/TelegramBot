@@ -35,7 +35,7 @@ def flush_dic():
 def get_attheme_list():
     flush_dic()
     di = dict()
-    for x in attheme_list:
+    for x in lis:
         l: str = x
         p = l.split(".")
         di.update({p[0]: p[1]})

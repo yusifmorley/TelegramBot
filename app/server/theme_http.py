@@ -15,6 +15,8 @@ from app.util.sync_public_desk import desk_add_by_name, delete as d_delete
 session: Session = init_session()
 log = get_logger()
 ty_lis = get_theme_list()
+
+
 class MyRequestHandler(BaseHTTPRequestHandler):
     def do_POST(self):
 
