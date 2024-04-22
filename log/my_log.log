@@ -1,0 +1,404 @@
+2024-04-14 13:02:20,263 - app.constant_obj.ThemeType - INFO - 刷新type字典完成
+2024-04-14 13:02:20,263 - app.constant_obj.ThemeType - INFO - 大小为 13 
+2024-04-14 13:02:20,263 - app.constant_obj.ThemeType - INFO - 字典type字典初始化完成,大小为 13 
+2024-04-14 13:02:21,446 - __main__ - INFO - 运行本项目必须开启ThemeFactory
+2024-04-14 13:02:21,451 - __mian__ - INFO - 公共目录 -3PJFe65CLIVuCWRAgSb0JIa_X7DadltDJBp6aySuwlE-MIr7XD-9jJWuNQ-gtNg.tdesktop-theme已经存在
+2024-04-14 13:02:21,451 - __mian__ - INFO - 公共目录 -6e2mOy2Rmnq-XWFnLsslol3inNXcsXT30P-wgyblkBeqC_62YQG4DpRpfQnZOAA.tdesktop-theme已经存在
+2024-04-14 13:02:21,451 - __mian__ - INFO - 公共目录 -FG1yjGT6_0GqEl_L7szoHP8ddPVkVPEPBCp9Omvyq_u8rXCOdhQ97Wb0fFtwHX2.tdesktop-theme已经存在
+2024-04-14 13:02:21,458 - __mian__ - INFO - ---公共目录完整---
+2024-04-14 13:02:21,458 - __mian__ - INFO - 公共目录 N_0dXco0VN8wFQAwhviRGzVUYy16Z_CWkqOE3S2IRVI1u4fu8ZRmIjox48oCb5ie.attheme已经存在
+2024-04-14 13:02:21,458 - __mian__ - INFO - 公共目录 o_dTwiB7tPPoxPg2ftYGvIvAts33zyfeOUntoxog3-EmQKjFZfl0Rdn2Um_mjWar.attheme已经存在
+2024-04-14 13:02:21,458 - __mian__ - INFO - 公共目录 p_3gEdOfnCoTLP7kBMUcUyarerNaTBmKPCn2AoQVsFB6ujRRasuNSejKRBOJofur.attheme已经存在
+2024-04-14 13:02:21,458 - __mian__ - INFO - 公共目录 P_Ugilz2CqBFkw95s9tmVrPCwAIZKKbaU99XlHBjmBgalxIpbebPKpk29HShGFrS.attheme已经存在
+2024-04-14 13:02:21,458 - __mian__ - INFO - 公共目录 I_d8AMTuqeSMVycDLxjTha2Z17MaswGAzezHXQ03HZ44NObs-PAkh5GUUHfwNW4E.attheme已经存在
+2024-04-14 13:02:21,458 - __mian__ - INFO - 公共目录 I_7x3E0l_sBOZp48-DJE71N6bTvcIXlhJAZ8QHdJGWsaCyBpNeYHYMk2jsEF96HD.attheme已经存在
+2024-04-14 13:02:21,458 - __mian__ - INFO - 公共目录 u_3-piPqDOLF_Jh3Uh44BAVSM4Od4x_bpqJ-gjQT8ny2KC5ZGxhLUsN27PzMhEOW.attheme已经存在
+2024-04-14 13:02:21,458 - __mian__ - INFO - 公共目录 t_002PticcQik7zaXkg473TCSswrlMgFJsH11ia7n0aYyZRdYl05jF703_IULjVa.attheme已经存在
+2024-04-14 13:02:21,458 - __mian__ - INFO - 公共目录 g_kWrZf2J4GQ0hAI3EgwPJH8EBvyXhyr767CPvi4ptHnny4CuMGn3ubPKPzvz-wp.attheme已经存在
+2024-04-14 13:02:21,458 - __mian__ - INFO - 公共目录 B_6A8tbNFc2g3L1u2tYuYcS5X5IobnNUHwe03tdSEIjk0k2NwwRa0wtpxRB5hp1D.attheme已经存在
+2024-04-14 13:02:21,458 - __mian__ - INFO - ---公共目录完整---
+2024-04-14 13:02:21,459 - __mian__ - INFO - Starting server...
+2024-04-14 13:02:23,689 - apscheduler.scheduler - INFO - Scheduler started
+2024-04-14 13:02:23,689 - telegram.ext.Application - INFO - Application started
+2024-04-14 13:05:33,101 - app.constant_obj.ThemeType - INFO - 刷新type字典完成
+2024-04-14 13:05:33,101 - app.constant_obj.ThemeType - INFO - 大小为 13 
+2024-04-14 13:05:33,102 - app.constant_obj.ThemeType - INFO - 字典type字典初始化完成,大小为 13 
+2024-04-14 13:05:34,307 - __main__ - INFO - 运行本项目必须开启ThemeFactory
+2024-04-14 13:05:34,313 - __mian__ - INFO - 公共目录 -3PJFe65CLIVuCWRAgSb0JIa_X7DadltDJBp6aySuwlE-MIr7XD-9jJWuNQ-gtNg.tdesktop-theme已经存在
+2024-04-14 13:05:34,313 - __mian__ - INFO - 公共目录 -6e2mOy2Rmnq-XWFnLsslol3inNXcsXT30P-wgyblkBeqC_62YQG4DpRpfQnZOAA.tdesktop-theme已经存在
+2024-04-14 13:05:34,313 - __mian__ - INFO - 公共目录 -FG1yjGT6_0GqEl_L7szoHP8ddPVkVPEPBCp9Omvyq_u8rXCOdhQ97Wb0fFtwHX2.tdesktop-theme已经存在
+2024-04-14 13:05:34,313 - __mian__ - INFO - ---公共目录完整---
+2024-04-14 13:05:34,314 - __mian__ - INFO - 公共目录 N_0dXco0VN8wFQAwhviRGzVUYy16Z_CWkqOE3S2IRVI1u4fu8ZRmIjox48oCb5ie.attheme已经存在
+2024-04-14 13:05:34,314 - __mian__ - INFO - 公共目录 o_dTwiB7tPPoxPg2ftYGvIvAts33zyfeOUntoxog3-EmQKjFZfl0Rdn2Um_mjWar.attheme已经存在
+2024-04-14 13:05:34,314 - __mian__ - INFO - 公共目录 p_3gEdOfnCoTLP7kBMUcUyarerNaTBmKPCn2AoQVsFB6ujRRasuNSejKRBOJofur.attheme已经存在
+2024-04-14 13:05:34,314 - __mian__ - INFO - 公共目录 P_Ugilz2CqBFkw95s9tmVrPCwAIZKKbaU99XlHBjmBgalxIpbebPKpk29HShGFrS.attheme已经存在
+2024-04-14 13:05:34,314 - __mian__ - INFO - 公共目录 I_d8AMTuqeSMVycDLxjTha2Z17MaswGAzezHXQ03HZ44NObs-PAkh5GUUHfwNW4E.attheme已经存在
+2024-04-14 13:05:34,314 - __mian__ - INFO - 公共目录 I_7x3E0l_sBOZp48-DJE71N6bTvcIXlhJAZ8QHdJGWsaCyBpNeYHYMk2jsEF96HD.attheme已经存在
+2024-04-14 13:05:34,314 - __mian__ - INFO - 公共目录 u_3-piPqDOLF_Jh3Uh44BAVSM4Od4x_bpqJ-gjQT8ny2KC5ZGxhLUsN27PzMhEOW.attheme已经存在
+2024-04-14 13:05:34,314 - __mian__ - INFO - 公共目录 t_002PticcQik7zaXkg473TCSswrlMgFJsH11ia7n0aYyZRdYl05jF703_IULjVa.attheme已经存在
+2024-04-14 13:05:34,314 - __mian__ - INFO - 公共目录 g_kWrZf2J4GQ0hAI3EgwPJH8EBvyXhyr767CPvi4ptHnny4CuMGn3ubPKPzvz-wp.attheme已经存在
+2024-04-14 13:05:34,315 - __mian__ - INFO - 公共目录 B_6A8tbNFc2g3L1u2tYuYcS5X5IobnNUHwe03tdSEIjk0k2NwwRa0wtpxRB5hp1D.attheme已经存在
+2024-04-14 13:05:34,315 - __mian__ - INFO - ---公共目录完整---
+2024-04-14 13:05:34,316 - __mian__ - INFO - Starting server...
+2024-04-14 13:05:36,232 - apscheduler.scheduler - INFO - Scheduler started
+2024-04-14 13:05:36,232 - telegram.ext.Application - INFO - Application started
+2024-04-14 13:10:46,285 - app.constant_obj.ThemeType - INFO - 刷新type字典完成
+2024-04-14 13:10:46,285 - app.constant_obj.ThemeType - INFO - 大小为 13 
+2024-04-14 13:10:46,285 - app.constant_obj.ThemeType - INFO - 字典type字典初始化完成,大小为 13 
+2024-04-14 13:10:47,524 - __main__ - INFO - 运行本项目必须开启ThemeFactory
+2024-04-14 13:10:47,527 - __mian__ - INFO - 公共目录 -3PJFe65CLIVuCWRAgSb0JIa_X7DadltDJBp6aySuwlE-MIr7XD-9jJWuNQ-gtNg.tdesktop-theme已经存在
+2024-04-14 13:10:47,527 - __mian__ - INFO - 公共目录 -6e2mOy2Rmnq-XWFnLsslol3inNXcsXT30P-wgyblkBeqC_62YQG4DpRpfQnZOAA.tdesktop-theme已经存在
+2024-04-14 13:10:47,527 - __mian__ - INFO - 公共目录 -FG1yjGT6_0GqEl_L7szoHP8ddPVkVPEPBCp9Omvyq_u8rXCOdhQ97Wb0fFtwHX2.tdesktop-theme已经存在
+2024-04-14 13:10:47,527 - __mian__ - INFO - ---公共目录完整---
+2024-04-14 13:10:47,528 - __mian__ - INFO - 公共目录 N_0dXco0VN8wFQAwhviRGzVUYy16Z_CWkqOE3S2IRVI1u4fu8ZRmIjox48oCb5ie.attheme已经存在
+2024-04-14 13:10:47,528 - __mian__ - INFO - 公共目录 o_dTwiB7tPPoxPg2ftYGvIvAts33zyfeOUntoxog3-EmQKjFZfl0Rdn2Um_mjWar.attheme已经存在
+2024-04-14 13:10:47,528 - __mian__ - INFO - 公共目录 p_3gEdOfnCoTLP7kBMUcUyarerNaTBmKPCn2AoQVsFB6ujRRasuNSejKRBOJofur.attheme已经存在
+2024-04-14 13:10:47,528 - __mian__ - INFO - 公共目录 P_Ugilz2CqBFkw95s9tmVrPCwAIZKKbaU99XlHBjmBgalxIpbebPKpk29HShGFrS.attheme已经存在
+2024-04-14 13:10:47,528 - __mian__ - INFO - 公共目录 I_d8AMTuqeSMVycDLxjTha2Z17MaswGAzezHXQ03HZ44NObs-PAkh5GUUHfwNW4E.attheme已经存在
+2024-04-14 13:10:47,528 - __mian__ - INFO - 公共目录 I_7x3E0l_sBOZp48-DJE71N6bTvcIXlhJAZ8QHdJGWsaCyBpNeYHYMk2jsEF96HD.attheme已经存在
+2024-04-14 13:10:47,528 - __mian__ - INFO - 公共目录 u_3-piPqDOLF_Jh3Uh44BAVSM4Od4x_bpqJ-gjQT8ny2KC5ZGxhLUsN27PzMhEOW.attheme已经存在
+2024-04-14 13:10:47,528 - __mian__ - INFO - 公共目录 t_002PticcQik7zaXkg473TCSswrlMgFJsH11ia7n0aYyZRdYl05jF703_IULjVa.attheme已经存在
+2024-04-14 13:10:47,528 - __mian__ - INFO - 公共目录 g_kWrZf2J4GQ0hAI3EgwPJH8EBvyXhyr767CPvi4ptHnny4CuMGn3ubPKPzvz-wp.attheme已经存在
+2024-04-14 13:10:47,528 - __mian__ - INFO - 公共目录 B_6A8tbNFc2g3L1u2tYuYcS5X5IobnNUHwe03tdSEIjk0k2NwwRa0wtpxRB5hp1D.attheme已经存在
+2024-04-14 13:10:47,529 - __mian__ - INFO - ---公共目录完整---
+2024-04-14 13:10:47,530 - __mian__ - INFO - Starting server...
+2024-04-14 13:10:49,311 - apscheduler.scheduler - INFO - Scheduler started
+2024-04-14 13:10:49,312 - telegram.ext.Application - INFO - Application started
+2024-04-14 13:12:27,514 - __mian__ - ERROR - 生成预览失败
+2024-04-14 13:12:41,507 - telegram.ext.Application - INFO - Application is stopping. This might take a moment.
+2024-04-14 13:12:41,508 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2024-04-14 13:12:41,508 - telegram.ext.Application - INFO - Application.stop() complete
+2024-04-14 13:14:01,636 - app.constant_obj.ThemeType - INFO - 刷新type字典完成
+2024-04-14 13:14:03,275 - app.constant_obj.ThemeType - INFO - 大小为 13 
+2024-04-14 13:14:05,625 - app.constant_obj.ThemeType - INFO - 字典type字典初始化完成,大小为 13 
+2024-04-14 13:14:06,819 - __main__ - INFO - 运行本项目必须开启ThemeFactory
+2024-04-14 13:14:06,822 - __mian__ - INFO - 公共目录 -3PJFe65CLIVuCWRAgSb0JIa_X7DadltDJBp6aySuwlE-MIr7XD-9jJWuNQ-gtNg.tdesktop-theme已经存在
+2024-04-14 13:14:06,822 - __mian__ - INFO - 公共目录 -6e2mOy2Rmnq-XWFnLsslol3inNXcsXT30P-wgyblkBeqC_62YQG4DpRpfQnZOAA.tdesktop-theme已经存在
+2024-04-14 13:14:06,822 - __mian__ - INFO - 公共目录 -FG1yjGT6_0GqEl_L7szoHP8ddPVkVPEPBCp9Omvyq_u8rXCOdhQ97Wb0fFtwHX2.tdesktop-theme已经存在
+2024-04-14 13:14:06,822 - __mian__ - INFO - ---公共目录完整---
+2024-04-14 13:14:06,822 - __mian__ - INFO - 公共目录 N_0dXco0VN8wFQAwhviRGzVUYy16Z_CWkqOE3S2IRVI1u4fu8ZRmIjox48oCb5ie.attheme已经存在
+2024-04-14 13:14:06,822 - __mian__ - INFO - 公共目录 o_dTwiB7tPPoxPg2ftYGvIvAts33zyfeOUntoxog3-EmQKjFZfl0Rdn2Um_mjWar.attheme已经存在
+2024-04-14 13:14:06,822 - __mian__ - INFO - 公共目录 p_3gEdOfnCoTLP7kBMUcUyarerNaTBmKPCn2AoQVsFB6ujRRasuNSejKRBOJofur.attheme已经存在
+2024-04-14 13:14:06,823 - __mian__ - INFO - 公共目录 P_Ugilz2CqBFkw95s9tmVrPCwAIZKKbaU99XlHBjmBgalxIpbebPKpk29HShGFrS.attheme已经存在
+2024-04-14 13:14:06,823 - __mian__ - INFO - 公共目录 I_d8AMTuqeSMVycDLxjTha2Z17MaswGAzezHXQ03HZ44NObs-PAkh5GUUHfwNW4E.attheme已经存在
+2024-04-14 13:14:06,823 - __mian__ - INFO - 公共目录 I_7x3E0l_sBOZp48-DJE71N6bTvcIXlhJAZ8QHdJGWsaCyBpNeYHYMk2jsEF96HD.attheme已经存在
+2024-04-14 13:14:06,823 - __mian__ - INFO - 公共目录 u_3-piPqDOLF_Jh3Uh44BAVSM4Od4x_bpqJ-gjQT8ny2KC5ZGxhLUsN27PzMhEOW.attheme已经存在
+2024-04-14 13:14:06,823 - __mian__ - INFO - 公共目录 t_002PticcQik7zaXkg473TCSswrlMgFJsH11ia7n0aYyZRdYl05jF703_IULjVa.attheme已经存在
+2024-04-14 13:14:06,823 - __mian__ - INFO - 公共目录 g_kWrZf2J4GQ0hAI3EgwPJH8EBvyXhyr767CPvi4ptHnny4CuMGn3ubPKPzvz-wp.attheme已经存在
+2024-04-14 13:14:06,823 - __mian__ - INFO - 公共目录 B_6A8tbNFc2g3L1u2tYuYcS5X5IobnNUHwe03tdSEIjk0k2NwwRa0wtpxRB5hp1D.attheme已经存在
+2024-04-14 13:14:06,823 - __mian__ - INFO - ---公共目录完整---
+2024-04-14 13:14:06,825 - __mian__ - INFO - Starting server...
+2024-04-14 13:14:08,454 - apscheduler.scheduler - INFO - Scheduler started
+2024-04-14 13:14:08,454 - telegram.ext.Application - INFO - Application started
+2024-04-14 13:14:34,052 - __mian__ - ERROR - 生成预览失败
+2024-04-14 13:14:54,651 - __mian__ - ERROR - 生成预览失败
+2024-04-14 13:14:59,127 - telegram.ext.Application - INFO - Application is stopping. This might take a moment.
+2024-04-14 13:14:59,128 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2024-04-14 13:14:59,128 - telegram.ext.Application - INFO - Application.stop() complete
+2024-04-14 13:15:06,178 - app.constant_obj.ThemeType - INFO - 刷新type字典完成
+2024-04-14 13:15:17,183 - app.constant_obj.ThemeType - INFO - 大小为 13 
+2024-04-14 13:15:17,856 - app.constant_obj.ThemeType - INFO - 字典type字典初始化完成,大小为 13 
+2024-04-14 13:15:19,039 - __main__ - INFO - 运行本项目必须开启ThemeFactory
+2024-04-14 13:15:19,042 - __mian__ - INFO - 公共目录 -3PJFe65CLIVuCWRAgSb0JIa_X7DadltDJBp6aySuwlE-MIr7XD-9jJWuNQ-gtNg.tdesktop-theme已经存在
+2024-04-14 13:15:19,042 - __mian__ - INFO - 公共目录 -6e2mOy2Rmnq-XWFnLsslol3inNXcsXT30P-wgyblkBeqC_62YQG4DpRpfQnZOAA.tdesktop-theme已经存在
+2024-04-14 13:15:19,042 - __mian__ - INFO - 公共目录 -FG1yjGT6_0GqEl_L7szoHP8ddPVkVPEPBCp9Omvyq_u8rXCOdhQ97Wb0fFtwHX2.tdesktop-theme已经存在
+2024-04-14 13:15:19,042 - __mian__ - INFO - ---公共目录完整---
+2024-04-14 13:15:19,042 - __mian__ - INFO - 公共目录 N_0dXco0VN8wFQAwhviRGzVUYy16Z_CWkqOE3S2IRVI1u4fu8ZRmIjox48oCb5ie.attheme已经存在
+2024-04-14 13:15:19,043 - __mian__ - INFO - 公共目录 o_dTwiB7tPPoxPg2ftYGvIvAts33zyfeOUntoxog3-EmQKjFZfl0Rdn2Um_mjWar.attheme已经存在
+2024-04-14 13:15:19,043 - __mian__ - INFO - 公共目录 p_3gEdOfnCoTLP7kBMUcUyarerNaTBmKPCn2AoQVsFB6ujRRasuNSejKRBOJofur.attheme已经存在
+2024-04-14 13:15:19,043 - __mian__ - INFO - 公共目录 P_Ugilz2CqBFkw95s9tmVrPCwAIZKKbaU99XlHBjmBgalxIpbebPKpk29HShGFrS.attheme已经存在
+2024-04-14 13:15:19,043 - __mian__ - INFO - 公共目录 I_d8AMTuqeSMVycDLxjTha2Z17MaswGAzezHXQ03HZ44NObs-PAkh5GUUHfwNW4E.attheme已经存在
+2024-04-14 13:15:19,043 - __mian__ - INFO - 公共目录 I_7x3E0l_sBOZp48-DJE71N6bTvcIXlhJAZ8QHdJGWsaCyBpNeYHYMk2jsEF96HD.attheme已经存在
+2024-04-14 13:15:19,043 - __mian__ - INFO - 公共目录 u_3-piPqDOLF_Jh3Uh44BAVSM4Od4x_bpqJ-gjQT8ny2KC5ZGxhLUsN27PzMhEOW.attheme已经存在
+2024-04-14 13:15:19,043 - __mian__ - INFO - 公共目录 t_002PticcQik7zaXkg473TCSswrlMgFJsH11ia7n0aYyZRdYl05jF703_IULjVa.attheme已经存在
+2024-04-14 13:15:19,043 - __mian__ - INFO - 公共目录 g_kWrZf2J4GQ0hAI3EgwPJH8EBvyXhyr767CPvi4ptHnny4CuMGn3ubPKPzvz-wp.attheme已经存在
+2024-04-14 13:15:19,043 - __mian__ - INFO - 公共目录 B_6A8tbNFc2g3L1u2tYuYcS5X5IobnNUHwe03tdSEIjk0k2NwwRa0wtpxRB5hp1D.attheme已经存在
+2024-04-14 13:15:19,044 - __mian__ - INFO - ---公共目录完整---
+2024-04-14 13:15:19,045 - __mian__ - INFO - Starting server...
+2024-04-14 13:15:20,643 - apscheduler.scheduler - INFO - Scheduler started
+2024-04-14 13:15:20,643 - telegram.ext.Application - INFO - Application started
+2024-04-14 13:15:23,771 - __mian__ - ERROR - 生成预览失败
+2024-04-14 13:16:35,613 - app.constant_obj.ThemeType - INFO - 刷新type字典完成
+2024-04-14 13:16:36,074 - app.constant_obj.ThemeType - INFO - 大小为 13 
+2024-04-14 13:17:41,855 - app.constant_obj.ThemeType - INFO - 刷新type字典完成
+2024-04-14 13:17:42,561 - app.constant_obj.ThemeType - INFO - 大小为 13 
+2024-04-14 13:20:22,651 - telegram.ext.Application - INFO - Application is stopping. This might take a moment.
+2024-04-14 13:20:22,652 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2024-04-14 13:20:22,652 - telegram.ext.Application - INFO - Application.stop() complete
+2024-04-14 13:20:29,369 - app.constant_obj.ThemeType - INFO - 刷新type字典完成
+2024-04-14 13:20:29,840 - app.constant_obj.ThemeType - INFO - 大小为 16 
+2024-04-14 13:20:30,454 - app.constant_obj.ThemeType - INFO - 字典type字典初始化完成,大小为 16 
+2024-04-14 13:20:31,639 - __main__ - INFO - 运行本项目必须开启ThemeFactory
+2024-04-14 13:20:31,641 - __mian__ - INFO - 公共目录 -3PJFe65CLIVuCWRAgSb0JIa_X7DadltDJBp6aySuwlE-MIr7XD-9jJWuNQ-gtNg.tdesktop-theme已经存在
+2024-04-14 13:20:31,642 - __mian__ - INFO - 公共目录 -6e2mOy2Rmnq-XWFnLsslol3inNXcsXT30P-wgyblkBeqC_62YQG4DpRpfQnZOAA.tdesktop-theme已经存在
+2024-04-14 13:20:31,642 - __mian__ - INFO - 公共目录 -FG1yjGT6_0GqEl_L7szoHP8ddPVkVPEPBCp9Omvyq_u8rXCOdhQ97Wb0fFtwHX2.tdesktop-theme已经存在
+2024-04-14 13:20:31,642 - __mian__ - INFO - 公共目录 X2ho8k_L42PLHimMPow1L0rqmljtJkTROKJMWte0rv5MJ3G1txAWSKzy3LeyaDJt.tdesktop-theme已经存在
+2024-04-14 13:20:31,642 - __mian__ - INFO - 公共目录 bYsXE_NaPZwA053T57C0b4-0lU4Z_Qdp2LpLS3o-zxTfoBJTHHkW9Tudrsoij1bc.tdesktop-theme已经存在
+2024-04-14 13:20:31,642 - __mian__ - INFO - 公共目录 7OkNF77aUmbd2yJepIlMNX_UFRaKAg5oalBltu22GXR-vZ7ku6sxc87FFMhrI8GH.tdesktop-theme已经存在
+2024-04-14 13:20:31,642 - __mian__ - INFO - ---公共目录完整---
+2024-04-14 13:20:31,642 - __mian__ - INFO - 公共目录 N_0dXco0VN8wFQAwhviRGzVUYy16Z_CWkqOE3S2IRVI1u4fu8ZRmIjox48oCb5ie.attheme已经存在
+2024-04-14 13:20:31,642 - __mian__ - INFO - 公共目录 o_dTwiB7tPPoxPg2ftYGvIvAts33zyfeOUntoxog3-EmQKjFZfl0Rdn2Um_mjWar.attheme已经存在
+2024-04-14 13:20:31,642 - __mian__ - INFO - 公共目录 p_3gEdOfnCoTLP7kBMUcUyarerNaTBmKPCn2AoQVsFB6ujRRasuNSejKRBOJofur.attheme已经存在
+2024-04-14 13:20:31,643 - __mian__ - INFO - 公共目录 P_Ugilz2CqBFkw95s9tmVrPCwAIZKKbaU99XlHBjmBgalxIpbebPKpk29HShGFrS.attheme已经存在
+2024-04-14 13:20:31,643 - __mian__ - INFO - 公共目录 I_d8AMTuqeSMVycDLxjTha2Z17MaswGAzezHXQ03HZ44NObs-PAkh5GUUHfwNW4E.attheme已经存在
+2024-04-14 13:20:31,643 - __mian__ - INFO - 公共目录 I_7x3E0l_sBOZp48-DJE71N6bTvcIXlhJAZ8QHdJGWsaCyBpNeYHYMk2jsEF96HD.attheme已经存在
+2024-04-14 13:20:31,643 - __mian__ - INFO - 公共目录 u_3-piPqDOLF_Jh3Uh44BAVSM4Od4x_bpqJ-gjQT8ny2KC5ZGxhLUsN27PzMhEOW.attheme已经存在
+2024-04-14 13:20:31,643 - __mian__ - INFO - 公共目录 t_002PticcQik7zaXkg473TCSswrlMgFJsH11ia7n0aYyZRdYl05jF703_IULjVa.attheme已经存在
+2024-04-14 13:20:31,643 - __mian__ - INFO - 公共目录 g_kWrZf2J4GQ0hAI3EgwPJH8EBvyXhyr767CPvi4ptHnny4CuMGn3ubPKPzvz-wp.attheme已经存在
+2024-04-14 13:20:31,643 - __mian__ - INFO - 公共目录 B_6A8tbNFc2g3L1u2tYuYcS5X5IobnNUHwe03tdSEIjk0k2NwwRa0wtpxRB5hp1D.attheme已经存在
+2024-04-14 13:20:31,643 - __mian__ - INFO - ---公共目录完整---
+2024-04-14 13:20:31,645 - __mian__ - INFO - Starting server...
+2024-04-14 13:20:33,241 - apscheduler.scheduler - INFO - Scheduler started
+2024-04-14 13:20:33,241 - telegram.ext.Application - INFO - Application started
+2024-04-14 13:20:38,713 - app.constant_obj.ThemeType - INFO - 刷新type字典完成
+2024-04-14 13:20:38,713 - app.constant_obj.ThemeType - INFO - 大小为 16 
+2024-04-14 13:20:38,713 - app.constant_obj.ThemeType - INFO - 字典type字典初始化完成,大小为 16 
+2024-04-14 13:20:39,828 - __main__ - INFO - 运行本项目必须开启ThemeFactory
+2024-04-14 13:20:39,830 - __mian__ - INFO - 公共目录 -3PJFe65CLIVuCWRAgSb0JIa_X7DadltDJBp6aySuwlE-MIr7XD-9jJWuNQ-gtNg.tdesktop-theme已经存在
+2024-04-14 13:20:39,830 - __mian__ - INFO - 公共目录 -6e2mOy2Rmnq-XWFnLsslol3inNXcsXT30P-wgyblkBeqC_62YQG4DpRpfQnZOAA.tdesktop-theme已经存在
+2024-04-14 13:20:39,830 - __mian__ - INFO - 公共目录 -FG1yjGT6_0GqEl_L7szoHP8ddPVkVPEPBCp9Omvyq_u8rXCOdhQ97Wb0fFtwHX2.tdesktop-theme已经存在
+2024-04-14 13:20:39,830 - __mian__ - INFO - 公共目录 X2ho8k_L42PLHimMPow1L0rqmljtJkTROKJMWte0rv5MJ3G1txAWSKzy3LeyaDJt.tdesktop-theme已经存在
+2024-04-14 13:20:39,830 - __mian__ - INFO - 公共目录 bYsXE_NaPZwA053T57C0b4-0lU4Z_Qdp2LpLS3o-zxTfoBJTHHkW9Tudrsoij1bc.tdesktop-theme已经存在
+2024-04-14 13:20:39,830 - __mian__ - INFO - 公共目录 7OkNF77aUmbd2yJepIlMNX_UFRaKAg5oalBltu22GXR-vZ7ku6sxc87FFMhrI8GH.tdesktop-theme已经存在
+2024-04-14 13:20:39,830 - __mian__ - INFO - ---公共目录完整---
+2024-04-14 13:20:39,830 - __mian__ - INFO - 公共目录 N_0dXco0VN8wFQAwhviRGzVUYy16Z_CWkqOE3S2IRVI1u4fu8ZRmIjox48oCb5ie.attheme已经存在
+2024-04-14 13:20:39,830 - __mian__ - INFO - 公共目录 o_dTwiB7tPPoxPg2ftYGvIvAts33zyfeOUntoxog3-EmQKjFZfl0Rdn2Um_mjWar.attheme已经存在
+2024-04-14 13:20:39,831 - __mian__ - INFO - 公共目录 p_3gEdOfnCoTLP7kBMUcUyarerNaTBmKPCn2AoQVsFB6ujRRasuNSejKRBOJofur.attheme已经存在
+2024-04-14 13:20:39,831 - __mian__ - INFO - 公共目录 P_Ugilz2CqBFkw95s9tmVrPCwAIZKKbaU99XlHBjmBgalxIpbebPKpk29HShGFrS.attheme已经存在
+2024-04-14 13:20:39,831 - __mian__ - INFO - 公共目录 I_d8AMTuqeSMVycDLxjTha2Z17MaswGAzezHXQ03HZ44NObs-PAkh5GUUHfwNW4E.attheme已经存在
+2024-04-14 13:20:39,831 - __mian__ - INFO - 公共目录 I_7x3E0l_sBOZp48-DJE71N6bTvcIXlhJAZ8QHdJGWsaCyBpNeYHYMk2jsEF96HD.attheme已经存在
+2024-04-14 13:20:39,831 - __mian__ - INFO - 公共目录 u_3-piPqDOLF_Jh3Uh44BAVSM4Od4x_bpqJ-gjQT8ny2KC5ZGxhLUsN27PzMhEOW.attheme已经存在
+2024-04-14 13:20:39,831 - __mian__ - INFO - 公共目录 t_002PticcQik7zaXkg473TCSswrlMgFJsH11ia7n0aYyZRdYl05jF703_IULjVa.attheme已经存在
+2024-04-14 13:20:39,831 - __mian__ - INFO - 公共目录 g_kWrZf2J4GQ0hAI3EgwPJH8EBvyXhyr767CPvi4ptHnny4CuMGn3ubPKPzvz-wp.attheme已经存在
+2024-04-14 13:20:39,831 - __mian__ - INFO - 公共目录 B_6A8tbNFc2g3L1u2tYuYcS5X5IobnNUHwe03tdSEIjk0k2NwwRa0wtpxRB5hp1D.attheme已经存在
+2024-04-14 13:20:39,831 - __mian__ - INFO - ---公共目录完整---
+2024-04-14 13:20:39,832 - __mian__ - INFO - Starting server...
+2024-04-14 13:20:41,477 - apscheduler.scheduler - INFO - Scheduler started
+2024-04-14 13:20:41,477 - telegram.ext.Application - INFO - Application started
+2024-04-14 13:21:23,363 - app.constant_obj.ThemeType - INFO - 刷新type字典完成
+2024-04-14 13:21:23,363 - app.constant_obj.ThemeType - INFO - 大小为 16 
+2024-04-14 13:21:23,363 - app.constant_obj.ThemeType - INFO - 字典type字典初始化完成,大小为 16 
+2024-04-14 13:21:24,484 - __main__ - INFO - 运行本项目必须开启ThemeFactory
+2024-04-14 13:21:24,486 - __mian__ - INFO - 公共目录 -3PJFe65CLIVuCWRAgSb0JIa_X7DadltDJBp6aySuwlE-MIr7XD-9jJWuNQ-gtNg.tdesktop-theme已经存在
+2024-04-14 13:21:24,486 - __mian__ - INFO - 公共目录 -6e2mOy2Rmnq-XWFnLsslol3inNXcsXT30P-wgyblkBeqC_62YQG4DpRpfQnZOAA.tdesktop-theme已经存在
+2024-04-14 13:21:24,486 - __mian__ - INFO - 公共目录 -FG1yjGT6_0GqEl_L7szoHP8ddPVkVPEPBCp9Omvyq_u8rXCOdhQ97Wb0fFtwHX2.tdesktop-theme已经存在
+2024-04-14 13:21:24,486 - __mian__ - INFO - 公共目录 X2ho8k_L42PLHimMPow1L0rqmljtJkTROKJMWte0rv5MJ3G1txAWSKzy3LeyaDJt.tdesktop-theme已经存在
+2024-04-14 13:21:24,486 - __mian__ - INFO - 公共目录 bYsXE_NaPZwA053T57C0b4-0lU4Z_Qdp2LpLS3o-zxTfoBJTHHkW9Tudrsoij1bc.tdesktop-theme已经存在
+2024-04-14 13:21:24,486 - __mian__ - INFO - 公共目录 7OkNF77aUmbd2yJepIlMNX_UFRaKAg5oalBltu22GXR-vZ7ku6sxc87FFMhrI8GH.tdesktop-theme已经存在
+2024-04-14 13:21:24,486 - __mian__ - INFO - ---公共目录完整---
+2024-04-14 13:21:24,486 - __mian__ - INFO - 公共目录 N_0dXco0VN8wFQAwhviRGzVUYy16Z_CWkqOE3S2IRVI1u4fu8ZRmIjox48oCb5ie.attheme已经存在
+2024-04-14 13:21:24,486 - __mian__ - INFO - 公共目录 o_dTwiB7tPPoxPg2ftYGvIvAts33zyfeOUntoxog3-EmQKjFZfl0Rdn2Um_mjWar.attheme已经存在
+2024-04-14 13:21:24,486 - __mian__ - INFO - 公共目录 p_3gEdOfnCoTLP7kBMUcUyarerNaTBmKPCn2AoQVsFB6ujRRasuNSejKRBOJofur.attheme已经存在
+2024-04-14 13:21:24,486 - __mian__ - INFO - 公共目录 P_Ugilz2CqBFkw95s9tmVrPCwAIZKKbaU99XlHBjmBgalxIpbebPKpk29HShGFrS.attheme已经存在
+2024-04-14 13:21:24,486 - __mian__ - INFO - 公共目录 I_d8AMTuqeSMVycDLxjTha2Z17MaswGAzezHXQ03HZ44NObs-PAkh5GUUHfwNW4E.attheme已经存在
+2024-04-14 13:21:24,486 - __mian__ - INFO - 公共目录 I_7x3E0l_sBOZp48-DJE71N6bTvcIXlhJAZ8QHdJGWsaCyBpNeYHYMk2jsEF96HD.attheme已经存在
+2024-04-14 13:21:24,486 - __mian__ - INFO - 公共目录 u_3-piPqDOLF_Jh3Uh44BAVSM4Od4x_bpqJ-gjQT8ny2KC5ZGxhLUsN27PzMhEOW.attheme已经存在
+2024-04-14 13:21:24,486 - __mian__ - INFO - 公共目录 t_002PticcQik7zaXkg473TCSswrlMgFJsH11ia7n0aYyZRdYl05jF703_IULjVa.attheme已经存在
+2024-04-14 13:21:24,486 - __mian__ - INFO - 公共目录 g_kWrZf2J4GQ0hAI3EgwPJH8EBvyXhyr767CPvi4ptHnny4CuMGn3ubPKPzvz-wp.attheme已经存在
+2024-04-14 13:21:24,487 - __mian__ - INFO - 公共目录 B_6A8tbNFc2g3L1u2tYuYcS5X5IobnNUHwe03tdSEIjk0k2NwwRa0wtpxRB5hp1D.attheme已经存在
+2024-04-14 13:21:24,487 - __mian__ - INFO - ---公共目录完整---
+2024-04-14 13:21:24,487 - __mian__ - INFO - Starting server...
+2024-04-14 13:21:26,087 - apscheduler.scheduler - INFO - Scheduler started
+2024-04-14 13:21:26,088 - telegram.ext.Application - INFO - Application started
+2024-04-14 13:21:27,911 - app.constant_obj.ThemeType - INFO - 刷新type字典完成
+2024-04-14 13:21:27,911 - app.constant_obj.ThemeType - INFO - 大小为 16 
+2024-04-14 13:21:52,268 - app.constant_obj.ThemeType - INFO - 刷新type字典完成
+2024-04-14 13:21:52,268 - app.constant_obj.ThemeType - INFO - 大小为 16 
+2024-04-14 21:09:07,311 - telegram.ext.Updater - ERROR - Error while getting Updates: httpx.RemoteProtocolError: Server disconnected without sending a response.
+2024-04-14 21:09:07,311 - telegram.ext.Application - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "D:\conda\envs\TelegramBot\Lib\site-packages\httpx\_transports\default.py", line 69, in map_httpcore_exceptions
+    yield
+  File "D:\conda\envs\TelegramBot\Lib\site-packages\httpx\_transports\default.py", line 373, in handle_async_request
+    resp = await self._pool.handle_async_request(req)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\conda\envs\TelegramBot\Lib\site-packages\httpcore\_async\connection_pool.py", line 216, in handle_async_request
+    raise exc from None
+  File "D:\conda\envs\TelegramBot\Lib\site-packages\httpcore\_async\connection_pool.py", line 196, in handle_async_request
+    response = await connection.handle_async_request(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\conda\envs\TelegramBot\Lib\site-packages\httpcore\_async\http_proxy.py", line 344, in handle_async_request
+    return await self._connection.handle_async_request(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\conda\envs\TelegramBot\Lib\site-packages\httpcore\_async\http11.py", line 143, in handle_async_request
+    raise exc
+  File "D:\conda\envs\TelegramBot\Lib\site-packages\httpcore\_async\http11.py", line 113, in handle_async_request
+    ) = await self._receive_response_headers(**kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\conda\envs\TelegramBot\Lib\site-packages\httpcore\_async\http11.py", line 186, in _receive_response_headers
+    event = await self._receive_event(timeout=timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\conda\envs\TelegramBot\Lib\site-packages\httpcore\_async\http11.py", line 238, in _receive_event
+    raise RemoteProtocolError(msg)
+httpcore.RemoteProtocolError: Server disconnected without sending a response.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\conda\envs\TelegramBot\Lib\site-packages\telegram\request\_httpxrequest.py", line 276, in do_request
+    res = await self._client.request(
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\conda\envs\TelegramBot\Lib\site-packages\httpx\_client.py", line 1574, in request
+    return await self.send(request, auth=auth, follow_redirects=follow_redirects)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\conda\envs\TelegramBot\Lib\site-packages\httpx\_client.py", line 1661, in send
+    response = await self._send_handling_auth(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\conda\envs\TelegramBot\Lib\site-packages\httpx\_client.py", line 1689, in _send_handling_auth
+    response = await self._send_handling_redirects(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\conda\envs\TelegramBot\Lib\site-packages\httpx\_client.py", line 1726, in _send_handling_redirects
+    response = await self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\conda\envs\TelegramBot\Lib\site-packages\httpx\_client.py", line 1763, in _send_single_request
+    response = await transport.handle_async_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\conda\envs\TelegramBot\Lib\site-packages\httpx\_transports\default.py", line 372, in handle_async_request
+    with map_httpcore_exceptions():
+  File "D:\conda\envs\TelegramBot\Lib\contextlib.py", line 158, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "D:\conda\envs\TelegramBot\Lib\site-packages\httpx\_transports\default.py", line 86, in map_httpcore_exceptions
+    raise mapped_exc(message) from exc
+httpx.RemoteProtocolError: Server disconnected without sending a response.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\conda\envs\TelegramBot\Lib\site-packages\telegram\ext\_updater.py", line 742, in _network_loop_retry
+    if not await do_action():
+           ^^^^^^^^^^^^^^^^^
+  File "D:\conda\envs\TelegramBot\Lib\site-packages\telegram\ext\_updater.py", line 736, in do_action
+    return action_cb_task.result()
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\conda\envs\TelegramBot\Lib\site-packages\telegram\ext\_updater.py", line 387, in polling_action_cb
+    raise exc
+  File "D:\conda\envs\TelegramBot\Lib\site-packages\telegram\ext\_updater.py", line 376, in polling_action_cb
+    updates = await self.bot.get_updates(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\conda\envs\TelegramBot\Lib\site-packages\telegram\ext\_extbot.py", line 618, in get_updates
+    updates = await super().get_updates(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\conda\envs\TelegramBot\Lib\site-packages\telegram\_bot.py", line 541, in decorator
+    result = await func(self, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\conda\envs\TelegramBot\Lib\site-packages\telegram\_bot.py", line 4177, in get_updates
+    await self._post(
+  File "D:\conda\envs\TelegramBot\Lib\site-packages\telegram\_bot.py", line 629, in _post
+    return await self._do_post(
+           ^^^^^^^^^^^^^^^^^^^^
+  File "D:\conda\envs\TelegramBot\Lib\site-packages\telegram\ext\_extbot.py", line 347, in _do_post
+    return await super()._do_post(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\conda\envs\TelegramBot\Lib\site-packages\telegram\_bot.py", line 657, in _do_post
+    return await request.post(
+           ^^^^^^^^^^^^^^^^^^^
+  File "D:\conda\envs\TelegramBot\Lib\site-packages\telegram\request\_baserequest.py", line 200, in post
+    result = await self._request_wrapper(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\conda\envs\TelegramBot\Lib\site-packages\telegram\request\_baserequest.py", line 340, in _request_wrapper
+    raise exc
+  File "D:\conda\envs\TelegramBot\Lib\site-packages\telegram\request\_baserequest.py", line 330, in _request_wrapper
+    code, payload = await self.do_request(
+                    ^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\conda\envs\TelegramBot\Lib\site-packages\telegram\request\_httpxrequest.py", line 300, in do_request
+    raise NetworkError(f"httpx.{err.__class__.__name__}: {err}") from err
+telegram.error.NetworkError: httpx.RemoteProtocolError: Server disconnected without sending a response.
+2024-04-14 23:47:25,614 - telegram.ext.Updater - ERROR - Error while getting Updates: httpx.RemoteProtocolError: Server disconnected without sending a response.
+2024-04-14 23:47:25,615 - telegram.ext.Application - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "D:\conda\envs\TelegramBot\Lib\site-packages\httpx\_transports\default.py", line 69, in map_httpcore_exceptions
+    yield
+  File "D:\conda\envs\TelegramBot\Lib\site-packages\httpx\_transports\default.py", line 373, in handle_async_request
+    resp = await self._pool.handle_async_request(req)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\conda\envs\TelegramBot\Lib\site-packages\httpcore\_async\connection_pool.py", line 216, in handle_async_request
+    raise exc from None
+  File "D:\conda\envs\TelegramBot\Lib\site-packages\httpcore\_async\connection_pool.py", line 196, in handle_async_request
+    response = await connection.handle_async_request(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\conda\envs\TelegramBot\Lib\site-packages\httpcore\_async\http_proxy.py", line 344, in handle_async_request
+    return await self._connection.handle_async_request(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\conda\envs\TelegramBot\Lib\site-packages\httpcore\_async\http11.py", line 143, in handle_async_request
+    raise exc
+  File "D:\conda\envs\TelegramBot\Lib\site-packages\httpcore\_async\http11.py", line 113, in handle_async_request
+    ) = await self._receive_response_headers(**kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\conda\envs\TelegramBot\Lib\site-packages\httpcore\_async\http11.py", line 186, in _receive_response_headers
+    event = await self._receive_event(timeout=timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\conda\envs\TelegramBot\Lib\site-packages\httpcore\_async\http11.py", line 238, in _receive_event
+    raise RemoteProtocolError(msg)
+httpcore.RemoteProtocolError: Server disconnected without sending a response.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\conda\envs\TelegramBot\Lib\site-packages\telegram\request\_httpxrequest.py", line 276, in do_request
+    res = await self._client.request(
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\conda\envs\TelegramBot\Lib\site-packages\httpx\_client.py", line 1574, in request
+    return await self.send(request, auth=auth, follow_redirects=follow_redirects)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\conda\envs\TelegramBot\Lib\site-packages\httpx\_client.py", line 1661, in send
+    response = await self._send_handling_auth(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\conda\envs\TelegramBot\Lib\site-packages\httpx\_client.py", line 1689, in _send_handling_auth
+    response = await self._send_handling_redirects(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\conda\envs\TelegramBot\Lib\site-packages\httpx\_client.py", line 1726, in _send_handling_redirects
+    response = await self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\conda\envs\TelegramBot\Lib\site-packages\httpx\_client.py", line 1763, in _send_single_request
+    response = await transport.handle_async_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\conda\envs\TelegramBot\Lib\site-packages\httpx\_transports\default.py", line 372, in handle_async_request
+    with map_httpcore_exceptions():
+  File "D:\conda\envs\TelegramBot\Lib\contextlib.py", line 158, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "D:\conda\envs\TelegramBot\Lib\site-packages\httpx\_transports\default.py", line 86, in map_httpcore_exceptions
+    raise mapped_exc(message) from exc
+httpx.RemoteProtocolError: Server disconnected without sending a response.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\conda\envs\TelegramBot\Lib\site-packages\telegram\ext\_updater.py", line 742, in _network_loop_retry
+    if not await do_action():
+           ^^^^^^^^^^^^^^^^^
+  File "D:\conda\envs\TelegramBot\Lib\site-packages\telegram\ext\_updater.py", line 736, in do_action
+    return action_cb_task.result()
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\conda\envs\TelegramBot\Lib\site-packages\telegram\ext\_updater.py", line 387, in polling_action_cb
+    raise exc
+  File "D:\conda\envs\TelegramBot\Lib\site-packages\telegram\ext\_updater.py", line 376, in polling_action_cb
+    updates = await self.bot.get_updates(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\conda\envs\TelegramBot\Lib\site-packages\telegram\ext\_extbot.py", line 618, in get_updates
+    updates = await super().get_updates(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\conda\envs\TelegramBot\Lib\site-packages\telegram\_bot.py", line 541, in decorator
+    result = await func(self, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\conda\envs\TelegramBot\Lib\site-packages\telegram\_bot.py", line 4177, in get_updates
+    await self._post(
+  File "D:\conda\envs\TelegramBot\Lib\site-packages\telegram\_bot.py", line 629, in _post
+    return await self._do_post(
+           ^^^^^^^^^^^^^^^^^^^^
+  File "D:\conda\envs\TelegramBot\Lib\site-packages\telegram\ext\_extbot.py", line 347, in _do_post
+    return await super()._do_post(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\conda\envs\TelegramBot\Lib\site-packages\telegram\_bot.py", line 657, in _do_post
+    return await request.post(
+           ^^^^^^^^^^^^^^^^^^^
+  File "D:\conda\envs\TelegramBot\Lib\site-packages\telegram\request\_baserequest.py", line 200, in post
+    result = await self._request_wrapper(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\conda\envs\TelegramBot\Lib\site-packages\telegram\request\_baserequest.py", line 340, in _request_wrapper
+    raise exc
+  File "D:\conda\envs\TelegramBot\Lib\site-packages\telegram\request\_baserequest.py", line 330, in _request_wrapper
+    code, payload = await self.do_request(
+                    ^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\conda\envs\TelegramBot\Lib\site-packages\telegram\request\_httpxrequest.py", line 300, in do_request
+    raise NetworkError(f"httpx.{err.__class__.__name__}: {err}") from err
+telegram.error.NetworkError: httpx.RemoteProtocolError: Server disconnected without sending a response.

@@ -1,0 +1,19 @@
+2024-04-10 17:33:56,018 - __main__ - INFO - 运行本项目必须开启ThemeFactory
+2024-04-10 17:33:56,020 - __mian__ - INFO - 公共目录 -3PJFe65CLIVuCWRAgSb0JIa_X7DadltDJBp6aySuwlE-MIr7XD-9jJWuNQ-gtNg.tdesktop-theme已经存在
+2024-04-10 17:33:56,020 - __mian__ - INFO - 公共目录 -6e2mOy2Rmnq-XWFnLsslol3inNXcsXT30P-wgyblkBeqC_62YQG4DpRpfQnZOAA.tdesktop-theme已经存在
+2024-04-10 17:33:56,020 - __mian__ - INFO - 公共目录 -FG1yjGT6_0GqEl_L7szoHP8ddPVkVPEPBCp9Omvyq_u8rXCOdhQ97Wb0fFtwHX2.tdesktop-theme已经存在
+2024-04-10 17:33:56,020 - __mian__ - INFO - ---公共目录完整---
+2024-04-10 17:33:56,020 - __mian__ - INFO - 公共目录 N_0dXco0VN8wFQAwhviRGzVUYy16Z_CWkqOE3S2IRVI1u4fu8ZRmIjox48oCb5ie.attheme已经存在
+2024-04-10 17:33:56,028 - __mian__ - INFO - 公共目录 o_dTwiB7tPPoxPg2ftYGvIvAts33zyfeOUntoxog3-EmQKjFZfl0Rdn2Um_mjWar.attheme已经存在
+2024-04-10 17:33:56,028 - __mian__ - INFO - 公共目录 p_3gEdOfnCoTLP7kBMUcUyarerNaTBmKPCn2AoQVsFB6ujRRasuNSejKRBOJofur.attheme已经存在
+2024-04-10 17:33:56,028 - __mian__ - INFO - 公共目录 P_Ugilz2CqBFkw95s9tmVrPCwAIZKKbaU99XlHBjmBgalxIpbebPKpk29HShGFrS.attheme已经存在
+2024-04-10 17:33:56,028 - __mian__ - INFO - 公共目录 I_d8AMTuqeSMVycDLxjTha2Z17MaswGAzezHXQ03HZ44NObs-PAkh5GUUHfwNW4E.attheme已经存在
+2024-04-10 17:33:56,028 - __mian__ - INFO - 公共目录 I_7x3E0l_sBOZp48-DJE71N6bTvcIXlhJAZ8QHdJGWsaCyBpNeYHYMk2jsEF96HD.attheme已经存在
+2024-04-10 17:33:56,028 - __mian__ - INFO - 公共目录 u_3-piPqDOLF_Jh3Uh44BAVSM4Od4x_bpqJ-gjQT8ny2KC5ZGxhLUsN27PzMhEOW.attheme已经存在
+2024-04-10 17:33:56,028 - __mian__ - INFO - 公共目录 t_002PticcQik7zaXkg473TCSswrlMgFJsH11ia7n0aYyZRdYl05jF703_IULjVa.attheme已经存在
+2024-04-10 17:33:56,028 - __mian__ - INFO - 公共目录 g_kWrZf2J4GQ0hAI3EgwPJH8EBvyXhyr767CPvi4ptHnny4CuMGn3ubPKPzvz-wp.attheme已经存在
+2024-04-10 17:33:56,028 - __mian__ - INFO - 公共目录 B_6A8tbNFc2g3L1u2tYuYcS5X5IobnNUHwe03tdSEIjk0k2NwwRa0wtpxRB5hp1D.attheme已经存在
+2024-04-10 17:33:56,028 - __mian__ - INFO - ---公共目录完整---
+2024-04-10 17:33:56,029 - __mian__ - INFO - Starting server...
+2024-04-10 17:33:57,126 - apscheduler.scheduler - INFO - Scheduler started
+2024-04-10 17:33:57,127 - telegram.ext.Application - INFO - Application started
