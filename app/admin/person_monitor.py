@@ -23,7 +23,10 @@ class MonitorPerson:
             os = admin_function.delete_txt(banword, text)
             if os:  # 若存在违禁词
                 if await admin_function.block_person(update, context, os):
-                    logger.info("用户{},id{},触发违禁词{}被封禁".format(user_name, str(usr_id), text))  # 记录
+                    await update.message.reply_text("您触发违禁词: {}\n 已被封禁，请联系管理解封".format(text))
+                    logger.info("用户{},id{},触发违禁词{}被封禁".format(user_name, str(usr_id), text))
+                    await context.bot.send_message(chat_id=get_myid(), text="用户{},id{},触发违禁词{}被封禁".format(user_name, str(usr_id), text))
+                    # 记录
                     return True
                 else:
                     logger.warn("无权限 用户{},id{},触发违禁词{}".format(user_name, str(usr_id), text))
