@@ -18,3 +18,4 @@ __pycache__
 *.tdesktop-theme
 .idea/
 .idea/**
+src/**
