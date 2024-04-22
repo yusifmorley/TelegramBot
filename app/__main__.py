@@ -90,14 +90,14 @@ async def admin_handle(update: Update, context: ContextTypes.DEFAULT_TYPE):  # �
         # 发送主题文件给用户
         await bot.send_document(chat_id=chat_id, document=theme_file.file_id)
         return
-    user = update.effective_message.from_user
-
-    if update.effective_message.chat.type == Chat.GROUP or update.effective_message.chat.type == Chat.SUPERGROUP:
-        if hasattr(user, "id"):
-            await  mon_per.run(user.id, user.first_name + " " + user.first_name, text, update, context, ban_words,
-                               logger)
-    else:
-        return
+    # user = update.effective_message.from_user
+    #
+    # if update.effective_message.chat.type == Chat.GROUP or update.effective_message.chat.type == Chat.SUPERGROUP:
+    #     if hasattr(user, "id"):
+    #         await  mon_per.run(user.id, user.first_name + " " + user.first_name, text, update, context, ban_words,
+    #                            logger)
+    # else:
+    #     return
 
 
 @listen
@@ -227,14 +227,15 @@ async def base_photo(update: Update, context: CallbackContext, doucment_pt: str 
 
     pic_bytes = None
     same_primary_key = update.effective_user.id
-    if hasattr(update.message, "caption"):
-        text = update.message.caption
-        if text:
-            user = update.effective_user
-            boo = mon_per.run(user.id, user.first_name + " " + user.first_name, text, update, context, ban_words,
-                              logger)
-            if boo:
-                return
+
+    # if hasattr(update.message, "caption"):
+    #     text = update.message.caption
+    #     if text:
+    #         user = update.effective_user
+    #         boo = mon_per.run(user.id, user.first_name + " " + user.first_name, text, update, context, ban_words,
+    #                           logger)
+    #         if boo:
+    #             return
 
     existing_user: CreateThemeLogo | None = session.get(CreateThemeLogo, same_primary_key)
     if not existing_user:

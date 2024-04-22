@@ -14,6 +14,7 @@ class MonitorPerson:
 
     async def run(self, usr_id, user_name, text, update: Update, context: CallbackContext, banword, logger):
         # 排除 管理员 的 消息 和私聊消息
+
         if usr_id == get_myid() and update.effective_message.chat.type == Chat.PRIVATE:
             return False
 
