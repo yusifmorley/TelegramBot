@@ -17,3 +17,4 @@ __pycache__
 *.attheme
 *.tdesktop-theme
 .idea/**
+log/**
