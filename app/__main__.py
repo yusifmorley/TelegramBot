@@ -1,4 +1,6 @@
+import asyncio
 import base64
+import tracemalloc
 import os
 import traceback
 from threading import Thread
@@ -20,9 +22,13 @@ from app.constant_obj.ThemeType import get_theme_list
 from app.decorate.listen import listen
 from app.logger import t_log
 from app.server.theme_http import run
+from app.state_machine.android_machine import Android_Machine, get_test_m
+from app.state_machine.desk_machine import Desk_Machine
+
 from app.theme_file import get_radom_link, get_android, get_desktop
 from app.admin import admin_function, ban_word_op
 from app.theme_file import get_ios
+from app.util.assrt import is_attheme
 from app.util.create_atheme import get_attheme_color_pic, get_kyb, get_attheme, get_transparent_ky
 from io import BytesIO
 from app.model.models import init_session, CreateThemeLogo, BanUserLogo
@@ -190,33 +196,15 @@ async def get_ios_theme(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 @listen
 async def create_attheme(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    same_primary_key = update.effective_user.id
-    existing_user: CreateThemeLogo | None = session.get(CreateThemeLogo, same_primary_key)
-    if existing_user:
-        clear(existing_user)
-        existing_user.flag = 1
+    an = get_test_m(update,context,session,0)
+    await an.recive_command()
 
-    else:
-        new_user = CreateThemeLogo(uid=same_primary_key, flag=1)
-        session.add(new_user)
-
-    session.commit()
-    await context.bot.send_message(chat_id=update.effective_chat.id, text="请发送您的图片")
 
 
 @listen
 async def create_tdesktop(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    same_primary_key = update.effective_user.id
-    existing_user: CreateThemeLogo | None = session.get(CreateThemeLogo, same_primary_key)
-    if existing_user:
-        clear(existing_user)
-        existing_user.flag = 4
-    else:
-        new_user = CreateThemeLogo(uid=same_primary_key, flag=4)
-        session.add(new_user)
-
-    session.commit()
-    await context.bot.send_message(chat_id=update.effective_chat.id, text="请发送您的图片")
+    de = Desk_Machine(update, context, session)
+    de.recive_command()
 
 
 # 用户发送图片
@@ -224,67 +212,19 @@ async def base_photo(update: Update, context: CallbackContext, doucment_pt: str 
     # 只有图片
     if update.effective_message.chat.type == Chat.CHANNEL:
         return
-
-    pic_bytes = None
     same_primary_key = update.effective_user.id
-    if hasattr(update.message, "caption"):
-        text = update.message.caption
-        if text:
-            user = update.effective_user
-            boo = mon_per.run(user.id, user.first_name + " " + user.first_name, text, update, context, ban_words,
-                              logger)
-            if boo:
-                return
-
     existing_user: CreateThemeLogo | None = session.get(CreateThemeLogo, same_primary_key)
     if not existing_user:
         return
-
     if existing_user and existing_user.flag == 0:
         return
-
-    if update.message.document:
-        if doucment_pt:
-            fd = open(doucment_pt, 'rb')
-            pic_bytes = fd.read()
-            fd.close()
-            existing_user.pic_path = doucment_pt
+    flag = existing_user.flag
+    if is_attheme(existing_user.flag):
+        an = Android_Machine(update, context, session, flag)
+        an.recive_photo()
     else:
-        pid = update.effective_message.photo[-1].file_id  # 最后一个是完整图片
-        pic_file = await bot.get_file(pid)
-        user_id = update.effective_user.id
-        # io重用
-        bio = BytesIO()
-        # 写入图片
-        pic_p = "src/Photo/" + str(user_id) + ".png"
-        fp = open(pic_p, "wb")
-        await pic_file.download_to_memory(bio)
-        fp.write(bio.getvalue())
-        fp.close()
-        # 更新数据库
-        pic_bytes = bio.getvalue()
-        bio.close()
-        existing_user.pic_path = pic_p
-
-    content: list = get_attheme_color_pic(pic_bytes)
-    # 生成键盘
-
-    if existing_user.flag != 4:
-
-        reply_markup = get_kyb(content[0])
-        call_message: Message = await update.message.reply_photo(content[1], caption="首先，请选择主题的背景颜色",
-                                                                 reply_markup=reply_markup)
-    else:
-        reply_markup = get_desktop_kyb(content[0])
-        call_message: Message = await update.message.reply_photo(content[1], caption="首先，请选择主题的背景颜色",
-                                                                 reply_markup=reply_markup)
-
-    # 如果记录已存在，执行 变更 picpath
-
-    existing_user.callback_id = call_message.message_id
-    session.commit()
-
-    # pic_file.download("src/Photo/"+file_id+".jpg")
+        de = Desk_Machine(update, context, session, flag)
+        de.recive_photo()
 
 
 # 解决 颜色三个状态
@@ -296,12 +236,13 @@ async def button_update(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not existing_user or query.message.message_id != existing_user.callback_id:
         await query.answer("此键盘不属于你，点击无效呢！")
         return
-
-    if existing_user.flag == 1:
-        await callback_android.callback_android_handle(update, context)
-
-    if existing_user.flag == 4:
-        await callback_desktop.callback_desktop_handle(update, context)
+    flag = existing_user.flag
+    if is_attheme(flag):
+        an = Android_Machine(update, context, session, flag)
+        an.next_state()
+    else:
+        de = Desk_Machine(update, context, session, flag)
+        de.next_state()
 
 
 async def parse_document(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -388,6 +329,8 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 if __name__ == "__main__":
     logger.info("运行本项目必须开启ThemeFactory")
     d_command()
+
+    tracemalloc.start()
     # 同步 桌面主题
     sync_dp()
     sunc_ap()

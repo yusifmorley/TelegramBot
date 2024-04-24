@@ -4,18 +4,41 @@ from sqlalchemy.orm import Session
 from telegram import Update, Chat, Message
 from telegram.ext import ContextTypes
 from transitions import Machine, State
-from transitions.extensions import AsyncMachine
-
 import app.util.file_name_gen as f_n
 import app.util.get_time as g_t
-from app.logger import t_log
 from app.model.models import CreateThemeLogo
 from app.util.create_atheme import get_attheme_color_pic, get_kyb, get_transparent_ky, get_attheme
 from app.util.create_desktop import get_desktop_kyb
 from app.util.db_op import clear
 
-logger = t_log.get_logging().getLogger(__name__)
-transitions = [  # 状态映射 （重要）
+
+class Desk_Machine(Machine):
+    def __init__(self, update: Update,
+                 context: ContextTypes.DEFAULT_TYPE,
+                 session: Session,
+                 flag
+                 ):
+        # TODO 通过数据库查询直接赋值状态 可以直接复用同一个类
+
+        self.update = update
+        self.context = context
+        self.session = session
+        self.same_primary_key = self.update.effective_user.id
+        self.existing_user: CreateThemeLogo | None = (self.session.get(CreateThemeLogo, self.same_primary_key))
+
+        self.query = update.callback_query
+        self.user_id = update.effective_user.id
+        self.original_reply_markup = self.query.message.reply_markup
+
+        states = [State("可创建状态", on_enter="can_run"),
+                  State("拥有图片", on_enter="handle_photo"),
+                  State('拥有主背景颜色', on_enter="set_bg"),
+                  State('拥有主字体颜色', on_enter="set_mian_c"),
+                  State('拥有次要颜色', on_enter="set_s_c"),
+                  State("已经选择是否透明", on_enter="set_can_opc"),
+                  State("未创建状态", on_enter="set_clear")
+                  ]  # 状态
+        transitions = [  # 状态映射 （重要）
             {'trigger': 'recive_command', 'source': "未创建状态", 'dest': "可创建状态"},
             {'trigger': 'recive_photo', 'source': "可创建状态", 'dest': "拥有图片"},
             {'trigger': 'recive_bgcolor', 'source': "拥有图片", 'dest': '拥有主背景颜色'},
@@ -24,72 +47,38 @@ transitions = [  # 状态映射 （重要）
             {'trigger': 'recive_secondcolor', 'source': '拥有次要颜色', 'dest': '已经选择是否透明'},
             {'trigger': 'recive_secondcolor', 'source': '已经选择是否透明', 'dest': '未创建状态'}
         ]
-states = [
-    State("未创建状态", on_enter="set_clear"),
-    State("可创建状态", on_enter="can_run"),
-    State("拥有图片", on_enter="handle_photo"),
-    State('拥有主背景颜色', on_enter="set_bg"),
-    State('拥有主字体颜色', on_enter="set_mian_c"),
-    State('拥有次要颜色', on_enter="set_s_c"),
-    State("已经选择是否透明", on_enter="set_can_opc"
-          , on_exit="set_clear")  # 清除置空
-]  # 状态
+        Machine.__init__(self,
+                         states=states,
+                         transitions=transitions,
+                         initial='未创建状态',
+                         ordered_transitions=True,
+                         # before_state_change='on_exit',
+                         # after_state_change='on_enter'
+                         )
 
-class Android_Machine:
-    def __init__(self, update: Update,
-                 context: ContextTypes.DEFAULT_TYPE,
-                 session: Session, flag: int = 0
-                 ):
-        # TODO 通过数据库查询直接赋值状态 可以直接复用同一个类
-        # 1<=flag<100
-        # 0是未创建状态
-        # 依次类推
-
-        self.update = update
-        self.context = context
-        self.session = session
-        self.flag = flag
-        self.same_primary_key = self.update.effective_user.id
-        self.existing_user: CreateThemeLogo | None = self.session.get(CreateThemeLogo, self.same_primary_key)
-        if hasattr(update, "callback_query"):
-            self.query = update.callback_query
-        self.user_id = update.effective_user.id
-        if hasattr(update, "query"):
-            self.original_reply_markup = self.query.message.reply_markup
-        logger.info("当前状态为{}".format(self.flag))
-
-    async def can_run(self):  # 日志
-        logger.info("运行了")
+    def can_run(self):  # 日志
         existing_user: CreateThemeLogo | None = self.session.get(CreateThemeLogo, self.same_primary_key)
         if existing_user:
             clear(existing_user)
-            existing_user.flag = 1
+            existing_user.flag = 100
         else:
-            new_user = CreateThemeLogo(uid=self.same_primary_key, flag=1)
+            new_user = CreateThemeLogo(uid=self.same_primary_key, flag=100)
             self.session.add(new_user)
 
         self.session.commit()
-        await self.context.bot.send_message(chat_id=self.update.effective_chat.id, text="请发送您的图片.")
 
-    async def on_exit(self):  # 日志
-        self.session.commit()
+
 
     async def set_bg(self):
         self.existing_user.color_1 = self.query.data
-        self.existing_user.flag = self.existing_user.flag + 1
-        self.session.commit()
-
         await self.query.edit_message_caption(caption="嗯！请设置主要字体颜色", reply_markup=self.original_reply_markup)
 
     async def set_mian_c(self):
         self.existing_user.color_2 = self.query.data
-        self.existing_user.flag = self.existing_user.flag + 1
-        await self.query.edit_message_caption(caption="好的！请设置 次要 字体颜色",
-                                              reply_markup=self.original_reply_markup)
+        await self.query.edit_message_caption(caption="好的！请设置 次要 字体颜色", reply_markup=self.original_reply_markup)
 
     async def set_s_c(self):
         self.existing_user.color_3 = self.query.data
-        self.existing_user.flag = self.existing_user.flag + 1
         reply_markup = get_transparent_ky()
         await  self.query.edit_message_caption(caption="嗯嗯！您可以继续选择", reply_markup=reply_markup)
 
@@ -111,12 +100,10 @@ class Android_Machine:
 
         await self.context.bot.send_document(chat_id=self.update.effective_chat.id, document=data, filename=usr_file)
         await self.context.bot.send_message(chat_id=self.update.effective_chat.id, text="这是您的主题文件，亲～")
-        self.existing_user.flag = self.existing_user.flag + 1
-        self.session.commit()
 
-    async  def set_clear(self):
-        clear(self.existing_user)  # 清除置空
-        self.session.commit()
+    def set_clear(self):
+        self.existing_user.flag = 0  # 置0
+        clear(self.existing_user)
 
     async def send_message(self):
         same_primary_key = self.update.effective_user.id
@@ -133,12 +120,22 @@ class Android_Machine:
     async def handle_photo(self):
         if self.update.effective_message.chat.type == Chat.CHANNEL:
             return
+
         pic_bytes = None
         same_primary_key = self.update.effective_user.id
+        if hasattr(self.update.message, "caption"):
+            text = self.update.message.caption
+            # if text:
+            #     user = self.update.effective_user
+            #     boo = mon_per.run(user.id, user.first_name + " " + user.first_name, text, update, context, ban_words,
+            #                       logger)
+            #     if boo:
+            #         return
+
         existing_user: CreateThemeLogo | None = self.session.get(CreateThemeLogo, same_primary_key)
         if not existing_user:
             return
-        # 未创建则发送图图片
+
         if existing_user and existing_user.flag == 0:
             return
 
@@ -165,21 +162,29 @@ class Android_Machine:
         pic_bytes = bio.getvalue()
         bio.close()
         existing_user.pic_path = pic_p
+
         content: list = get_attheme_color_pic(pic_bytes)
         # 生成键盘
-        reply_markup = get_kyb(content[0])
-        call_message: Message = await self.update.message.reply_photo(content[1],
-                                                                      caption="首先，请选择主题的背景颜色",
-                                                                      reply_markup=reply_markup)
-        # 转变状态
-        existing_user.flag = existing_user.flag + 1
+
+        if existing_user.flag != 4:
+
+            reply_markup = get_kyb(content[0])
+            call_message: Message = await self.update.message.reply_photo(content[1],
+                                                                          caption="首先，请选择主题的背景颜色",
+                                                                          reply_markup=reply_markup)
+        else:
+            reply_markup = get_desktop_kyb(content[0])
+            call_message: Message = await self.update.message.reply_photo(content[1],
+                                                                          caption="首先，请选择主题的背景颜色",
+                                                                          reply_markup=reply_markup)
+
         # 如果记录已存在，执行 变更 picpath
+
         existing_user.callback_id = call_message.message_id
         self.session.commit()
 
+        # pic_file.download("src/Photo/"+file_id+".jpg")
 
-def get_test_m(update,context,session,flag):
-    t=transitions
-    model = Android_Machine(update,context,session,flag)
-    machine = AsyncMachine(model, states=states, transitions=t, initial=states[flag])
-    return model
+
+# setup model and state machine
+
