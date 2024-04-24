@@ -16,10 +16,10 @@ from app.util.db_op import clear
 
 logger = t_log.get_logging().getLogger(__name__)
 transitions = [  # 状态映射 （重要）
-            {'trigger': 'recive_command', 'source': "未创建状态", 'dest': "可创建状态"},
-            {'trigger': 'recive_photo', 'source': "可创建状态", 'dest': "拥有图片"},
-            {'trigger': 'recive_bgcolor', 'source': "拥有图片", 'dest': '拥有主背景颜色'},
-            {'trigger': 'recive_miancolor', 'source': '拥有主背景颜色', 'dest': '拥有主字体颜色'},
+            {'trigger': 'recive_command'    , 'source': "未创建状态", 'dest': "可创建状态"},
+            {'trigger': 'recive_photo',    'source':    "可创建状态", 'dest': "拥有图片"},
+            {'trigger': 'recive_bgcolor',   'source':   "拥有图片", 'dest': '拥有主背景颜色'},
+            {'trigger': 'recive_miancolor', 'source':   '拥有主背景颜色', 'dest': '拥有主字体颜色'},
             {'trigger': 'recive_secondcolor', 'source': '拥有主背景颜色', 'dest': '拥有次要颜色'},
             {'trigger': 'recive_secondcolor', 'source': '拥有次要颜色', 'dest': '已经选择是否透明'},
             {'trigger': 'recive_secondcolor', 'source': '已经选择是否透明', 'dest': '未创建状态'}

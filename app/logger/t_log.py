@@ -3,11 +3,11 @@ from logging.handlers import TimedRotatingFileHandler
 
 handler = TimedRotatingFileHandler('log/my_log.log', when='midnight', interval=1, backupCount=7)
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-                    level=logging.INFO, handlers=[handler])  # 日志
+                    level=logging.INFO, handlers=[handler])  # 锟斤拷志
 logger = logging.getLogger("__mian__")
 
 
-# 遗留代码
+
 def get_logger():
     return logger
 
