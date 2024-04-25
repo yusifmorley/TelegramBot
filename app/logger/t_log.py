@@ -10,7 +10,7 @@ handler = TimedRotatingFileHandler('log/my_log.log', when='midnight', interval=1
 hs.append(handler)
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                     level=logging.INFO, handlers=hs)
-logger = logging.getLogger("__mian__")
+logger = logging.getLogger(__name__)
 
 
 def get_logger():
