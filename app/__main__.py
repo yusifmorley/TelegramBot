@@ -238,9 +238,9 @@ async def base_photo(update: Update, context: CallbackContext, doucment_pt: str 
     #             return
 
     existing_user: CreateThemeLogo | None = session.get(CreateThemeLogo, same_primary_key)
-    # 图片已存在 跳过
-    if existing_user.pic_path:
-        return
+    # # 图片已存在 跳过
+    # if existing_user.pic_path:
+    #     return
     if not existing_user:
         return
 
