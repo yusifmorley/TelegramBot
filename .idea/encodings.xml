@@ -3,7 +3,7 @@
   <component name="Encoding" defaultCharsetForPropertiesFiles="UTF-8">
     <file url="file://$PROJECT_DIR$/app/callback/callback_android.py" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/callback/callback_desktop.py" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/app/logger/t_log.py" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/logger/t_log.py" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/stand_alone/stand_lone.py" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/test.py" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/util/color_parse.py" charset="UTF-8" />

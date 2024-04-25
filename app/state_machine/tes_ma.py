@@ -156,7 +156,8 @@ class AsyncModel:
         self.session.commit()
 
 
-transition = [dict(trigger='recive_command', source="未创建状态", dest="可创建状态", before="send_message"),
+transition = [dict(trigger='recive_command', source="未创建状态", dest="可创建状态", before="send_mess"
+                                                                                            "age"),
               dict(trigger='recive_photo', source="可创建状态", dest="拥有图片", before="can_run"),
               dict(trigger='recive_bgcolor', source="拥有图片", dest="有主背景颜色", before="handle_photo"),
               dict(trigger='recive_miancolo', source='拥有主背景颜色', dest="拥有主字体颜色", before="set_bg"),

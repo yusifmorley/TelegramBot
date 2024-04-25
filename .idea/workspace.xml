@@ -5,14 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ca79680f-c54d-4792-8fc8-f23ed4ec4965" name="Changes" comment="内部bug">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/7f122a22-a408-45aa-8129-dd5e72c1cc5f.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/7f122a22-a408-45aa-8129-dd5e72c1cc5f.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/__main__.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/__main__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/logger/t_log.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/logger/t_log.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/state_machine/android/android_context.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/state_machine/android/state/andoid_state.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/state_machine/android_machine.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/state_machine/android_machine.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/state_machine/desk/desk_context.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/app/state_machine/tes_ma.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/state_machine/tes_ma.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -61,37 +55,37 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "ASKED_MARK_IGNORED_FILES_AS_EXCLUDED": "true",
-    "DefaultPlantUmlFileTemplate": "UML State",
-    "Python.__main__.executor": "Run",
-    "Python.dev.executor": "Run",
-    "Python.tes_ma.executor": "Run",
-    "Python.theme_http.executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "main",
-    "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "F:/Project/pycharmProject/TelegramBot/app/state_machine/desk",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "run.code.analysis.last.selected.profile": "aDefault",
-    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;ASKED_MARK_IGNORED_FILES_AS_EXCLUDED&quot;: &quot;true&quot;,
+    &quot;DefaultPlantUmlFileTemplate&quot;: &quot;UML State&quot;,
+    &quot;Python.__main__.executor&quot;: &quot;Run&quot;,
+    &quot;Python.dev.executor&quot;: &quot;Run&quot;,
+    &quot;Python.tes_ma.executor&quot;: &quot;Run&quot;,
+    &quot;Python.theme_http.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;F:/Project/pycharmProject/TelegramBot/app/state_machine/desk&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;aDefault&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "mysql"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;mysql&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="F:\Project\pycharmProject\TelegramBot\app\state_machine\desk" />
@@ -109,27 +103,6 @@
     </key>
   </component>
   <component name="RunManager" selected="Python.dev">
-    <configuration default="true" type="DjangoTestsConfigurationType">
-      <module name="TelegramBot" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="TARGET" value="" />
-      <option name="SETTINGS_FILE" value="" />
-      <option name="CUSTOM_SETTINGS" value="false" />
-      <option name="USE_OPTIONS" value="false" />
-      <option name="OPTIONS" value="" />
-      <method v="2" />
-    </configuration>
     <configuration name="__main__" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="TelegramBot" />
       <option name="ENV_FILES" value="" />
@@ -652,6 +625,7 @@
       <workItem from="1713936418912" duration="10365000" />
       <workItem from="1713947144490" duration="3371000" />
       <workItem from="1713950527096" duration="1795000" />
+      <workItem from="1714011158983" duration="694000" />
     </task>
     <task id="LOCAL-00015" summary="ok">
       <created>1681708485862</created>
@@ -996,7 +970,7 @@
       <option name="project" value="LOCAL" />
       <updated>1691742284559</updated>
     </task>
-    <option name="localTasksCounter" value="180" />
+    <option name="localTasksCounter" value="181" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1046,7 +1020,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="图片识别优化" />
     <MESSAGE value="目录优化" />
     <MESSAGE value="优化了文档格式的图片识别 更改了文件名生成" />
     <MESSAGE value="优化异常" />
@@ -1071,7 +1044,8 @@
     <MESSAGE value="修复文件夹同步" />
     <MESSAGE value="文件名修复" />
     <MESSAGE value="内部bug" />
-    <option name="LAST_COMMIT_MESSAGE" value="内部bug" />
+    <MESSAGE value="异步状态机" />
+    <option name="LAST_COMMIT_MESSAGE" value="异步状态机" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
