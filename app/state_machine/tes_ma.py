@@ -34,10 +34,10 @@ class AsyncModel:
         self.user_id = update.effective_user.id
         if hasattr(update, "query"):
             self.original_reply_markup = self.query.message.reply_markup
-        logger.info("当前状态为{}".format(self.flag))
+        logger.info("当前状态为{}".format(sta[self.flag]))
 
     async def can_run(self):  # 日志
-        logger.info("运行了")
+        # logger.info("运行了")
         existing_user: CreateThemeLogo | None = self.session.get(CreateThemeLogo, self.same_primary_key)
         if existing_user:
             clear(existing_user)
@@ -96,18 +96,6 @@ class AsyncModel:
         clear(self.existing_user)  # 清除置空
         self.session.commit()
 
-    async def send_message(self):
-        same_primary_key = self.update.effective_user.id
-        existing_user: CreateThemeLogo | None = self.session.get(CreateThemeLogo, same_primary_key)
-        if existing_user:
-            clear(existing_user)
-            existing_user.flag = 1
-        else:
-            new_user = CreateThemeLogo(uid=same_primary_key, flag=1)
-            self.session.add(new_user)
-        self.session.commit()
-        await self.context.bot.send_message(chat_id=self.update.effective_chat.id, text="请发送您的图片")
-
     async def handle_photo(self):
         if self.update.effective_message.chat.type == Chat.CHANNEL:
             return
@@ -156,19 +144,18 @@ class AsyncModel:
         self.session.commit()
 
 
-transition = [dict(trigger='recive_command', source="未创建状态", dest="可创建状态", before="send_mess"
-                                                                                            "age"),
-              dict(trigger='recive_photo', source="可创建状态", dest="拥有图片", before="can_run"),
-              dict(trigger='recive_bgcolor', source="拥有图片", dest="有主背景颜色", before="handle_photo"),
-              dict(trigger='recive_miancolo', source='拥有主背景颜色', dest="拥有主字体颜色", before="set_bg"),
-              dict(trigger='recive_secondco', source='拥有主背景颜色', dest="拥有次要颜色", before="set_mian_c"),
-              dict(trigger='recive_secondco', source='拥有次要颜色', dest="已经选择是否透明", before="set_s_c"),
-              dict(trigger='recive_secondco', source='已经选择是否透明', dest='未创建状态', before="set_can_opc")
-              ]
+transition = [dict(trigger='recive_command', source="未创建状态", dest="可创建状态", before="can_run"),
+              dict(trigger='recive_photo', source="可创建状态", dest="拥有图片", before="handle_photo"),
+              dict(trigger='recive_color', source="拥有图片", dest="有主背景颜色", before="set_bg"),
+              dict(trigger='recive_color', source='拥有主背景颜色', dest="拥有主字体颜色", before="set_mian_c"),
+              dict(trigger='recive_color', source='拥有主字体颜色', dest="拥有次要颜色", before="set_s_c"),
+              dict(trigger='recive_op_color', source='拥有次要颜色', dest="已经选择是否透明", before="set_can_opc"),
 
-def get_modle(update,context,session,flag):
-    model = AsyncModel(update,context,session,flag)
-    machine = AsyncMachine(model, states=[
+              dict(trigger='recive_op_color', source='拥有次要颜色', dest="已经选择是否透明", before="over_send"),
+
+              dict(trigger='recive_clear', source='已经选择是否透明', dest='未创建状态', before="set_clear")
+              ]
+sta=[
         "未创建状态",
         "可创建状态",
         "拥有图片",
@@ -176,7 +163,12 @@ def get_modle(update,context,session,flag):
         '拥有主字体颜色'
         '拥有次要颜色',
         "已经选择是否透明"
-    ], transitions=transition, initial='未创建状态')
+    ]
+def get_modle(update,context,session,flag):
+    model = AsyncModel(update,context,session,flag)
+    machine = AsyncMachine(model, states=sta,
+                           transitions=transition,
+                           initial=sta[flag])
 
     return model
 

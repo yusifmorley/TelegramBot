@@ -23,7 +23,7 @@ from app.logger import t_log
 from app.server.theme_http import run
 from app.state_machine.android_machine import Android_Machine, get_test_m
 from app.state_machine.desk_machine import Desk_Machine
-from app.state_machine.tes_ma import  get_modle
+from app.state_machine.tes_ma import get_modle
 
 from app.theme_file import get_radom_link, get_android, get_desktop
 from app.admin import admin_function, ban_word_op
@@ -196,9 +196,8 @@ async def get_ios_theme(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 @listen
 async def create_attheme(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    an = get_modle(update,context,session,0)
+    an = get_modle(update, context, session, 0)
     await an.recive_command()
-
 
 
 @listen
@@ -220,8 +219,8 @@ async def base_photo(update: Update, context: CallbackContext, doucment_pt: str 
         return
     flag = existing_user.flag
     if is_attheme(existing_user.flag):
-        an = Android_Machine(update, context, session, flag)
-        an.recive_photo()
+        an = get_modle(update, context, session, flag)
+        await  an.recive_photo()
     else:
         de = Desk_Machine(update, context, session, flag)
         de.recive_photo()
@@ -238,8 +237,8 @@ async def button_update(update: Update, context: ContextTypes.DEFAULT_TYPE):
         return
     flag = existing_user.flag
     if is_attheme(flag):
-        an = Android_Machine(update, context, session, flag)
-        an.next_state()
+        an = get_modle(update, context, session, flag)
+        await an.recive_color()
     else:
         de = Desk_Machine(update, context, session, flag)
         de.next_state()
