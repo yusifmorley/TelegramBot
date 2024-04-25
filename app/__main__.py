@@ -244,12 +244,12 @@ async def base_photo(update: Update, context: CallbackContext, doucment_pt: str 
     if existing_user and existing_user.flag == 0:
         return
 
-    if update.message.document:
-        if doucment_pt:
+    if doucment_pt is not None:
             fd = open(doucment_pt, 'rb')
             pic_bytes = fd.read()
             fd.close()
             existing_user.pic_path = doucment_pt
+            logger.info("正在读取 document 大小为{}比特".format(len(pic_bytes)))
     else:
         pid = update.effective_message.photo[-1].file_id  # 最后一个是完整图片
         pic_file = await bot.get_file(pid)
@@ -268,6 +268,7 @@ async def base_photo(update: Update, context: CallbackContext, doucment_pt: str 
         existing_user.pic_path = pic_p
 
     content: list = get_attheme_color_pic(pic_bytes)
+    logger.info("图片预览色生成成功大小为{}".format(content.__len__()))
     # 生成键盘
 
     if existing_user.flag != 4:
@@ -306,6 +307,8 @@ async def button_update(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 
 async def parse_document(update: Update, context: ContextTypes.DEFAULT_TYPE):
+
+    logger.info("用户发送了文档格式:为{}".format(update.message.document.mime_type))
     same_primary_key = update.effective_user.id
     existing_user: CreateThemeLogo | None = session.get(CreateThemeLogo, same_primary_key)
 
@@ -317,9 +320,9 @@ async def parse_document(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if existing_user and existing_user.flag == 0:
         return
 
-    if not hasattr(update.message, "document"):
-        await base_photo(update, context)
-        return
+    # if not hasattr(update.message, "document"):
+    #     await base_photo(update, context)
+    #     return
 
     document = update.message.document
     # 获取文档的文件名
@@ -339,7 +342,7 @@ async def parse_document(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text(f"您发送了非法文件")
         return
     await update.message.reply_text("嗯嗯！这确实是一个图片")
-
+    logger.info("验证通过，无异常。正在调用base_photo，file_path为{}".format(file_path))
     await base_photo(update, context, file_path)
 
 

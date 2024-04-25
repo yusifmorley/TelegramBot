@@ -402,3 +402,77 @@ Traceback (most recent call last):
   File "D:\conda\envs\TelegramBot\Lib\site-packages\telegram\request\_httpxrequest.py", line 300, in do_request
     raise NetworkError(f"httpx.{err.__class__.__name__}: {err}") from err
 telegram.error.NetworkError: httpx.RemoteProtocolError: Server disconnected without sending a response.
+2024-04-25 10:59:18,605 - app.constant_obj.ThemeType - INFO - 刷新type字典完成
+2024-04-25 10:59:18,605 - app.constant_obj.ThemeType - INFO - 大小为 25 
+2024-04-25 10:59:18,605 - app.constant_obj.ThemeType - INFO - 字典type字典初始化完成,大小为 25 
+2024-04-25 11:00:50,562 - app.constant_obj.ThemeType - INFO - 刷新type字典完成
+2024-04-25 11:00:50,562 - app.constant_obj.ThemeType - INFO - 大小为 25 
+2024-04-25 11:00:50,562 - app.constant_obj.ThemeType - INFO - 字典type字典初始化完成,大小为 25 
+2024-04-25 11:00:51,720 - __main__ - INFO - 运行本项目必须开启ThemeFactory
+2024-04-25 11:00:51,725 - __mian__ - INFO - 公共目录 -3PJFe65CLIVuCWRAgSb0JIa_X7DadltDJBp6aySuwlE-MIr7XD-9jJWuNQ-gtNg.tdesktop-theme已经存在
+2024-04-25 11:00:51,726 - __mian__ - INFO - 公共目录 -6e2mOy2Rmnq-XWFnLsslol3inNXcsXT30P-wgyblkBeqC_62YQG4DpRpfQnZOAA.tdesktop-theme已经存在
+2024-04-25 11:00:51,726 - __mian__ - INFO - 公共目录 -FG1yjGT6_0GqEl_L7szoHP8ddPVkVPEPBCp9Omvyq_u8rXCOdhQ97Wb0fFtwHX2.tdesktop-theme已经存在
+2024-04-25 11:00:51,726 - __mian__ - INFO - 公共目录 X2ho8k_L42PLHimMPow1L0rqmljtJkTROKJMWte0rv5MJ3G1txAWSKzy3LeyaDJt.tdesktop-theme已经存在
+2024-04-25 11:00:51,726 - __mian__ - INFO - 公共目录 bYsXE_NaPZwA053T57C0b4-0lU4Z_Qdp2LpLS3o-zxTfoBJTHHkW9Tudrsoij1bc.tdesktop-theme已经存在
+2024-04-25 11:00:51,726 - __mian__ - INFO - 公共目录 7OkNF77aUmbd2yJepIlMNX_UFRaKAg5oalBltu22GXR-vZ7ku6sxc87FFMhrI8GH.tdesktop-theme已经存在
+2024-04-25 11:00:51,726 - __mian__ - INFO - 公共目录 8907zrz01KkZ89M3Xj4c_X51jFOqBKPv4Rg5PInDnvjPdiH2fZGKyNqtH6snkwVV.tdesktop-theme已经存在
+2024-04-25 11:00:51,726 - __mian__ - INFO - 公共目录 43Emik8lQZLQEsyKdzqY2vYw72ePVfVph1b94i_syLgdksarkcwsiwvAr20Z-xFY.tdesktop-theme已经存在
+2024-04-25 11:00:51,726 - __mian__ - INFO - ---公共目录完整---
+2024-04-25 11:00:51,726 - __mian__ - INFO - 公共目录 N_0dXco0VN8wFQAwhviRGzVUYy16Z_CWkqOE3S2IRVI1u4fu8ZRmIjox48oCb5ie.attheme已经存在
+2024-04-25 11:00:51,726 - __mian__ - INFO - 公共目录 o_dTwiB7tPPoxPg2ftYGvIvAts33zyfeOUntoxog3-EmQKjFZfl0Rdn2Um_mjWar.attheme已经存在
+2024-04-25 11:00:51,726 - __mian__ - INFO - 公共目录 p_3gEdOfnCoTLP7kBMUcUyarerNaTBmKPCn2AoQVsFB6ujRRasuNSejKRBOJofur.attheme已经存在
+2024-04-25 11:00:51,726 - __mian__ - INFO - 公共目录 P_Ugilz2CqBFkw95s9tmVrPCwAIZKKbaU99XlHBjmBgalxIpbebPKpk29HShGFrS.attheme已经存在
+2024-04-25 11:00:51,726 - __mian__ - INFO - 公共目录 I_d8AMTuqeSMVycDLxjTha2Z17MaswGAzezHXQ03HZ44NObs-PAkh5GUUHfwNW4E.attheme已经存在
+2024-04-25 11:00:51,726 - __mian__ - INFO - 公共目录 I_7x3E0l_sBOZp48-DJE71N6bTvcIXlhJAZ8QHdJGWsaCyBpNeYHYMk2jsEF96HD.attheme已经存在
+2024-04-25 11:00:51,726 - __mian__ - INFO - 公共目录 u_3-piPqDOLF_Jh3Uh44BAVSM4Od4x_bpqJ-gjQT8ny2KC5ZGxhLUsN27PzMhEOW.attheme已经存在
+2024-04-25 11:00:51,726 - __mian__ - INFO - 公共目录 t_002PticcQik7zaXkg473TCSswrlMgFJsH11ia7n0aYyZRdYl05jF703_IULjVa.attheme已经存在
+2024-04-25 11:00:51,726 - __mian__ - INFO - 公共目录 g_kWrZf2J4GQ0hAI3EgwPJH8EBvyXhyr767CPvi4ptHnny4CuMGn3ubPKPzvz-wp.attheme已经存在
+2024-04-25 11:00:51,726 - __mian__ - INFO - 公共目录 B_6A8tbNFc2g3L1u2tYuYcS5X5IobnNUHwe03tdSEIjk0k2NwwRa0wtpxRB5hp1D.attheme已经存在
+2024-04-25 11:00:51,726 - __mian__ - INFO - ---公共目录完整---
+2024-04-25 11:00:51,727 - __mian__ - INFO - Starting server...
+2024-04-25 11:00:53,344 - apscheduler.scheduler - INFO - Scheduler started
+2024-04-25 11:00:53,344 - telegram.ext.Application - INFO - Application started
+2024-04-25 11:01:27,414 - __main__ - INFO - 用户发送了文档格式:为image/png
+2024-04-25 11:01:30,563 - __main__ - INFO - 验证通过，无异常。正在调用base_photo，file_path为src/Photo/507467074.png
+2024-04-25 11:01:30,564 - __main__ - INFO - 正在读取 document 大小为9140比特
+2024-04-25 11:01:30,581 - telegram.ext.Application - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "D:\conda\envs\TelegramBot\Lib\site-packages\telegram\ext\_application.py", line 1264, in process_update
+    await coroutine
+  File "D:\conda\envs\TelegramBot\Lib\site-packages\telegram\ext\_handlers\basehandler.py", line 157, in handle_update
+    return await self.callback(update, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Project\pycharmProject\TelegramBot\app\__main__.py", line 346, in parse_document
+    await base_photo(update, context, file_path)
+  File "F:\Project\pycharmProject\TelegramBot\app\__main__.py", line 271, in base_photo
+    logger.info("图片预览色生成成功大小为{}".format(content.__len__()))
+                                                    ^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute '__len__'
+2024-04-25 11:39:16,735 - __main__ - INFO - 用户发送了文档格式:为image/png
+2024-04-25 11:39:18,378 - __main__ - INFO - 验证通过，无异常。正在调用base_photo，file_path为src/Photo/507467074.png
+2024-04-25 11:39:18,378 - __main__ - INFO - 正在读取 document 大小为9140比特
+2024-04-25 11:39:18,388 - telegram.ext.Application - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "D:\conda\envs\TelegramBot\Lib\site-packages\telegram\ext\_application.py", line 1264, in process_update
+    await coroutine
+  File "D:\conda\envs\TelegramBot\Lib\site-packages\telegram\ext\_handlers\basehandler.py", line 157, in handle_update
+    return await self.callback(update, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Project\pycharmProject\TelegramBot\app\__main__.py", line 346, in parse_document
+    await base_photo(update, context, file_path)
+  File "F:\Project\pycharmProject\TelegramBot\app\__main__.py", line 271, in base_photo
+    logger.info("图片预览色生成成功大小为{}".format(content.__len__()))
+                                                    ^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute '__len__'
+2024-04-25 11:48:28,638 - __main__ - INFO - 用户发送了文档格式:为image/png
+2024-04-25 11:48:29,717 - __main__ - INFO - 验证通过，无异常。正在调用base_photo，file_path为src/Photo/507467074.png
+2024-04-25 11:48:29,717 - __main__ - INFO - 正在读取 document 大小为9140比特
+2024-04-25 11:48:29,888 - __main__ - INFO - 图片预览色生成成功大小为2
+2024-04-25 20:41:14,100 - __main__ - INFO - 用户发送了文档格式:为image/png
+2024-04-25 20:41:15,384 - __main__ - INFO - 验证通过，无异常。正在调用base_photo，file_path为src/Photo/507467074.png
+2024-04-25 20:41:15,384 - __main__ - INFO - 正在读取 document 大小为9140比特
+2024-04-25 20:41:15,528 - __main__ - INFO - 图片预览色生成成功大小为2
+2024-04-25 20:42:21,724 - __main__ - INFO - 图片预览色生成成功大小为2
+2024-04-25 21:04:17,670 - telegram.ext.Application - INFO - Application is stopping. This might take a moment.
+2024-04-25 21:04:17,670 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2024-04-25 21:04:17,670 - telegram.ext.Application - INFO - Application.stop() complete
