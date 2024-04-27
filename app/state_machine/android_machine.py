@@ -3,7 +3,7 @@ from io import BytesIO
 from sqlalchemy.orm import Session
 from telegram import Update, Chat, Message
 from telegram.ext import ContextTypes
-from transitions import Machine, State
+from transitions import State
 from transitions.extensions import AsyncMachine
 
 import app.util.file_name_gen as f_n
@@ -16,14 +16,14 @@ from app.util.db_op import clear
 
 logger = t_log.get_logging().getLogger(__name__)
 transitions = [  # 状态映射 （重要）
-            {'trigger': 'recive_command'    , 'source': "未创建状态", 'dest': "可创建状态"},
-            {'trigger': 'recive_photo',    'source':    "可创建状态", 'dest': "拥有图片"},
-            {'trigger': 'recive_bgcolor',   'source':   "拥有图片", 'dest': '拥有主背景颜色'},
-            {'trigger': 'recive_miancolor', 'source':   '拥有主背景颜色', 'dest': '拥有主字体颜色'},
-            {'trigger': 'recive_secondcolor', 'source': '拥有主背景颜色', 'dest': '拥有次要颜色'},
-            {'trigger': 'recive_secondcolor', 'source': '拥有次要颜色', 'dest': '已经选择是否透明'},
-            {'trigger': 'recive_secondcolor', 'source': '已经选择是否透明', 'dest': '未创建状态'}
-        ]
+    {'trigger': 'recive_command', 'source': "未创建状态", 'dest': "可创建状态"},
+    {'trigger': 'recive_photo', 'source': "可创建状态", 'dest': "拥有图片"},
+    {'trigger': 'recive_bgcolor', 'source': "拥有图片", 'dest': '拥有主背景颜色'},
+    {'trigger': 'recive_miancolor', 'source': '拥有主背景颜色', 'dest': '拥有主字体颜色'},
+    {'trigger': 'recive_secondcolor', 'source': '拥有主背景颜色', 'dest': '拥有次要颜色'},
+    {'trigger': 'recive_secondcolor', 'source': '拥有次要颜色', 'dest': '已经选择是否透明'},
+    {'trigger': 'recive_secondcolor', 'source': '已经选择是否透明', 'dest': '未创建状态'}
+]
 states = [
     State("未创建状态", on_enter="set_clear"),
     State("可创建状态", on_enter="can_run"),
@@ -34,6 +34,7 @@ states = [
     State("已经选择是否透明", on_enter="set_can_opc"
           , on_exit="set_clear")  # 清除置空
 ]  # 状态
+
 
 class Android_Machine:
     def __init__(self, update: Update,
@@ -114,7 +115,7 @@ class Android_Machine:
         self.existing_user.flag = self.existing_user.flag + 1
         self.session.commit()
 
-    async  def set_clear(self):
+    async def set_clear(self):
         clear(self.existing_user)  # 清除置空
         self.session.commit()
 
@@ -178,8 +179,8 @@ class Android_Machine:
         self.session.commit()
 
 
-def get_test_m(update,context,session,flag):
-    t=transitions
-    model = Android_Machine(update,context,session,flag)
+def get_test_m(update, context, session, flag):
+    t = transitions
+    model = Android_Machine(update, context, session, flag)
     machine = AsyncMachine(model, states=states, transitions=t, initial=states[flag])
     return model

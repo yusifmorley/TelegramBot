@@ -1,5 +1,3 @@
-import asyncio
-import base64
 import tracemalloc
 import os
 import traceback
@@ -7,7 +5,7 @@ from threading import Thread
 from PIL import Image
 import sqlalchemy.exc
 import telegram
-from telegram import Update, Bot, File, Message, Chat
+from telegram import Update, Bot, File, Chat
 from telegram.ext import CallbackContext, CallbackQueryHandler, ContextTypes, Application, ApplicationBuilder
 from telegram.ext import MessageHandler, filters
 from telegram.ext import CommandHandler
@@ -21,22 +19,16 @@ from app.constant_obj.ThemeType import get_theme_list
 from app.decorate.listen import listen
 from app.logger import t_log
 from app.server.theme_http import run
-from app.state_machine.android_machine import Android_Machine, get_test_m
 from app.state_machine.desk_machine import Desk_Machine
 from app.state_machine.tes_ma import get_modle
-
 from app.theme_file import get_radom_link, get_android, get_desktop
 from app.admin import admin_function, ban_word_op
 from app.theme_file import get_ios
 from app.util.assrt import is_attheme
-from app.util.create_atheme import get_attheme_color_pic, get_kyb, get_attheme, get_transparent_ky
-from io import BytesIO
-from app.model.models import init_session, CreateThemeLogo, BanUserLogo
+from app.model.models import init_session, CreateThemeLogo
 from sqlalchemy.orm.session import Session
-from app.util.create_desktop import get_desktop_kyb
-from app.util.db_op import clear
-from app.util.sync_public_attheme import sunc_ap, get_attheme_list
-from app.util.sync_public_desk import sync_dp, get_desk_list
+from app.util.sync_public_attheme import sunc_ap
+from app.util.sync_public_desk import sync_dp
 import logging
 
 # 日志

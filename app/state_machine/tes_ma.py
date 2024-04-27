@@ -11,7 +11,10 @@ from app.model.models import CreateThemeLogo
 from app.util.create_atheme import get_attheme_color_pic, get_kyb, get_transparent_ky, get_attheme
 from app.util.create_desktop import get_desktop_kyb
 from app.util.db_op import clear
+
 logger = t_log.get_logging().getLogger(__name__)
+
+
 class AsyncModel:
 
     def __init__(self, update: Update,
@@ -151,25 +154,25 @@ transition = [dict(trigger='recive_command', source="未创建状态", dest="可
               dict(trigger='recive_color', source='拥有主字体颜色', dest="拥有次要颜色", before="set_s_c"),
               dict(trigger='recive_op_color', source='拥有次要颜色', dest="已经选择是否透明", before="set_can_opc"),
 
-              dict(trigger='recive_op_color', source='拥有次要颜色', dest="已经选择是否透明", before="over_send"),
+              dict(trigger='recive_over', source='拥有次要颜色', dest="未创建状态", before="over_send"),
 
-              dict(trigger='recive_clear', source='已经选择是否透明', dest='未创建状态', before="set_clear")
+              dict(trigger='recive_over', source='已经选择是否透明', dest='未创建状态', before="over_send")
               ]
-sta=[
-        "未创建状态",
-        "可创建状态",
-        "拥有图片",
-        '拥有主背景颜色'
-        '拥有主字体颜色'
-        '拥有次要颜色',
-        "已经选择是否透明"
-    ]
-def get_modle(update,context,session,flag):
-    model = AsyncModel(update,context,session,flag)
+sta = [
+    "未创建状态",
+    "可创建状态",
+    "拥有图片",
+    '拥有主背景颜色'
+    '拥有主字体颜色'
+    '拥有次要颜色',
+    "已经选择是否透明"
+]
+
+
+def get_modle(update, context, session, flag):
+    model = AsyncModel(update, context, session, flag)
     machine = AsyncMachine(model, states=sta,
                            transitions=transition,
                            initial=sta[flag])
 
     return model
-
-
