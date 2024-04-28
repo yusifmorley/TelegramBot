@@ -60,13 +60,13 @@ class AsyncModel:
         self.existing_user.flag = self.existing_user.flag + 1
         self.session.commit()
 
-        await self.query.edit_message_caption(caption="嗯！请设置主要字体颜色", reply_markup=self.original_reply_markup)
+        await self.query.edit_message_caption(caption="嗯！请设置主要字体颜色", reply_markup=self.query.message.reply_markup)
 
     async def set_mian_c(self):
         self.existing_user.color_2 = self.query.data
         self.existing_user.flag = self.existing_user.flag + 1
         await self.query.edit_message_caption(caption="好的！请设置 次要 字体颜色",
-                                              reply_markup=self.original_reply_markup)
+                                              reply_markup=self.query.message.reply_markup)
 
     async def set_s_c(self):
         self.existing_user.color_3 = self.query.data
@@ -149,21 +149,20 @@ class AsyncModel:
 
 transition = [dict(trigger='recive_command', source="未创建状态", dest="可创建状态", before="can_run"),
               dict(trigger='recive_photo', source="可创建状态", dest="拥有图片", before="handle_photo"),
-              dict(trigger='recive_color', source="拥有图片", dest="有主背景颜色", before="set_bg"),
+              dict(trigger='recive_color', source="拥有图片", dest="拥有主背景颜色", before="set_bg"),
               dict(trigger='recive_color', source='拥有主背景颜色', dest="拥有主字体颜色", before="set_mian_c"),
               dict(trigger='recive_color', source='拥有主字体颜色', dest="拥有次要颜色", before="set_s_c"),
-              dict(trigger='recive_op_color', source='拥有次要颜色', dest="已经选择是否透明", before="set_can_opc"),
+              dict(trigger='recive_color', source='拥有次要颜色', dest="已经选择是否透明", before="set_can_opc",
+                   after="set_clear"  # 清空
 
-              dict(trigger='recive_over', source='拥有次要颜色', dest="未创建状态", before="over_send"),
-
-              dict(trigger='recive_over', source='已经选择是否透明', dest='未创建状态', before="over_send")
+                   )
               ]
 sta = [
     "未创建状态",
     "可创建状态",
     "拥有图片",
-    '拥有主背景颜色'
-    '拥有主字体颜色'
+    '拥有主背景颜色',
+    '拥有主字体颜色',
     '拥有次要颜色',
     "已经选择是否透明"
 ]

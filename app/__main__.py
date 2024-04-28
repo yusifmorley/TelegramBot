@@ -228,6 +228,7 @@ async def button_update(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await query.answer("此键盘不属于你，点击无效呢！")
         return
     flag = existing_user.flag
+
     if is_attheme(flag):
         an = get_modle(update, context, session, flag)
         await an.recive_color()
