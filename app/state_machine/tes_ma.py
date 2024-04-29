@@ -1,7 +1,9 @@
 import asyncio
 from io import BytesIO
+
+from PIL import Image
 from sqlalchemy.orm import Session
-from telegram import Update, Chat, Message
+from telegram import Update, Chat, Message, File
 from telegram.ext import ContextTypes
 from transitions.extensions import AsyncMachine
 import app.util.file_name_gen as f_n
@@ -99,25 +101,12 @@ class AsyncModel:
         clear(self.existing_user)  # 清除置空
         self.session.commit()
 
+    async def handle_document(self,event):
+
+
     async def handle_photo(self):
-        if self.update.effective_message.chat.type == Chat.CHANNEL:
-            return
-        pic_bytes = None
         same_primary_key = self.update.effective_user.id
         existing_user: CreateThemeLogo | None = self.session.get(CreateThemeLogo, same_primary_key)
-        if not existing_user:
-            return
-        # 未创建则发送图图片
-        if existing_user and existing_user.flag == 0:
-            return
-
-        # if self.update.message.document:
-        #     if doucment_pt:
-        #         fd = open(doucment_pt, 'rb')
-        #         pic_bytes = fd.read()
-        #         fd.close()
-        #         existing_user.pic_path = doucment_pt
-        # else:
 
         pid = self.update.effective_message.photo[-1].file_id  # 最后一个是完整图片
         pic_file = await self.context.bot.get_file(pid)
@@ -149,6 +138,8 @@ class AsyncModel:
 
 transition = [dict(trigger='recive_command', source="未创建状态", dest="可创建状态", before="can_run"),
               dict(trigger='recive_photo', source="可创建状态", dest="拥有图片", before="handle_photo"),
+              dict(trigger='recive_document', source="拥有图片", dest="拥有主背景颜色", before="handle_document"),
+
               dict(trigger='recive_color', source="拥有图片", dest="拥有主背景颜色", before="set_bg"),
               dict(trigger='recive_color', source='拥有主背景颜色', dest="拥有主字体颜色", before="set_mian_c"),
               dict(trigger='recive_color', source='拥有主字体颜色', dest="拥有次要颜色", before="set_s_c"),

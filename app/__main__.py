@@ -209,6 +209,9 @@ async def base_photo(update: Update, context: CallbackContext, doucment_pt: str 
         return
     if existing_user and existing_user.flag == 0:
         return
+    if existing_user.flag == 2:  # 避免重复检测图片
+        # await context.bot.send_message(chat_id=update.effective_chat.id, text="图片已经发送 亲～")
+        return
     flag = existing_user.flag
     if is_attheme(existing_user.flag):
         an = get_modle(update, context, session, flag)
@@ -271,8 +274,10 @@ async def parse_document(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text(f"您发送了非法文件")
         return
     await update.message.reply_text("嗯嗯！这确实是一个图片")
+    # 调用处理程序 手段
+    an = get_modle(update, context, session, existing_user.flag)
+    await an.recive_document(file_path)
 
-    await base_photo(update, context, file_path)
 
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
