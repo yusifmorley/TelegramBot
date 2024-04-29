@@ -19,8 +19,8 @@ from app.constant_obj.ThemeType import get_theme_list
 from app.decorate.listen import listen
 from app.logger import t_log
 from app.server.theme_http import run
-from app.state_machine.desk_machine import Desk_Machine
-from app.state_machine.tes_ma import get_modle
+from app.state_machine.desk_machine import  get_de_modle
+from app.state_machine.android_theme import get_modle
 from app.theme_file import get_radom_link, get_android, get_desktop
 from app.admin import admin_function, ban_word_op
 from app.theme_file import get_ios
@@ -194,8 +194,8 @@ async def create_attheme(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 @listen
 async def create_tdesktop(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    de = Desk_Machine(update, context, session)
-    de.recive_command()
+    de = get_de_modle(update, context, session, 100)
+    await de.recive_command()
 
 
 # 用户发送图片
@@ -209,7 +209,7 @@ async def base_photo(update: Update, context: CallbackContext, doucment_pt: str 
         return
     if existing_user and existing_user.flag == 0:
         return
-    if existing_user.flag == 2:  # 避免重复检测图片
+    if existing_user.flag == 2 or existing_user.flag == 102:  # 避免重复检测图片
         # await context.bot.send_message(chat_id=update.effective_chat.id, text="图片已经发送 亲～")
         return
     flag = existing_user.flag
@@ -217,8 +217,8 @@ async def base_photo(update: Update, context: CallbackContext, doucment_pt: str 
         an = get_modle(update, context, session, flag)
         await  an.recive_photo()
     else:
-        de = Desk_Machine(update, context, session, flag)
-        de.recive_photo()
+        de = get_de_modle(update, context, session, flag)
+        await de.recive_photo()
 
 
 # 解决 颜色三个状态
@@ -231,13 +231,25 @@ async def button_update(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await query.answer("此键盘不属于你，点击无效呢！")
         return
     flag = existing_user.flag
+    logger.info(f"当前flag为{flag} ")
+    if len(query.data) > 15:
+        if is_attheme(flag):
+            an = get_modle(update, context, session, flag)
+            await an.recive_random_color(query, existing_user)
+
+            return
+        else:
+            de = get_de_modle(update, context, session, flag)
+            await de.recive_random_color(query, existing_user)
+
+            return
 
     if is_attheme(flag):
         an = get_modle(update, context, session, flag)
         await an.recive_color()
     else:
-        de = Desk_Machine(update, context, session, flag)
-        de.next_state()
+        de = get_de_modle(update, context, session, flag)
+        await de.recive_color()
 
 
 async def parse_document(update: Update, context: ContextTypes.DEFAULT_TYPE):

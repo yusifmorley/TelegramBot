@@ -5,16 +5,17 @@ import base64
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 
 from app.util.color_parse import is_light, parse_color
-url0= "http://127.0.0.1:3000/tdesktop-create"
-def get_tdektop(pic_byte, color_list):
+
+url0 = "http://127.0.0.1:3000/tdesktop-create"
+
+
+def get_tdektop(pic_byte, color_list, flag: bool):
     url = url0
     head = {
         'Content-Type': 'application/json'
     }
     picb = str(base64.b64encode(pic_byte), encoding='utf-8')
-    # picObj = {'picb': picb, 'colors': color_list},
-    picObj = {'picb': picb, 'colors': color_list}
-    # content = requests.post(url1, data=picObj,headers=head).content
+    picObj = {'picb': picb, 'colors': color_list, 'flag': flag}
 
     content = requests.post(url, json=ast.literal_eval(str(picObj)), headers=head).content
     if content != b'fail':
@@ -22,7 +23,8 @@ def get_tdektop(pic_byte, color_list):
     else:
         return None
 
-def get_desktop_kyb(arr:list[str]):
+
+def get_desktop_kyb(arr: list[str]):
     autocolor: list = []
     autocolor1: list = []
     if len(arr) == 5:

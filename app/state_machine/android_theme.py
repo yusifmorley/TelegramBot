@@ -41,6 +41,17 @@ class AsyncModel:
             self.original_reply_markup = self.query.message.reply_markup
         logger.info("当前状态为{}".format(sta[self.flag]))
 
+    async def random_theme(self, query, existing_user):
+        color_arr = query.data.split(",")
+        existing_user.color_1 = color_arr[0]
+        existing_user.color_2 = color_arr[1]
+        existing_user.color_3 = color_arr[2]
+        reply_markup = get_transparent_ky()
+        await query.edit_message_caption(caption="嗯嗯！您可以继续选择", reply_markup=reply_markup)
+        existing_user.flag = 5
+        self.session.commit()
+        return
+
     async def can_run(self):  # 日志
         # logger.info("运行了")
         existing_user: CreateThemeLogo | None = self.session.get(CreateThemeLogo, self.same_primary_key)
@@ -161,6 +172,8 @@ class AsyncModel:
 transition = [dict(trigger='recive_command', source="未创建状态", dest="可创建状态", before="can_run"),
               dict(trigger='recive_photo', source="可创建状态", dest="拥有图片", before="handle_photo"),
               dict(trigger='recive_document', source="可创建状态", dest="拥有图片", before="handle_document"),
+
+              dict(trigger='recive_random_color', source="*", dest="拥有次要颜色", before="random_theme"),
 
               dict(trigger='recive_color', source="拥有图片", dest="拥有主背景颜色", before="set_bg"),
               dict(trigger='recive_color', source='拥有主背景颜色', dest="拥有主字体颜色", before="set_mian_c"),
