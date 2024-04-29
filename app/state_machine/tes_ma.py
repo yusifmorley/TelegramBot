@@ -62,7 +62,8 @@ class AsyncModel:
         self.existing_user.flag = self.existing_user.flag + 1
         self.session.commit()
 
-        await self.query.edit_message_caption(caption="嗯！请设置主要字体颜色", reply_markup=self.query.message.reply_markup)
+        await self.query.edit_message_caption(caption="嗯！请设置主要字体颜色",
+                                              reply_markup=self.query.message.reply_markup)
 
     async def set_mian_c(self):
         self.existing_user.color_2 = self.query.data
@@ -101,8 +102,29 @@ class AsyncModel:
         clear(self.existing_user)  # 清除置空
         self.session.commit()
 
-    async def handle_document(self,event):
+    async def handle_document(self, doucment_pt):
+        logger.debug("进入 handle_document")
+        same_primary_key = self.update.effective_user.id
+        existing_user: CreateThemeLogo | None = self.session.get(CreateThemeLogo, same_primary_key)
 
+        logger.debug(f"得到变量 {doucment_pt}")
+        fd = open(doucment_pt, 'rb')
+        pic_bytes = fd.read()
+        fd.close()
+        existing_user.pic_path = doucment_pt
+        logger.info("正在读取 document 大小为{}比特".format(len(pic_bytes)))
+        content: list = get_attheme_color_pic(pic_bytes)
+        # 生成键盘
+        reply_markup = get_kyb(content[0])
+        call_message: Message = await self.update.message.reply_photo(content[1],
+                                                                      caption="首先，请选择主题的背景颜色",
+                                                                      reply_markup=reply_markup)
+
+        # 转变状态
+        existing_user.flag = existing_user.flag + 1
+        # 如果记录已存在，执行 变更 picpath
+        existing_user.callback_id = call_message.message_id
+        self.session.commit()
 
     async def handle_photo(self):
         same_primary_key = self.update.effective_user.id
@@ -138,7 +160,7 @@ class AsyncModel:
 
 transition = [dict(trigger='recive_command', source="未创建状态", dest="可创建状态", before="can_run"),
               dict(trigger='recive_photo', source="可创建状态", dest="拥有图片", before="handle_photo"),
-              dict(trigger='recive_document', source="拥有图片", dest="拥有主背景颜色", before="handle_document"),
+              dict(trigger='recive_document', source="可创建状态", dest="拥有图片", before="handle_document"),
 
               dict(trigger='recive_color', source="拥有图片", dest="拥有主背景颜色", before="set_bg"),
               dict(trigger='recive_color', source='拥有主背景颜色', dest="拥有主字体颜色", before="set_mian_c"),
