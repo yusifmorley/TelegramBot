@@ -1,18 +1,17 @@
-import base64
+import tracemalloc
 import os
 import traceback
 from threading import Thread
 from PIL import Image
 import sqlalchemy.exc
 import telegram
-from telegram import Update, Bot, File, Message, Chat
+from telegram import Update, Bot, File, Chat
 from telegram.ext import CallbackContext, CallbackQueryHandler, ContextTypes, Application, ApplicationBuilder
 from telegram.ext import MessageHandler, filters
 from telegram.ext import CommandHandler
 from urllib3.exceptions import NewConnectionError
 import app.model.models
 from app.admin.person_monitor import MonitorPerson
-from app.callback import callback_android, callback_desktop
 from app.config import get_config
 from app.config.command_list import get_command, get_command_str
 from app.config.get_config import get_myid
@@ -20,21 +19,24 @@ from app.constant_obj.ThemeType import get_theme_list
 from app.decorate.listen import listen
 from app.logger import t_log
 from app.server.theme_http import run
+from app.state_machine.desk_machine import  get_de_modle
+from app.state_machine.android_theme import get_modle
 from app.theme_file import get_radom_link, get_android, get_desktop
 from app.admin import admin_function, ban_word_op
 from app.theme_file import get_ios
-from app.util.create_atheme import get_attheme_color_pic, get_kyb, get_attheme, get_transparent_ky
-from io import BytesIO
-from app.model.models import init_session, CreateThemeLogo, BanUserLogo
+from app.util.assrt import is_attheme
+from app.model.models import init_session, CreateThemeLogo
 from sqlalchemy.orm.session import Session
-from app.util.create_desktop import get_desktop_kyb
-from app.util.db_op import clear
-from app.util.sync_public_attheme import sunc_ap, get_attheme_list
-from app.util.sync_public_desk import sync_dp, get_desk_list
+from app.util.sync_public_attheme import sunc_ap
+from app.util.sync_public_desk import sync_dp
 import logging
 
 # 日志
 logging.getLogger("httpx").setLevel(logging.WARNING)
+if os.environ.get('ENV') != 'dev':
+    logging.getLogger("app.state_machine.android_theme").setLevel(logging.WARNING)
+    logging.getLogger("app.state_machine.desk_machine").setLevel(logging.WARNING)
+    logging.getLogger("transitions.extensions.asyncio").setLevel(logging.WARNING)
 logger = t_log.get_logging().getLogger(__name__)
 my_github: str = "欢迎使用主题生成机器人\n"
 my_id = get_myid()
@@ -90,14 +92,14 @@ async def admin_handle(update: Update, context: ContextTypes.DEFAULT_TYPE):  # �
         # 发送主题文件给用户
         await bot.send_document(chat_id=chat_id, document=theme_file.file_id)
         return
-    # user = update.effective_message.from_user
-    #
-    # if update.effective_message.chat.type == Chat.GROUP or update.effective_message.chat.type == Chat.SUPERGROUP:
-    #     if hasattr(user, "id"):
-    #         await  mon_per.run(user.id, user.first_name + " " + user.first_name, text, update, context, ban_words,
-    #                            logger)
-    # else:
-    #     return
+    user = update.effective_message.from_user
+
+    if update.effective_message.chat.type == Chat.GROUP or update.effective_message.chat.type == Chat.SUPERGROUP:
+        if hasattr(user, "id"):
+            await  mon_per.run(user.id, user.first_name + " " + user.first_name, text, update, context, ban_words,
+                               logger)
+    else:
+        return
 
 
 @listen
@@ -190,33 +192,14 @@ async def get_ios_theme(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 @listen
 async def create_attheme(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    same_primary_key = update.effective_user.id
-    existing_user: CreateThemeLogo | None = session.get(CreateThemeLogo, same_primary_key)
-    if existing_user:
-        clear(existing_user)
-        existing_user.flag = 1
-
-    else:
-        new_user = CreateThemeLogo(uid=same_primary_key, flag=1)
-        session.add(new_user)
-
-    session.commit()
-    await context.bot.send_message(chat_id=update.effective_chat.id, text="请发送您的图片")
+    an = get_modle(update, context, session, 0)
+    await an.recive_command()
 
 
 @listen
 async def create_tdesktop(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    same_primary_key = update.effective_user.id
-    existing_user: CreateThemeLogo | None = session.get(CreateThemeLogo, same_primary_key)
-    if existing_user:
-        clear(existing_user)
-        existing_user.flag = 4
-    else:
-        new_user = CreateThemeLogo(uid=same_primary_key, flag=4)
-        session.add(new_user)
-
-    session.commit()
-    await context.bot.send_message(chat_id=update.effective_chat.id, text="请发送您的图片")
+    de = get_de_modle(update, context, session, 100)
+    await de.recive_command()
 
 
 # 用户发送图片
@@ -224,72 +207,22 @@ async def base_photo(update: Update, context: CallbackContext, doucment_pt: str 
     # 只有图片
     if update.effective_message.chat.type == Chat.CHANNEL:
         return
-
-    pic_bytes = None
     same_primary_key = update.effective_user.id
-
-    # if hasattr(update.message, "caption"):
-    #     text = update.message.caption
-    #     if text:
-    #         user = update.effective_user
-    #         boo = mon_per.run(user.id, user.first_name + " " + user.first_name, text, update, context, ban_words,
-    #                           logger)
-    #         if boo:
-    #             return
-
     existing_user: CreateThemeLogo | None = session.get(CreateThemeLogo, same_primary_key)
-    # # 图片已存在 跳过
-    # if existing_user.pic_path:
-    #     return
     if not existing_user:
         return
-
     if existing_user and existing_user.flag == 0:
         return
-
-    if doucment_pt is not None:
-            fd = open(doucment_pt, 'rb')
-            pic_bytes = fd.read()
-            fd.close()
-            existing_user.pic_path = doucment_pt
-            logger.info("正在读取 document 大小为{}比特".format(len(pic_bytes)))
+    if existing_user.flag == 2 or existing_user.flag == 102:  # 避免重复检测图片
+        # await context.bot.send_message(chat_id=update.effective_chat.id, text="图片已经发送 亲～")
+        return
+    flag = existing_user.flag
+    if is_attheme(existing_user.flag):
+        an = get_modle(update, context, session, flag)
+        await  an.recive_photo()
     else:
-        pid = update.effective_message.photo[-1].file_id  # 最后一个是完整图片
-        pic_file = await bot.get_file(pid)
-        user_id = update.effective_user.id
-        # io重用
-        bio = BytesIO()
-        # 写入图片
-        pic_p = "src/Photo/" + str(user_id) + ".png"
-        fp = open(pic_p, "wb")
-        await pic_file.download_to_memory(bio)
-        fp.write(bio.getvalue())
-        fp.close()
-        # 更新数据库
-        pic_bytes = bio.getvalue()
-        bio.close()
-        existing_user.pic_path = pic_p
-
-    content: list = get_attheme_color_pic(pic_bytes)
-    logger.info("图片预览色生成成功大小为{}".format(content.__len__()))
-    # 生成键盘
-
-    if existing_user.flag != 4:
-
-        reply_markup = get_kyb(content[0])
-        call_message: Message = await update.message.reply_photo(content[1], caption="首先，请选择主题的背景颜色",
-                                                                 reply_markup=reply_markup)
-    else:
-        reply_markup = get_desktop_kyb(content[0])
-        call_message: Message = await update.message.reply_photo(content[1], caption="首先，请选择主题的背景颜色",
-                                                                 reply_markup=reply_markup)
-
-    # 如果记录已存在，执行 变更 picpath
-
-    existing_user.callback_id = call_message.message_id
-    session.commit()
-
-    # pic_file.download("src/Photo/"+file_id+".jpg")
+        de = get_de_modle(update, context, session, flag)
+        await de.recive_photo()
 
 
 # 解决 颜色三个状态
@@ -301,17 +234,29 @@ async def button_update(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not existing_user or query.message.message_id != existing_user.callback_id:
         await query.answer("此键盘不属于你，点击无效呢！")
         return
+    flag = existing_user.flag
+    logger.info(f"当前flag为{flag} ")
+    if len(query.data) > 15:
+        if is_attheme(flag):
+            an = get_modle(update, context, session, flag)
+            await an.recive_random_color(query, existing_user)
 
-    if existing_user.flag == 1:
-        await callback_android.callback_android_handle(update, context)
+            return
+        else:
+            de = get_de_modle(update, context, session, flag)
+            await de.recive_random_color(query, existing_user)
 
-    if existing_user.flag == 4:
-        await callback_desktop.callback_desktop_handle(update, context)
+            return
+
+    if is_attheme(flag):
+        an = get_modle(update, context, session, flag)
+        await an.recive_color()
+    else:
+        de = get_de_modle(update, context, session, flag)
+        await de.recive_color()
 
 
 async def parse_document(update: Update, context: ContextTypes.DEFAULT_TYPE):
-
-    logger.info("用户发送了文档格式:为{}".format(update.message.document.mime_type))
     same_primary_key = update.effective_user.id
     existing_user: CreateThemeLogo | None = session.get(CreateThemeLogo, same_primary_key)
 
@@ -323,9 +268,9 @@ async def parse_document(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if existing_user and existing_user.flag == 0:
         return
 
-    # if not hasattr(update.message, "document"):
-    #     await base_photo(update, context)
-    #     return
+    if not hasattr(update.message, "document"):
+        await base_photo(update, context)
+        return
 
     document = update.message.document
     # 获取文档的文件名
@@ -345,8 +290,9 @@ async def parse_document(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text(f"您发送了非法文件")
         return
     await update.message.reply_text("嗯嗯！这确实是一个图片")
-    logger.info("验证通过，无异常。正在调用base_photo，file_path为{}".format(file_path))
-    await base_photo(update, context, file_path)
+    # 调用处理程序 手段
+    an = get_modle(update, context, session, existing_user.flag)
+    await an.recive_document(file_path)
 
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -395,6 +341,8 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 if __name__ == "__main__":
     logger.info("运行本项目必须开启ThemeFactory")
     d_command()
+
+    tracemalloc.start()
     # 同步 桌面主题
     sync_dp()
     sunc_ap()
