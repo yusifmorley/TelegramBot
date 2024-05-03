@@ -1,7 +1,6 @@
-import asyncio
 from io import BytesIO
 from sqlalchemy.orm import Session
-from telegram import Update, Chat, Message, File
+from telegram import Update, Message
 from telegram.ext import ContextTypes
 from transitions.extensions import AsyncMachine
 import app.util.file_name_gen as f_n

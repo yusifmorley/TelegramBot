@@ -32,7 +32,11 @@ from app.util.sync_public_desk import sync_dp
 import logging
 
 # 日志
-logging.getLogger("httpx").setLevel(logging.WARNING)
+if os.environ.get('ENV') != 'dev':
+    logging.getLogger("httpx").setLevel(logging.WARNING)
+    logging.getLogger("app.state_machine.android_theme").setLevel(logging.WARNING)
+    logging.getLogger("app.state_machine.desk_machine").setLevel(logging.WARNING)
+    logging.getLogger("transitions.extensions.asyncio").setLevel(logging.WARNING)
 logger = t_log.get_logging().getLogger(__name__)
 my_github: str = "欢迎使用主题生成机器人\n"
 my_id = get_myid()
