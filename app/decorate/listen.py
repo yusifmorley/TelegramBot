@@ -1,3 +1,4 @@
+import telegram
 from telegram import Update, Chat, User
 from telegram.error import TelegramError
 from telegram.ext import ContextTypes, CallbackContext
@@ -35,25 +36,30 @@ def listen(fun):
         # 执行函数
         await fun(update, context)
 
+        # TODO 此处需要重构
         # 记录群组使用
-        # if update.effective_chat.type == Chat.GROUP or update.effective_chat.type == Chat.SUPERGROUP:
-        #     my_chat: Chat = update.effective_chat
-        #     existing_group_log: GroupInfo | None = session.get(app.model.models.GroupInfo,
-        #                                                        my_chat.id)
-        #     # can_de = await bot_delete_permission(update, context)
-        #     can_restr = 0
-        #     can_de = can_restr
-        #     if not existing_group_log:
-        #         new_group = GroupInfo(uid=my_chat.id, link=my_chat.link, group_name=my_chat.username, can_delete=can_de,
-        #                               can_restrict=can_restr)
-        #         session.add(new_group)
-        #     else:  # 存在则对比数据库里的数据 看是否更
-        #         if existing_group_log.link != my_chat.id or existing_group_log.group_name != my_chat.username:
-        #             existing_group_log.link = my_chat.id
-        #             existing_group_log.group_name = my_chat.username
-        #         if existing_group_log.can_delete != can_de or existing_group_log.can_restrict != can_restr:
-        #             existing_group_log.can_delete = can_de
-        #             existing_group_log.can_restrict = can_restr
+        if update.effective_chat.type == Chat.GROUP or update.effective_chat.type == Chat.SUPERGROUP:
+            my_chat: Chat = update.effective_chat
+            existing_group_log: GroupInfo | None = session.get(app.model.models.GroupInfo,
+                                                               my_chat.id)
+            admins = await update.effective_chat.get_administrators()
+            for x in admins:
+                if x.__eq__(context.bot.getChatMember):
+                    v:telegram.ChatMemberAdministrator= x
+                    can_restr = 1 if v.can_restrict_members else 0
+                    can_de = 1 if v.can_delete_messages else 0
+                    if not existing_group_log:
+                        new_group = GroupInfo(uid=my_chat.id, link=my_chat.link, group_name=my_chat.effective_name, can_delete=can_de,
+                                              can_restrict=can_restr)
+                        session.add(new_group)
+                    else:  # 存在则对比数据库里的数据 看是否更
+                        if existing_group_log.link != my_chat.id or existing_group_log.group_name != my_chat.effective_name:
+                            existing_group_log.link = my_chat.id
+                            existing_group_log.group_name = my_chat.effective_name
+                        if existing_group_log.can_delete != can_de or existing_group_log.can_restrict != can_restr:
+                            existing_group_log.can_delete = can_de
+                            existing_group_log.can_restrict = can_restr
+                    break
         # 记录用户
         user: User = update.effective_user
         existing_user_log: app.model.models.User | None = session.get(app.model.models.User, update.effective_chat.id)
