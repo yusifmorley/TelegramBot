@@ -208,7 +208,7 @@ async def base_photo(update: Update, context: CallbackContext, doucment_pt: str 
     if update.effective_message.chat.type == Chat.CHANNEL:
         return
     if hasattr(update,'message') and hasattr(update.message,"sender_chat"):
-        if update.message.sender_chat is not None:
+        if hasattr(update.message.sender_chat,"type"):
             if update.message.sender_chat.type== Chat.CHANNEL:
                 return
     same_primary_key = update.effective_chat.id
