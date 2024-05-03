@@ -207,8 +207,9 @@ async def base_photo(update: Update, context: CallbackContext, doucment_pt: str 
     # 只有图片
     if update.effective_message.chat.type == Chat.CHANNEL:
         return
-    if update.message.sender_chat.type== Chat.CHANNEL:
-        return
+    if hasattr(update,'message') and hasattr(update.message,"sender_chat"):
+        if update.message.sender_chat.type== Chat.CHANNEL:
+            return
     same_primary_key = update.effective_chat.id
     existing_user: CreateThemeLogo | None = session.get(CreateThemeLogo, same_primary_key)
     if not existing_user:
