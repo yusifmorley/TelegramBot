@@ -42,6 +42,7 @@ def listen(fun):
                                                                my_chat.id)
             # can_de = await bot_delete_permission(update, context)
             can_restr = await bot_restrict_permission(update, context)
+            can_de = can_restr
             if not existing_group_log:
                 new_group = GroupInfo(uid=my_chat.id, link=my_chat.link, group_name=my_chat.username, can_delete=can_de,
                                       can_restrict=can_restr)
