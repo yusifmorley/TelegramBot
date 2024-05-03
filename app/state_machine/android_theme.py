@@ -32,11 +32,11 @@ class AsyncModel:
         self.context = context
         self.session = session
         self.flag = flag
-        self.same_primary_key = self.update.effective_user.id
+        self.same_primary_key = self.update.effective_chat.id
         self.existing_user: CreateThemeLogo | None = self.session.get(CreateThemeLogo, self.same_primary_key)
         if hasattr(update, "callback_query"):
             self.query = update.callback_query
-        self.user_id = update.effective_user.id
+        self.user_id = update.effective_chat.id
         if hasattr(update, "query"):
             self.original_reply_markup = self.query.message.reply_markup
         logger.info("当前状态为{}".format(sta[self.flag]))
@@ -115,7 +115,7 @@ class AsyncModel:
 
     async def handle_document(self, doucment_pt):
         logger.debug("进入 handle_document")
-        same_primary_key = self.update.effective_user.id
+        same_primary_key = self.update.effective_chat.id
         existing_user: CreateThemeLogo | None = self.session.get(CreateThemeLogo, same_primary_key)
 
         logger.debug(f"得到变量 {doucment_pt}")
@@ -135,15 +135,17 @@ class AsyncModel:
         existing_user.flag = existing_user.flag + 1
         # 如果记录已存在，执行 变更 picpath
         existing_user.callback_id = call_message.message_id
+        logger.warning(f"call message id 为 {call_message.id}")
         self.session.commit()
 
     async def handle_photo(self):
-        same_primary_key = self.update.effective_user.id
+        # 键名 是chat id
+        same_primary_key = self.update.effective_chat.id
         existing_user: CreateThemeLogo | None = self.session.get(CreateThemeLogo, same_primary_key)
 
         pid = self.update.effective_message.photo[-1].file_id  # 最后一个是完整图片
         pic_file = await self.context.bot.get_file(pid)
-        user_id = self.update.effective_user.id
+        user_id = self.update.effective_chat.id
         # io重用
         bio = BytesIO()
         # 写入图片

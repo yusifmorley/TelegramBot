@@ -207,7 +207,7 @@ async def base_photo(update: Update, context: CallbackContext, doucment_pt: str 
     # 只有图片
     if update.effective_message.chat.type == Chat.CHANNEL:
         return
-    same_primary_key = update.effective_user.id
+    same_primary_key = update.effective_chat.id
     existing_user: CreateThemeLogo | None = session.get(CreateThemeLogo, same_primary_key)
     if not existing_user:
         return
@@ -227,7 +227,7 @@ async def base_photo(update: Update, context: CallbackContext, doucment_pt: str 
 
 # 解决 颜色三个状态
 async def button_update(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    same_primary_key = update.effective_user.id
+    same_primary_key = update.effective_chat.id
     existing_user: CreateThemeLogo | None = session.get(CreateThemeLogo, same_primary_key)
     query = update.callback_query
     # 检查
@@ -258,7 +258,7 @@ async def button_update(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 
 async def parse_document(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    same_primary_key = update.effective_user.id
+    same_primary_key = update.effective_chat.id
     existing_user: CreateThemeLogo | None = session.get(CreateThemeLogo, same_primary_key)
 
     # 文档里带图片
@@ -282,7 +282,7 @@ async def parse_document(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     try:
         file_obj: File = await document.get_file()
-        file_path: str = "src/Photo/" + str(update.effective_user.id) + ".png"
+        file_path: str = "src/Photo/" + str(update.effective_chat.id) + ".png"
         public_IO = await file_obj.download_to_drive(file_path)
         Image.open(public_IO)
 

@@ -26,7 +26,7 @@ def listen(fun):
             pass
 
         # 向数据库查询用户
-        existing_user: BanUserLogo | None = session.get(BanUserLogo, update.effective_user.id)
+        existing_user: BanUserLogo | None = session.get(BanUserLogo, update.effective_chat.id)
         # 如果用户被封禁
         if existing_user:
             logger.warning("非法私聊用户,禁止使用机器人 update为: {}".format(update))
@@ -54,8 +54,8 @@ def listen(fun):
                     existing_group_log.can_delete = can_de
                     existing_group_log.can_restrict = can_restr
         # 记录用户
-        user: User = update.effective_user
-        existing_user_log: app.model.models.User | None = session.get(app.model.models.User, update.effective_user.id)
+        user: User = update.effective_chat
+        existing_user_log: app.model.models.User | None = session.get(app.model.models.User, update.effective_chat.id)
         # 如果不存在
         if not existing_user_log:
             new_user = app.model.models.User(uid=user.id, full_name=user.full_name, link=user.link,
@@ -71,7 +71,7 @@ def listen(fun):
                 existing_user_log.link = user.link
 
         # 记录用户使用
-        same_primary_key = update.effective_user.id
+        same_primary_key = update.effective_chat.id
         existing_user: UserUseRecord | None = session.get(UserUseRecord,
                                                           {"uid": same_primary_key,
                                                            "date": date.today()
