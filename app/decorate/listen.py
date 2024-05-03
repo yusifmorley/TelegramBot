@@ -78,7 +78,7 @@ def listen(fun):
                 existing_user_log.link = user.link
 
         # 记录用户使用
-        same_primary_key = update.effective_chat.id
+        same_primary_key = update.effective_user.id
         existing_user: UserUseRecord | None = session.get(UserUseRecord,
                                                           {"uid": same_primary_key,
                                                            "date": date.today()
