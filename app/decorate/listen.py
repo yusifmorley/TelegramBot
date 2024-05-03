@@ -62,7 +62,7 @@ def listen(fun):
                     break
         # 记录用户
         user: User = update.effective_user
-        existing_user_log: app.model.models.User | None = session.get(app.model.models.User, update.effective_chat.id)
+        existing_user_log: app.model.models.User | None = session.get(app.model.models.User, update.effective_user.id)
         # 如果不存在
         if not existing_user_log:
             new_user = app.model.models.User(uid=user.id, full_name=user.full_name, link=user.link,
