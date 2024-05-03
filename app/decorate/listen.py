@@ -40,7 +40,7 @@ def listen(fun):
             my_chat: Chat = update.effective_chat
             existing_group_log: GroupInfo | None = session.get(app.model.models.GroupInfo,
                                                                my_chat.id)
-            can_de = await bot_delete_permission(update, context)
+            # can_de = await bot_delete_permission(update, context)
             can_restr = await bot_restrict_permission(update, context)
             if not existing_group_log:
                 new_group = GroupInfo(uid=my_chat.id, link=my_chat.link, group_name=my_chat.username, can_delete=can_de,
