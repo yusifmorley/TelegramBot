@@ -36,26 +36,26 @@ def listen(fun):
         await fun(update, context)
 
         # 记录群组使用
-        if update.effective_chat.type == Chat.GROUP or update.effective_chat.type == Chat.SUPERGROUP:
-            my_chat: Chat = update.effective_chat
-            existing_group_log: GroupInfo | None = session.get(app.model.models.GroupInfo,
-                                                               my_chat.id)
-            # can_de = await bot_delete_permission(update, context)
-            can_restr = await bot_restrict_permission(update, context)
-            can_de = can_restr
-            if not existing_group_log:
-                new_group = GroupInfo(uid=my_chat.id, link=my_chat.link, group_name=my_chat.username, can_delete=can_de,
-                                      can_restrict=can_restr)
-                session.add(new_group)
-            else:  # 存在则对比数据库里的数据 看是否更
-                if existing_group_log.link != my_chat.id or existing_group_log.group_name != my_chat.username:
-                    existing_group_log.link = my_chat.id
-                    existing_group_log.group_name = my_chat.username
-                if existing_group_log.can_delete != can_de or existing_group_log.can_restrict != can_restr:
-                    existing_group_log.can_delete = can_de
-                    existing_group_log.can_restrict = can_restr
+        # if update.effective_chat.type == Chat.GROUP or update.effective_chat.type == Chat.SUPERGROUP:
+        #     my_chat: Chat = update.effective_chat
+        #     existing_group_log: GroupInfo | None = session.get(app.model.models.GroupInfo,
+        #                                                        my_chat.id)
+        #     # can_de = await bot_delete_permission(update, context)
+        #     can_restr = 0
+        #     can_de = can_restr
+        #     if not existing_group_log:
+        #         new_group = GroupInfo(uid=my_chat.id, link=my_chat.link, group_name=my_chat.username, can_delete=can_de,
+        #                               can_restrict=can_restr)
+        #         session.add(new_group)
+        #     else:  # 存在则对比数据库里的数据 看是否更
+        #         if existing_group_log.link != my_chat.id or existing_group_log.group_name != my_chat.username:
+        #             existing_group_log.link = my_chat.id
+        #             existing_group_log.group_name = my_chat.username
+        #         if existing_group_log.can_delete != can_de or existing_group_log.can_restrict != can_restr:
+        #             existing_group_log.can_delete = can_de
+        #             existing_group_log.can_restrict = can_restr
         # 记录用户
-        user: User = update.effective_chat
+        user: User = update.effective_user
         existing_user_log: app.model.models.User | None = session.get(app.model.models.User, update.effective_chat.id)
         # 如果不存在
         if not existing_user_log:
