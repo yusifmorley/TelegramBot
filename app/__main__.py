@@ -374,7 +374,7 @@ if __name__ == "__main__":
     application.add_handler(CommandHandler('combinthemeandphoto', combin_theme))
     application.add_handler(CommandHandler('getbackground', combin_theme))
 
-    application.add_handler(MessageHandler(filters.TEXT, admin_handle))
+    # application.add_handler(MessageHandler(filters.TEXT, admin_handle))
     application.add_handler(MessageHandler(filters.StatusUpdate.NEW_CHAT_MEMBERS, on_join))
 
     if os.environ.get('ENV') != 'dev':
