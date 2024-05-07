@@ -2,6 +2,8 @@ import logging
 import os
 from logging.handlers import TimedRotatingFileHandler
 
+from deprecated import deprecated
+
 hs = []
 sh = logging.StreamHandler()
 
@@ -14,7 +16,7 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
                     level=logging.INFO, handlers=hs)
 logger = logging.getLogger(__name__)
 
-
+@deprecated
 def get_logger():
     return logger
 

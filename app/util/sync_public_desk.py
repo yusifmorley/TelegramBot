@@ -3,13 +3,13 @@ import shutil
 
 from sqlalchemy.orm import Session
 
-from app.logger.t_log import get_logger
+from app.logger.t_log import get_logging
 from app.model.models import init_session, ThemeUploadRecord
 from app.util.get_preview import get_from
 
 from sqlalchemy import Enum
 
-log = get_logger()
+log = get_logging().getLogger(__name__)
 # 主题所在文件夹
 orgin_dir = "src/Theme/desktop-theme"
 # 公共目录

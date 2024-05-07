@@ -7,13 +7,13 @@ from sqlalchemy.orm import Session
 
 from app.constant_obj.ThemeType import get_theme_list
 from app.model.models import init_session, ThemeUploadRecord
-from app.logger.t_log import get_logger
+from app.logger.t_log import get_logging
 from app.util.get_preview import get_from
 from app.util.sync_public_attheme import android_add_by_name, delete
 from app.util.sync_public_desk import desk_add_by_name, delete as d_delete
 
 session: Session = init_session()
-log = get_logger()
+log = get_logging().getLogger(__name__)
 ty_lis = get_theme_list()
 
 

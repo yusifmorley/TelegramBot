@@ -3,7 +3,7 @@ import shutil
 
 from sqlalchemy.orm import Session
 
-from app.logger.t_log import get_logger
+from app.logger.t_log import get_logging
 from app.model.models import init_session, ThemeUploadRecord
 from app.util.get_preview import get_from
 
@@ -11,7 +11,7 @@ from app.util.get_preview import get_from
 orgin_dir = "src/Theme/android-theme"
 # 公共目录
 desk_dir_root = 'src/myserver_bot_public/attheme'
-log = get_logger()
+log = get_logging().getLogger(__name__)
 
 session: Session = init_session()
 
