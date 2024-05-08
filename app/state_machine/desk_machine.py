@@ -25,12 +25,11 @@ class DeAsyncModel:
         # 100<=flag<200
         # 0是未创建状态
         # 依次类推
-
         self.update = update
         self.context = context
         self.session = session
         self.flag = flag
-        self.same_primary_key = self.update.effective_chat.id
+        self.same_primary_key = self.update.effective_user.id
         self.existing_user: CreateThemeLogo | None = self.session.get(CreateThemeLogo, self.same_primary_key)
         if hasattr(update, "callback_query"):
             self.query = update.callback_query
@@ -55,9 +54,9 @@ class DeAsyncModel:
         existing_user: CreateThemeLogo | None = self.session.get(CreateThemeLogo, self.same_primary_key)
         if existing_user:
             clear(existing_user)
-            existing_user.flag = 1+off
+            existing_user.flag = 1 + off
         else:
-            new_user = CreateThemeLogo(uid=self.same_primary_key, flag=1+off)
+            new_user = CreateThemeLogo(uid=self.same_primary_key, flag=1 + off)
             self.session.add(new_user)
 
         self.session.commit()
@@ -113,9 +112,7 @@ class DeAsyncModel:
 
     async def handle_document(self, doucment_pt):
         logger.debug("进入 handle_document")
-        same_primary_key = self.update.effective_chat.id
-        existing_user: CreateThemeLogo | None = self.session.get(CreateThemeLogo, same_primary_key)
-
+        existing_user: CreateThemeLogo | None = self.session.get(CreateThemeLogo, self.same_primary_key)
         logger.debug(f"得到变量 {doucment_pt}")
         fd = open(doucment_pt, 'rb')
         pic_bytes = fd.read()
@@ -136,8 +133,8 @@ class DeAsyncModel:
         self.session.commit()
 
     async def handle_photo(self):
-        same_primary_key = self.update.effective_chat.id
-        existing_user: CreateThemeLogo | None = self.session.get(CreateThemeLogo, same_primary_key)
+
+        existing_user: CreateThemeLogo | None = self.session.get(CreateThemeLogo, self.same_primary_key)
 
         pid = self.update.effective_message.photo[-1].file_id  # 最后一个是完整图片
         pic_file = await self.context.bot.get_file(pid)

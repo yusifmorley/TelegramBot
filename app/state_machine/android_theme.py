@@ -32,7 +32,7 @@ class AsyncModel:
         self.context = context
         self.session = session
         self.flag = flag
-        self.same_primary_key = self.update.effective_chat.id
+        self.same_primary_key = self.update.effective_user.id
         self.existing_user: CreateThemeLogo | None = self.session.get(CreateThemeLogo, self.same_primary_key)
         if hasattr(update, "callback_query"):
             self.query = update.callback_query
@@ -115,8 +115,7 @@ class AsyncModel:
 
     async def handle_document(self, doucment_pt):
         logger.debug("进入 handle_document")
-        same_primary_key = self.update.effective_chat.id
-        existing_user: CreateThemeLogo | None = self.session.get(CreateThemeLogo, same_primary_key)
+        existing_user: CreateThemeLogo | None = self.session.get(CreateThemeLogo, self.same_primary_key)
 
         logger.debug(f"得到变量 {doucment_pt}")
         fd = open(doucment_pt, 'rb')
@@ -140,8 +139,7 @@ class AsyncModel:
 
     async def handle_photo(self):
         # 键名 是chat id
-        same_primary_key = self.update.effective_chat.id
-        existing_user: CreateThemeLogo | None = self.session.get(CreateThemeLogo, same_primary_key)
+        existing_user: CreateThemeLogo | None = self.session.get(CreateThemeLogo, self.same_primary_key)
 
         pid = self.update.effective_message.photo[-1].file_id  # 最后一个是完整图片
         pic_file = await self.context.bot.get_file(pid)
