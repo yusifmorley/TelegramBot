@@ -116,7 +116,6 @@ class AsyncModel:
     async def handle_document(self, doucment_pt):
         logger.debug("进入 handle_document")
         existing_user: CreateThemeLogo | None = self.session.get(CreateThemeLogo, self.same_primary_key)
-
         logger.debug(f"得到变量 {doucment_pt}")
         fd = open(doucment_pt, 'rb')
         pic_bytes = fd.read()
