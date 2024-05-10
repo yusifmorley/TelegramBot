@@ -27,7 +27,6 @@ class AsyncModel:
         # 1<=flag<100
         # 0是未创建状态
         # 依次类推
-
         self.update = update
         self.context = context
         self.session = session
@@ -39,6 +38,7 @@ class AsyncModel:
         self.user_id = update.effective_chat.id
         if hasattr(update, "query"):
             self.original_reply_markup = self.query.message.reply_markup
+        logger.warning(f"当前 flag为 {flag}")
         logger.info("当前状态为{}".format(sta[self.flag]))
 
     async def random_theme(self, query, existing_user):
