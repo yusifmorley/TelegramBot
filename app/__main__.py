@@ -19,7 +19,7 @@ from app.constant_obj.ThemeType import get_theme_list
 from app.decorate.listen import listen
 from app.logger import t_log
 from app.server.theme_http import run
-from app.state_machine.desk_machine import  get_de_modle
+from app.state_machine.desk_machine import get_de_modle
 from app.state_machine.android_theme import get_modle
 from app.theme_file import get_radom_link, get_android, get_desktop
 from app.admin import admin_function, ban_word_op
@@ -207,9 +207,9 @@ async def base_photo(update: Update, context: CallbackContext, doucment_pt: str 
     # 只有图片
     if update.effective_message.chat.type == Chat.CHANNEL:
         return
-    if hasattr(update,'message') and hasattr(update.message,"sender_chat"):
-        if hasattr(update.message.sender_chat,"type"):
-            if update.message.sender_chat.type== Chat.CHANNEL:
+    if hasattr(update, 'message') and hasattr(update.message, "sender_chat"):
+        if hasattr(update.message.sender_chat, "type"):
+            if update.message.sender_chat.type == Chat.CHANNEL:
                 return
     same_primary_key = update.effective_user.id
     existing_user: CreateThemeLogo | None = session.get(CreateThemeLogo, same_primary_key)
@@ -236,6 +236,7 @@ async def button_update(update: Update, context: ContextTypes.DEFAULT_TYPE):
     query = update.callback_query
     # 检查
     if not existing_user or query.message.message_id != existing_user.callback_id:
+        logger.error(f"{update}")
         logger.warning(f"当前id为{query.message.message_id} 数据库id为{existing_user.callback_id}")
         await query.answer("此键盘不属于你，点击无效呢！")
         return
