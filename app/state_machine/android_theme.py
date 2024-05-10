@@ -133,7 +133,7 @@ class AsyncModel:
         existing_user.flag = existing_user.flag + 1
         # 如果记录已存在，执行 变更 picpath
         existing_user.callback_id = call_message.message_id
-        logger.warning(f"call message id 为 {call_message.id}")
+        # logger.warning(f"call message id 为 {call_message.id}")
         self.session.commit()
 
     async def handle_photo(self):

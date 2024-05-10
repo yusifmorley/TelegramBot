@@ -161,8 +161,8 @@ class DeAsyncModel:
         existing_user.flag = existing_user.flag + 1
         # 如果记录已存在，执行 变更 picpath
         existing_user.callback_id = call_message.message_id
-        logger.warn(f"call_maessage.message_id为: {call_message.message_id}")
-        logger.warn(f"{self.update}")
+        # logger.warn(f"call_maessage.message_id为: {call_message.message_id}")
+        # logger.warn(f"{self.update}")
         self.session.commit()
 
 
