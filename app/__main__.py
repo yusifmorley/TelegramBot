@@ -170,7 +170,7 @@ async def get_android_theme(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await context.bot.send_photo(chat_id=update.effective_chat.id, photo=preview_bytes)
     await context.bot.send_message(chat_id=update.effective_chat.id, text="这是您的主题文件，亲～")
 
-
+@some_check
 @listen
 async def get_desktop_theme(update: Update, context: ContextTypes.DEFAULT_TYPE):
     path = get_desktop.get_desktop_theme()
