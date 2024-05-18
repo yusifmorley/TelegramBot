@@ -19,7 +19,7 @@ def some_check(fun):
         if update.effective_chat.id == -1001313322278:
             await context.bot.send_message(chat_id=update.effective_chat.id,
                                            text="此命令已经在本群组中禁用。如若使用请私聊我~")
-
+            return
         await fun(update, context)
 
     return add_check
