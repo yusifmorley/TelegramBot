@@ -102,6 +102,7 @@ async def admin_handle(update: Update, context: ContextTypes.DEFAULT_TYPE):  # �
     else:
         return
 
+
 @some_check
 @listen
 async def get_ran_theme(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -157,6 +158,7 @@ async def error_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
         info = traceback.format_exc()
         await context.bot.send_message(chat_id=my_id, text=f"出错了 {context.error},\n{update} \n{info}")
 
+
 @some_check
 @listen
 async def get_android_theme(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -170,6 +172,7 @@ async def get_android_theme(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await context.bot.send_photo(chat_id=update.effective_chat.id, photo=preview_bytes)
     await context.bot.send_message(chat_id=update.effective_chat.id, text="这是您的主题文件，亲～")
 
+
 @some_check
 @listen
 async def get_desktop_theme(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -182,6 +185,7 @@ async def get_desktop_theme(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if preview_bytes:
         await context.bot.send_photo(chat_id=update.effective_chat.id, photo=preview_bytes)
     await context.bot.send_message(chat_id=update.effective_chat.id, text="这是您的主题文件，亲～")
+
 
 @some_check
 @listen
@@ -269,20 +273,22 @@ async def parse_document(update: Update, context: ContextTypes.DEFAULT_TYPE):
     existing_user: CreateThemeLogo | None = session.get(CreateThemeLogo, same_primary_key)
 
     # 文档里带图片
-
+    # 不存在用户
     if not existing_user:
         return
 
+    #存在用户 但状态为空
     if existing_user and existing_user.flag == 0:
         return
-
+    # 无document属性
     if not hasattr(update.message, "document"):
-        await base_photo(update, context)
+        # await base_photo(update, context)
         return
 
     document = update.message.document
     # 获取文档的文件名
 
+    # 名称不正确
     file_name: str = document.file_name
     if '.jpg' not in file_name and 'png' not in file_name:
         return
@@ -292,15 +298,22 @@ async def parse_document(update: Update, context: ContextTypes.DEFAULT_TYPE):
         file_path: str = "src/Photo/" + str(update.effective_chat.id) + ".png"
         public_IO = await file_obj.download_to_drive(file_path)
         Image.open(public_IO)
-
     except Exception:
+        # TODO 日志
         # 如果无法打开图像，它不是一个有效的图像文件
         await update.message.reply_text(f"您发送了非法文件")
         return
     await update.message.reply_text("嗯嗯！这确实是一个图片")
-    # 调用处理程序 手段
-    an = get_modle(update, context, session, existing_user.flag)
-    await an.recive_document(file_path)
+
+    flag = existing_user.flag
+    if is_attheme(existing_user.flag):
+        an = get_modle(update, context, session, flag)
+        await  an.recive_document(file_path)
+    else:
+        de = get_de_modle(update, context, session, flag)
+        await de.recive_document(file_path)
+
+
 
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
