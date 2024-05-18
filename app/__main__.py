@@ -17,6 +17,7 @@ from app.config.command_list import get_command, get_command_str
 from app.config.get_config import get_myid
 from app.constant_obj.ThemeType import get_theme_list
 from app.decorate.listen import listen
+from app.decorate.some_check import some_check
 from app.logger import t_log
 from app.server.theme_http import run
 from app.state_machine.desk_machine import get_de_modle
@@ -101,7 +102,7 @@ async def admin_handle(update: Update, context: ContextTypes.DEFAULT_TYPE):  # �
     else:
         return
 
-
+@some_check
 @listen
 async def get_ran_theme(update: Update, context: ContextTypes.DEFAULT_TYPE):
     path = get_radom_link.get_random_theme()
@@ -156,7 +157,7 @@ async def error_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
         info = traceback.format_exc()
         await context.bot.send_message(chat_id=my_id, text=f"出错了 {context.error},\n{update} \n{info}")
 
-
+@some_check
 @listen
 async def get_android_theme(update: Update, context: ContextTypes.DEFAULT_TYPE):
     path = get_android.get_android_theme()
@@ -182,7 +183,7 @@ async def get_desktop_theme(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await context.bot.send_photo(chat_id=update.effective_chat.id, photo=preview_bytes)
     await context.bot.send_message(chat_id=update.effective_chat.id, text="这是您的主题文件，亲～")
 
-
+@some_check
 @listen
 async def get_ios_theme(update: Update, context: ContextTypes.DEFAULT_TYPE):
     path = get_ios.get_random_theme()

@@ -26,11 +26,12 @@ def listen(fun):
         #     # 如果发生错误 说明用户未加入群组
         #     pass
         # 向数据库查询用户
-        # existing_user: BanUserLogo | None = session.get(BanUserLogo, update.effective_chat.id)
-        # # 如果用户被封禁
-        # if existing_user:
-        #     logger.warning("非法私聊用户,禁止使用机器人 update为: {}".format(update))
-        #     return
+        existing_user: BanUserLogo | None = session.get(BanUserLogo, update.effective_chat.id)
+        # 如果用户被封禁
+        if existing_user:
+            logger.warning("非法私聊用户,禁止使用机器人 update为: {}".format(update))
+            context.bot.send_message(chat_id=update.effective_chat.id, text="您使用次数过多,请访问网站查看更多主题 https://yusifmorley.com/theme")
+            return
 
         # 执行函数
         await fun(update, context)
