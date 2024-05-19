@@ -16,6 +16,7 @@ from app.config import get_config
 from app.config.command_list import get_command, get_command_str
 from app.config.get_config import get_myid
 from app.constant_obj.ThemeType import get_theme_list
+from app.decorate.delete_command import delete_command
 from app.decorate.listen import listen
 from app.decorate.some_check import some_check
 from app.logger import t_log
@@ -103,6 +104,7 @@ async def admin_handle(update: Update, context: ContextTypes.DEFAULT_TYPE):  # �
         return
 
 
+@delete_command
 @some_check
 @listen
 async def get_ran_theme(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -159,6 +161,7 @@ async def error_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await context.bot.send_message(chat_id=my_id, text=f"出错了 {context.error},\n{update} \n{info}")
 
 
+@delete_command
 @some_check
 @listen
 async def get_android_theme(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -173,6 +176,7 @@ async def get_android_theme(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await context.bot.send_message(chat_id=update.effective_chat.id, text="这是您的主题文件，亲～")
 
 
+@delete_command
 @some_check
 @listen
 async def get_desktop_theme(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -187,6 +191,7 @@ async def get_desktop_theme(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await context.bot.send_message(chat_id=update.effective_chat.id, text="这是您的主题文件，亲～")
 
 
+@delete_command
 @some_check
 @listen
 async def get_ios_theme(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -195,12 +200,14 @@ async def get_ios_theme(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await context.bot.send_message(chat_id=update.effective_chat.id, text="这是您的主题文件，亲～")
 
 
+@delete_command
 @listen
 async def create_attheme(update: Update, context: ContextTypes.DEFAULT_TYPE):
     an = get_modle(update, context, session, 0)
     await an.recive_command()
 
 
+@delete_command
 @listen
 async def create_tdesktop(update: Update, context: ContextTypes.DEFAULT_TYPE):
     de = get_de_modle(update, context, session, 100)
@@ -312,8 +319,6 @@ async def parse_document(update: Update, context: ContextTypes.DEFAULT_TYPE):
     else:
         de = get_de_modle(update, context, session, flag)
         await de.recive_document(file_path)
-
-
 
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
