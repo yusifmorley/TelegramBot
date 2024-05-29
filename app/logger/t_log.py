@@ -9,7 +9,7 @@ log_p=['info','warn','error']
 log_directory = "log"
 for x in log_p:
     o_p = os.path.join(log_directory,x)
-    if not os.path.exists(x):
+    if not os.path.exists(o_p):
         os.makedirs(o_p)
 
 # 创建日志处理器

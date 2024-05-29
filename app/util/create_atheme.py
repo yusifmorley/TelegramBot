@@ -4,8 +4,11 @@ import base64
 
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 
+from app.logger import t_log
 from app.util.color_parse import is_light, parse_color
+from app.util.optimize_colors import optimize_colors
 
+log = t_log.get_logging().getLogger(__name__)
 # 与nodejs 交互 发送一个图片
 url0 = "http://127.0.0.1:3000/attheme"
 
@@ -35,6 +38,9 @@ def get_attheme_color_pic(byte_arr: bytes):
 
 
 def get_attheme(pic_byte: bytes, color_list: list, flag=False):
+    log.info(f"接受参数{color_list}")
+    color_list=list(optimize_colors(color_list[0], color_list[1], color_list[2]))
+    log.info(f"优化后{color_list}")
     url = url1
     head = {
         'Content-Type': 'application/json'
