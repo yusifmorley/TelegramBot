@@ -3,11 +3,14 @@ import os
 from logging.handlers import TimedRotatingFileHandler
 
 from deprecated import deprecated
+log_p=['info','warn','error']
 
 # 创建日志目录
 log_directory = "log"
-if not os.path.exists(log_directory):
-    os.makedirs(log_directory)
+for x in log_p:
+    o_p = os.path.join(log_directory,x)
+    if not os.path.exists(x):
+        os.makedirs(o_p)
 
 # 创建日志处理器
 handlers = []
