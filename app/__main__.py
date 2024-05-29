@@ -19,6 +19,7 @@ from app.constant_obj.ThemeType import get_theme_list
 from app.decorate.delete_command import delete_command
 from app.decorate.listen import listen
 from app.decorate.some_check import some_check
+from app.exception.my_exception import NoSuitParmException
 from app.logger import t_log
 from app.server.theme_http import run
 from app.state_machine.desk_machine import get_de_modle
@@ -152,6 +153,11 @@ async def error_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     except (ConnectionError, NewConnectionError) as e:
         logger.warning(f"网络错误: {e}")
 
+    except NoSuitParmException as e:
+        logger.error(f"错误的参数错误: {e}")
+
+    except Exception as e:
+        logger.error(f"{e}")
     finally:
         session.close()
         app.model.models.reflush()

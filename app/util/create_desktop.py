@@ -1,15 +1,29 @@
+from typing import List
+
 import requests
 import ast
 import base64
-
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 
+from app.exception.my_exception import NoSuitParmException
+from app.logger import t_log
 from app.util.color_parse import is_light, parse_color
 
+logger = t_log.get_logging().getLogger(__name__)
 url0 = "http://127.0.0.1:3000/tdesktop-create"
 
+# TODO 传参测试 日志
+def get_tdektop(pic_byte, color_list:List[str], flag: bool):
+    # 参数检测
+    logger.info("get_tdektop 正在检测参数")
 
-def get_tdektop(pic_byte, color_list, flag: bool):
+    logger.info(f"{color_list}")
+    for x in color_list:
+        if not x.startswith("#"):
+            logger.error(f"错误！ color_list为 {color_list}")
+            raise NoSuitParmException("错误的参数")
+
+
     url = url0
     head = {
         'Content-Type': 'application/json'
