@@ -97,10 +97,11 @@ class AsyncModel:
         fp.close()
         lis = [self.existing_user.color_1, self.existing_user.color_2, self.existing_user.color_3]
 
-        if self.query.data == "off":
-            data = get_attheme(by, lis)
-        elif self.query.data == "tran":
-            data = get_attheme(by, lis, True)
+        if self.query.data == "tran":
+            data = get_attheme(by, lis,True)
+        # elif self.query.data == "tran":
+        else:
+            data = get_attheme(by, lis, )
 
         usr_file = f_n.gen_name(g_t.get_now()) + ".attheme"
 
