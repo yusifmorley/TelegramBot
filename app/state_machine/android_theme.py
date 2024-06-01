@@ -106,13 +106,14 @@ class AsyncModel:
         usr_file = f_n.gen_name(g_t.get_now()) + ".attheme"
 
         await self.context.bot.send_document(chat_id=self.update.effective_chat.id, document=data, filename=usr_file)
-        await self.context.bot.send_message(chat_id=self.update.effective_chat.id, text="这是您的主题文件，亲～")
+        await self.context.bot.send_message(chat_id=self.update.effective_chat.id, text="这是您的主题文件，亲～。更多安卓主题请关注我们的频道 https://t.me/moleydimu")
         self.existing_user.flag = self.existing_user.flag + 1
         self.session.commit()
 
     async def set_clear(self):
         clear(self.existing_user)  # 清除置空
         self.session.commit()
+
 
     async def handle_document(self, doucment_pt):
         logger.debug("进入 handle_document")

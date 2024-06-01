@@ -103,7 +103,7 @@ class DeAsyncModel:
         usr_file = f_n.gen_name(g_t.get_now()) + ".tdesktop-theme"
 
         await self.context.bot.send_document(chat_id=self.update.effective_chat.id, document=data, filename=usr_file)
-        await self.context.bot.send_message(chat_id=self.update.effective_chat.id, text="这是您的主题文件，亲～")
+        await self.context.bot.send_message(chat_id=self.update.effective_chat.id, text="这是您的主题文件，亲～。更多桌面主题请关注 https://t.me/tdesktopzt")
         self.existing_user.flag = self.existing_user.flag + 1
         self.session.commit()
 
