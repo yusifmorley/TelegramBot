@@ -44,8 +44,8 @@ def listen(fun):
                                                                my_chat.id)
             admins = await update.effective_chat.get_administrators()
             for x in admins:
-                if x.__eq__(context.bot.getChatMember):
-                    v:telegram.ChatMemberAdministrator= x
+                v: telegram.ChatMemberAdministrator = x
+                if x.__eq__(context.bot.getChatMember) and hasattr(v,"can_restrict_members")and hasattr(v,"can_delete_messages"):
                     can_restr = 1 if v.can_restrict_members else 0
                     can_de = 1 if v.can_delete_messages else 0
                     if not existing_group_log:
