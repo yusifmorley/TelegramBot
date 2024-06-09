@@ -37,7 +37,6 @@ from app.util.sync_public_desk import sync_dp
 import logging
 
 # 日志
-logging.getLogger("httpx").setLevel(logging.INFO)
 logging.getLogger("httpcore").setLevel(logging.INFO)
 if os.environ.get('ENV') != 'dev':
     logging.getLogger("app.state_machine.android_theme").setLevel(logging.WARNING)
