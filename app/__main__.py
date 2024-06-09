@@ -54,14 +54,11 @@ proxy_url = None
 if os.environ.get('ENV') == 'dev':
     proxy_url = "http://127.0.0.1:10810/"
     myapi = '6520279001:AAFlM8bPclv-dZvSERAbLihBNlMNVz2KRK0'  # 测试机器人id
-application = ApplicationBuilder().token(myapi).proxy(proxy_url).build()
 commands = get_command()
-bot: Bot = application.bot
 # 获取 banword 对象
 bwo = ban_word_op.BanWord_OP(session)
 # 获取所有违禁词
 ban_words = admin_function.get_ban_word(bwo)
-
 # 监控10个人
 mon_per = MonitorPerson()
 str_info = get_command_str()
@@ -69,9 +66,8 @@ str_info = get_command_str()
 # 获取对象
 ty_lis = get_theme_list()
 
-
-async def d_command():
-    await bot.set_my_commands(commands)
+async def d_command(application: Application):
+    await application.bot.set_my_commands(commands)
 
 
 # 合并主题和背景
@@ -141,7 +137,7 @@ async def combin_theme(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 
 # 错误处理
-async def error_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
+async def error_handler(update: object, context: ContextTypes.DEFAULT_TYPE):
     try:
         raise context.error
 
@@ -379,6 +375,8 @@ if __name__ == "__main__":
     # 同步 桌面主题
     sync_dp()
     sunc_ap()
+    application = ApplicationBuilder().token(myapi).post_init(d_command).proxy(proxy_url).build()
+
     # 同步 安卓主题
     # application.add_handler(MessageHandler(filters.ALL, filter_user), group=-1)
     application.add_handler(MessageHandler(filters.Document.IMAGE, parse_document))
@@ -405,9 +403,7 @@ if __name__ == "__main__":
     # application.add_handler(MessageHandler(filters.TEXT, admin_handle))
     application.add_handler(MessageHandler(filters.StatusUpdate.NEW_CHAT_MEMBERS, on_join))
 
-
     application.add_error_handler(error_handler)
-
 
     # 开启辅助线程
     server = Thread(target=run)
