@@ -370,7 +370,6 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 if __name__ == "__main__":
     logger.info("运行本项目必须开启ThemeFactory")
-    d_command()
     tracemalloc.start()
     # 同步 桌面主题
     sync_dp()
