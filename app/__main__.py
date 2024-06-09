@@ -2,6 +2,8 @@ import tracemalloc
 import os
 import traceback
 from threading import Thread
+
+import requests
 from PIL import Image
 import sqlalchemy.exc
 import telegram
@@ -52,7 +54,6 @@ proxy_url = None
 if os.environ.get('ENV') == 'dev':
     proxy_url = "http://127.0.0.1:10810/"
     myapi = '6520279001:AAFlM8bPclv-dZvSERAbLihBNlMNVz2KRK0'  # 测试机器人id
-
 application = ApplicationBuilder().token(myapi).proxy(proxy_url).build()
 commands = get_command()
 bot: Bot = application.bot
@@ -147,25 +148,25 @@ async def error_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     except sqlalchemy.exc.PendingRollbackError as e:
         session.rollback()  # 回滚
         logger.warning(f"数据库提交发生错误: {e}")
+        session.close()
+        app.model.models.reflush()
+        logger.error("已经重置 session ")
+        await context.bot.send_message(chat_id=my_id, text=f"数据库错误{e}")
 
     except telegram.error.BadRequest as e:
         logger.warning(f"错误请求: {e}")
 
-    except (ConnectionError, NewConnectionError) as e:
-        logger.warning(f"网络错误: {e}")
+    except (requests.exceptions.RequestException, requests.exceptions.ConnectionError) as e:
+        logger.error(f"网络错误: {e}")
+        await context.bot.send_message(chat_id=my_id, text=f"出错了 主题工厂连接失败")
 
     except NoSuitParmException as e:
         logger.error(f"错误的参数错误: {e}")
+        await context.bot.send_message(chat_id=my_id, text=f"参数错误")
 
     except Exception as e:
         logger.error(f"{e}")
-    finally:
-        session.close()
-        app.model.models.reflush()
-        logger.warning("已经重置 session ")
-        # 异常发生时的清理操作
-        info = traceback.format_exc()
-        await context.bot.send_message(chat_id=my_id, text=f"出错了 {context.error},\n{update} \n{info}")
+        await context.bot.send_message(chat_id=my_id, text=f"{e}")
 
 
 @delete_command
@@ -404,8 +405,8 @@ if __name__ == "__main__":
     # application.add_handler(MessageHandler(filters.TEXT, admin_handle))
     application.add_handler(MessageHandler(filters.StatusUpdate.NEW_CHAT_MEMBERS, on_join))
 
-    if os.environ.get('ENV') != 'dev':
-        application.add_error_handler(error_handler)
+
+    application.add_error_handler(error_handler)
 
 
     # 开启辅助线程
