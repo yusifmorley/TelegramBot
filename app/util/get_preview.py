@@ -2,8 +2,8 @@ import requests
 from urllib.parse import quote
 
 # 与nodejs 交互
-main_url0 = "http://127.0.0.1:3000/android?query="
-main_url1 = "http://127.0.0.1:3000/desktop?query="
+main_url0 = "https://127.0.0.1:3000/android?query="
+main_url1 = "https://127.0.0.1:3000/desktop?query="
 head = {
     'Content-Type': 'application/octet-stream'
 }
