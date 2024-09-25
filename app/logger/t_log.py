@@ -40,7 +40,7 @@ for handler in handlers:
     handler.setFormatter(formatter)
 
 # 配置基本的日志记录系统
-logging.basicConfig(level=logging.DEBUG, handlers=handlers)
+logging.basicConfig(level=logging.INFO, handlers=handlers)
 logger = logging.getLogger(__name__)
 
 @deprecated

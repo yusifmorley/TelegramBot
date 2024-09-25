@@ -7,9 +7,9 @@ from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from app.util.color_parse import is_light, parse_color
 
 # 与nodejs 交互 发送一个图片
-url0 = "http://127.0.0.1:3000/colorlist"
+url0 = "http://127.0.0.1:5000/colorlist"
 
-url1 = "http://127.0.0.1:3000/attheme-create"
+url1 = "http://127.0.0.1:5000/attheme-create"
 
 # desk 和 attheme共用
 def get_attheme_color_pic(byte_arr: bytes):

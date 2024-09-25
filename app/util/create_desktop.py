@@ -10,7 +10,7 @@ from app.logger import t_log
 from app.util.color_parse import is_light, parse_color
 
 logger = t_log.get_logging().getLogger(__name__)
-url0 = "http://127.0.0.1:3000/tdesktop-create"
+url0 = "http://127.0.0.1:5000/tdesktop-create"
 
 # TODO 传参测试 日志
 def get_tdektop(pic_byte, color_list:List[str], flag: bool):
