@@ -1,9 +1,12 @@
+import json
+
 import requests
 import ast
 import base64
 
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 
+from app.logger.t_log import logger
 from app.util.color_parse import is_light, parse_color
 
 # 与nodejs 交互 发送一个图片
@@ -48,7 +51,7 @@ def get_attheme(pic_byte: bytes, color_list: list, flag=False):
     if flag:
         url = url1 + "/tran"
 
-    content = requests.post(url, json=ast.literal_eval(str(picObj)), headers=head).content
+    content = requests.post(url, json=picObj,headers=head).content
     if content != b'fail':
         return content  # 返回内容
     else:

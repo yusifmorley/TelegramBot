@@ -54,11 +54,11 @@ if os.environ.get('ENV') == 'dev':
     myapi = '6520279001:AAFlM8bPclv-dZvSERAbLihBNlMNVz2KRK0'  # 测试机器人id
 commands = get_command()
 # 获取 banword 对象
-bwo = ban_word_op.BanWord_OP(session)
-# 获取所有违禁词
-ban_words = admin_function.get_ban_word(bwo)
+# bwo = ban_word_op.BanWord_OP(session)
+# # 获取所有违禁词
+# ban_words = admin_function.get_ban_word(bwo)
 # 监控10个人
-mon_per = MonitorPerson()
+# mon_per = MonitorPerson()
 str_info = get_command_str()
 # lic: dict | None = None
 # 获取对象
@@ -91,14 +91,13 @@ async def admin_handle(update: Update, context: ContextTypes.DEFAULT_TYPE):  # �
         # 发送主题文件给用户
         await bot.send_document(chat_id=chat_id, document=theme_file.file_id)
         return
-    user = update.effective_message.from_user
-
-    if update.effective_message.chat.type == Chat.GROUP or update.effective_message.chat.type == Chat.SUPERGROUP:
-        if hasattr(user, "id"):
-            await  mon_per.run(user.id, user.first_name + " " + user.first_name, text, update, context, ban_words,
-                               logger)
-    else:
-        return
+    # user = update.effective_message.from_user
+    # if update.effective_message.chat.type == Chat.GROUP or update.effective_message.chat.type == Chat.SUPERGROUP:
+    #     if hasattr(user, "id"):
+    #         await  mon_per.run(user.id, user.first_name + " " + user.first_name, text, update, context, ban_words,
+    #                            logger)
+    # else:
+    #     return
 
 
 @delete_command
@@ -111,22 +110,22 @@ async def get_ran_theme(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await context.bot.send_message(chat_id=update.effective_chat.id, text="这是您的主题文件，亲～")
 
 
-async def write_ban_word(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    if update.message.from_user.id != 507467074:
-        await context.bot.send_message(chat_id=update.effective_chat.id,
-                                       text="您不是管理员！\n" + str_info)
-        return
-    global ban_words
-    if context.args[0] in ban_words:
-        await context.bot.send_message(chat_id=update.effective_chat.id,
-                                       text="违禁词已经存在：" + context.args[0])
-        return
-
-    admin_function.write_ban_word(bwo, context.args[0])
-    ban_words = admin_function.get_ban_word(bwo)
-    await context.bot.send_message(chat_id=update.effective_chat.id,
-                                   text="成功添加新的违禁词：" + context.args[0])
-    await context.bot.delete_message(message_id=update.effective_message.message_id, chat_id=update.effective_chat.id)
+# async def write_ban_word(update: Update, context: ContextTypes.DEFAULT_TYPE):
+#     if update.message.from_user.id != 507467074:
+#         await context.bot.send_message(chat_id=update.effective_chat.id,
+#                                        text="您不是管理员！\n" + str_info)
+#         return
+#     # global ban_words
+#     # if context.args[0] in ban_words:
+#     #     await context.bot.send_message(chat_id=update.effective_chat.id,
+#     #                                    text="违禁词已经存在：" + context.args[0])
+#     #     return
+#
+#     # admin_function.write_ban_word(bwo, context.args[0])
+#     # ban_words = admin_function.get_ban_word(bwo)
+#     await context.bot.send_message(chat_id=update.effective_chat.id,
+#                                    text="成功添加新的违禁词：" + context.args[0])
+#     await context.bot.delete_message(message_id=update.effective_message.message_id, chat_id=update.effective_chat.id)
 
 
 async def combin_theme(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -392,7 +391,7 @@ if __name__ == "__main__":
     application.add_handler(CommandHandler('getrandomtheme', get_ran_theme))
 
     application.add_handler(CommandHandler('start', start))
-    application.add_handler(CommandHandler('report', write_ban_word))
+    # application.add_handler(CommandHandler('report', write_ban_word))
 
     application.add_handler(CommandHandler('combinthemeandphoto', combin_theme))
     application.add_handler(CommandHandler('getbackground', combin_theme))
