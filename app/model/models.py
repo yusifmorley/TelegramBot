@@ -12,8 +12,8 @@ from app.config import get_config
 # ubuntu 需要安装依赖  apt-get install python3.11-dev libmysqlclient-dev
 
 Base = declarative_base()
-
-engine = create_engine(get_config.get_engine_str(), pool_pre_ping=True)
+# 7小时刷新 连接池
+engine = create_engine(get_config.get_engine_str(),pool_recycle=3600*7)
 DBSession = sessionmaker(bind=engine)
 seesion = DBSession()
 
