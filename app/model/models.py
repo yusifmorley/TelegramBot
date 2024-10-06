@@ -3,8 +3,11 @@ from sqlalchemy import BigInteger, Column, Date, Integer, text, create_engine
 from sqlalchemy.dialects.mysql import ENUM, INTEGER, MEDIUMTEXT, TINYINT, VARCHAR
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
-
+import datetime
+import time
+import sched
 from app.config import get_config
+from app.logger.t_log import logger
 
 # 命令行运行报错 相关MySQ python依赖没有安装 关闭系统代理
 # pip install mysqlclient
@@ -88,4 +91,19 @@ def init_session():
 
 def reflush():
     global seesion
+    seesion.close()
     seesion = DBSession()
+
+
+def target_task():
+    now = datetime.datetime.now()
+    ts = now.strftime('%Y-%m-%d %H:%M:%S')
+    reflush()
+    logger.info('执行reflush seesion time :', ts)
+    loop_reflush()
+
+# 6小时刷新session
+def loop_reflush():
+    s = sched.scheduler(time.time, time.sleep)  # 生成调度器
+    s.enter(3600 * 6, 1, target_task, ())
+    s.run()

@@ -30,7 +30,7 @@ from app.theme_file import get_radom_link, get_android, get_desktop
 from app.admin import admin_function, ban_word_op
 from app.theme_file import get_ios
 from app.util.assrt import is_attheme
-from app.model.models import init_session, CreateThemeLogo
+from app.model.models import init_session, CreateThemeLogo ,loop_reflush
 from sqlalchemy.orm.session import Session
 from app.util.sync_public_attheme import sunc_ap
 from app.util.sync_public_desk import sync_dp
@@ -399,8 +399,8 @@ if __name__ == "__main__":
 
     # application.add_handler(MessageHandler(filters.TEXT, admin_handle))
     application.add_handler(MessageHandler(filters.StatusUpdate.NEW_CHAT_MEMBERS, on_join))
-
     application.add_error_handler(error_handler)
+    loop_reflush()
 
     # 开启辅助线程
     server = Thread(target=run)
