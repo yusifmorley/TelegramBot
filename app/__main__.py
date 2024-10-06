@@ -400,11 +400,15 @@ if __name__ == "__main__":
     # application.add_handler(MessageHandler(filters.TEXT, admin_handle))
     application.add_handler(MessageHandler(filters.StatusUpdate.NEW_CHAT_MEMBERS, on_join))
     application.add_error_handler(error_handler)
-    loop_reflush()
+
 
     # 开启辅助线程
     server = Thread(target=run)
     # run_on(port_number) #Run in main thread
     # server.daemon = True # Do not make us wait for you to exit
     server.start()
+
+    server2=Thread(target=loop_reflush)
+    server2.start()
+
     application.run_polling()
