@@ -4,7 +4,7 @@ import shutil
 from sqlalchemy.orm import Session
 
 from app.logger.t_log import get_logging
-from app.model.models import init_session, ThemeUploadRecord
+from app.model.models import ThemeUploadRecord, getSession
 from app.util.get_preview import get_from
 
 # 主题所在文件夹
@@ -12,11 +12,9 @@ orgin_dir = "src/Theme/android-theme"
 # 公共目录
 desk_dir_root = 'src/myserver_bot_public/attheme'
 log = get_logging().getLogger(__name__)
-
-session: Session = init_session()
-
-attheme_ls = session.query(ThemeUploadRecord).filter(
-    ThemeUploadRecord.type == 'android' and ThemeUploadRecord.strc == 0).all()
+with getSession() as session:
+    attheme_ls = session.query(ThemeUploadRecord).filter(
+        ThemeUploadRecord.type == 'android' and ThemeUploadRecord.strc == 0).all()
 # 展示的主题列表
 attheme_list = []
 for x in attheme_ls:

@@ -4,7 +4,7 @@ import shutil
 from sqlalchemy.orm import Session
 
 from app.logger.t_log import get_logging
-from app.model.models import init_session, ThemeUploadRecord
+from app.model.models import ThemeUploadRecord, getSession
 from app.util.get_preview import get_from
 
 from sqlalchemy import Enum
@@ -15,11 +15,12 @@ orgin_dir = "src/Theme/desktop-theme"
 # 公共目录
 desk_dir_root = 'src/myserver_bot_public/desk'
 
-session: Session = init_session()
+
 
 lis = os.listdir(desk_dir_root)
-# 数据库信息
-desk_ls = session.query(ThemeUploadRecord).filter(ThemeUploadRecord.type == 'tdesktop' and ThemeUploadRecord.strc == 0
+with getSession() as session:
+    # 数据库信息
+    desk_ls = session.query(ThemeUploadRecord).filter(ThemeUploadRecord.type == 'tdesktop' and ThemeUploadRecord.strc == 0
                                                   ).all()
 # 必要，保存session数据
 # 展示的主题列表

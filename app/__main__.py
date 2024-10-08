@@ -7,13 +7,10 @@ import requests
 from PIL import Image
 import sqlalchemy.exc
 import telegram
-from telegram import Update, Bot, File, Chat
+from telegram import Update, File, Chat
 from telegram.ext import CallbackContext, CallbackQueryHandler, ContextTypes, Application, ApplicationBuilder
 from telegram.ext import MessageHandler, filters
 from telegram.ext import CommandHandler
-from urllib3.exceptions import NewConnectionError
-import app.model.models
-from app.admin.person_monitor import MonitorPerson
 from app.config import get_config
 from app.config.command_list import get_command, get_command_str
 from app.config.get_config import get_myid
@@ -30,7 +27,7 @@ from app.theme_file import get_radom_link, get_android, get_desktop
 from app.admin import admin_function, ban_word_op
 from app.theme_file import get_ios
 from app.util.assrt import is_attheme
-from app.model.models import init_session, CreateThemeLogo ,loop_reflush
+from app.model.models import  CreateThemeLogo ,getSession
 from sqlalchemy.orm.session import Session
 from app.util.sync_public_attheme import sunc_ap
 from app.util.sync_public_desk import sync_dp
@@ -47,8 +44,6 @@ my_github: str = "欢迎使用主题生成机器人\n"
 my_id = get_myid()
 myapi = get_config.get_telegram_id()  # 机器人api
 # public_IO:IO|None=None #供用户发送 document 形式的　图片用　
-session: Session = init_session()
-
 proxy_url = None
 if os.environ.get('ENV') == 'dev':
     proxy_url = "http://127.0.0.1:10810/"
@@ -106,7 +101,6 @@ async def admin_handle(update: Update, context: ContextTypes.DEFAULT_TYPE):  # �
 @listen
 async def get_ran_theme(update: Update, context: ContextTypes.DEFAULT_TYPE):
     path = get_radom_link.get_random_theme()
-
     await context.bot.send_message(chat_id=update.effective_chat.id, text=path.rstrip("\n"))
     await context.bot.send_message(chat_id=update.effective_chat.id, text="这是您的主题文件，亲～")
 
@@ -140,10 +134,6 @@ async def error_handler(update: object, context: ContextTypes.DEFAULT_TYPE):
         raise context.error
 
     except sqlalchemy.exc.PendingRollbackError as e:
-        session.rollback()  # 回滚
-        logger.warning(f"数据库提交发生错误: {e}")
-        session.close()
-        app.model.models.reflush()
         logger.error("已经重置 session ")
         await context.bot.send_message(chat_id=my_id, text=f"数据库错误{e}")
 
@@ -159,7 +149,7 @@ async def error_handler(update: object, context: ContextTypes.DEFAULT_TYPE):
         await context.bot.send_message(chat_id=my_id, text=f"参数错误")
 
     except Exception as e:
-        logger.error(f"{e}")
+        logger.error(f"{e}",exc_info=True)
         await context.bot.send_message(chat_id=my_id, text=f"{e}")
 
 
@@ -205,6 +195,7 @@ async def get_ios_theme(update: Update, context: ContextTypes.DEFAULT_TYPE):
 @delete_command
 @listen
 async def create_attheme(update: Update, context: ContextTypes.DEFAULT_TYPE):
+  with getSession() as session:
     an = get_modle(update, context, session, 0)
     await an.recive_command()
 
@@ -212,115 +203,118 @@ async def create_attheme(update: Update, context: ContextTypes.DEFAULT_TYPE):
 @delete_command
 @listen
 async def create_tdesktop(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    de = get_de_modle(update, context, session, 100)
-    await de.recive_command()
-
+    with getSession() as session:
+        de = get_de_modle(update, context, session, 100)
+        await de.recive_command()
 
 # 用户发送图片
 async def base_photo(update: Update, context: CallbackContext, doucment_pt: str | None = None):
-    # 只有图片
-    if update.effective_message.chat.type == Chat.CHANNEL:
-        return
-    if hasattr(update, 'message') and hasattr(update.message, "sender_chat"):
-        if hasattr(update.message.sender_chat, "type"):
-            if update.message.sender_chat.type == Chat.CHANNEL:
-                return
-    same_primary_key = update.effective_user.id
-    existing_user: CreateThemeLogo | None = session.get(CreateThemeLogo, same_primary_key)
-    if not existing_user:
-        return
-    if existing_user and existing_user.flag == 0:
-        return
-    if existing_user.flag == 2 or existing_user.flag == 102:  # 避免重复检测图片
-        # await context.bot.send_message(chat_id=update.effective_chat.id, text="图片已经发送 亲～")
-        return
-    flag = existing_user.flag
-    if is_attheme(existing_user.flag):
-        an = get_modle(update, context, session, flag)
-        await  an.recive_photo()
-    else:
-        de = get_de_modle(update, context, session, flag)
-        await de.recive_photo()
+    with getSession() as session:
+        # 只有图片
+        if update.effective_message.chat.type == Chat.CHANNEL:
+            return
+        if hasattr(update, 'message') and hasattr(update.message, "sender_chat"):
+            if hasattr(update.message.sender_chat, "type"):
+                if update.message.sender_chat.type == Chat.CHANNEL:
+                    return
+        same_primary_key = update.effective_user.id
+        existing_user: CreateThemeLogo | None = session.get(CreateThemeLogo, same_primary_key)
+        if not existing_user:
+            return
+        if existing_user and existing_user.flag == 0:
+            return
+        if existing_user.flag == 2 or existing_user.flag == 102:  # 避免重复检测图片
+            # await context.bot.send_message(chat_id=update.effective_chat.id, text="图片已经发送 亲～")
+            return
+        flag = existing_user.flag
+        if is_attheme(existing_user.flag):
+            an = get_modle(update, context, session, flag)
+            await  an.recive_photo()
+        else:
+            de = get_de_modle(update, context, session, flag)
+            await de.recive_photo()
 
 
 # 解决 颜色三个状态
 async def button_update(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    same_primary_key = update.effective_user.id
-    existing_user: CreateThemeLogo | None = session.get(CreateThemeLogo, same_primary_key)
-    query = update.callback_query
-    # 检查
-    if update.effective_user.id != get_myid():
-        if not existing_user or query.message.message_id != existing_user.callback_id:
-            # logger.debug(f"{update}")
-            logger.warning(f"当前id为{query.message.message_id} 数据库id为{existing_user.callback_id}")
-            await query.answer("此键盘不属于你，点击无效呢！")
-            return
-    flag = existing_user.flag
-    logger.info(f"当前flag为{flag} ")
-    if len(query.data) > 15:
+    with getSession() as session:
+        same_primary_key = update.effective_user.id
+        existing_user: CreateThemeLogo | None = session.get(CreateThemeLogo, same_primary_key)
+        query = update.callback_query
+        # 检查
+        if update.effective_user.id != get_myid():
+            if not existing_user or query.message.message_id != existing_user.callback_id:
+                # logger.debug(f"{update}")
+                logger.warning(f"当前id为{query.message.message_id} 数据库id为{existing_user.callback_id}")
+                await query.answer("此键盘不属于你，点击无效呢！")
+                return
+        flag = existing_user.flag
+        logger.info(f"当前flag为{flag} ")
+        if len(query.data) > 15:
+            if is_attheme(flag):
+                an = get_modle(update, context, session, flag)
+                await an.recive_random_color(query, existing_user)
+
+                return
+            else:
+                de = get_de_modle(update, context, session, flag)
+                await de.recive_random_color(query, existing_user)
+
+                return
+
         if is_attheme(flag):
             an = get_modle(update, context, session, flag)
-            await an.recive_random_color(query, existing_user)
-
-            return
+            await an.recive_color()
         else:
             de = get_de_modle(update, context, session, flag)
-            await de.recive_random_color(query, existing_user)
-
-            return
-
-    if is_attheme(flag):
-        an = get_modle(update, context, session, flag)
-        await an.recive_color()
-    else:
-        de = get_de_modle(update, context, session, flag)
-        await de.recive_color()
+            await de.recive_color()
 
 
 async def parse_document(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    same_primary_key = update.effective_user.id
-    existing_user: CreateThemeLogo | None = session.get(CreateThemeLogo, same_primary_key)
+    with getSession() as session:
+        same_primary_key = update.effective_user.id
+        existing_user: CreateThemeLogo | None = session.get(CreateThemeLogo, same_primary_key)
 
-    # 文档里带图片
-    # 不存在用户
-    if not existing_user:
-        return
+        # 文档里带图片
+        # 不存在用户
+        if not existing_user:
+            return
 
-    #存在用户 但状态为空
-    if existing_user and existing_user.flag == 0:
-        return
-    # 无document属性
-    if not hasattr(update.message, "document"):
-        # await base_photo(update, context)
-        return
+        #存在用户 但状态为空
+        if existing_user and existing_user.flag == 0:
+            return
+        # 无document属性
+        if not hasattr(update.message, "document"):
+            # await base_photo(update, context)
+            return
 
-    document = update.message.document
-    # 获取文档的文件名
+        document = update.message.document
+        # 获取文档的文件名
 
-    # 名称不正确
-    file_name: str = document.file_name
-    if '.jpg' not in file_name and 'png' not in file_name:
-        return
+        # 名称不正确
+        file_name: str = document.file_name
+        if '.jpg' not in file_name and 'png' not in file_name:
+            return
 
-    try:
-        file_obj: File = await document.get_file()
-        file_path: str = "src/Photo/" + str(update.effective_chat.id) + ".png"
-        public_IO = await file_obj.download_to_drive(file_path)
-        Image.open(public_IO)
-    except Exception:
-        # TODO 日志
-        # 如果无法打开图像，它不是一个有效的图像文件
-        await update.message.reply_text(f"您发送了非法文件")
-        return
-    await update.message.reply_text("嗯嗯！这确实是一个图片")
+        try:
+            file_obj: File = await document.get_file()
+            file_path: str = "src/Photo/" + str(update.effective_chat.id) + ".png"
+            public_IO = await file_obj.download_to_drive(file_path)
+            Image.open(public_IO)
+        except Exception:
+            # TODO 日志
+            # 如果无法打开图像，它不是一个有效的图像文件
+            await update.message.reply_text(f"您发送了非法文件")
+            return
+        await update.message.reply_text("嗯嗯！这确实是一个图片")
 
-    flag = existing_user.flag
-    if is_attheme(existing_user.flag):
-        an = get_modle(update, context, session, flag)
-        await  an.recive_document(file_path)
-    else:
-        de = get_de_modle(update, context, session, flag)
-        await de.recive_document(file_path)
+        flag = existing_user.flag
+        if is_attheme(existing_user.flag):
+            an = get_modle(update, context, session, flag)
+            await  an.recive_document(file_path)
+        else:
+            de = get_de_modle(update, context, session, flag)
+            await de.recive_document(file_path)
 
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -401,14 +395,11 @@ if __name__ == "__main__":
     application.add_handler(MessageHandler(filters.StatusUpdate.NEW_CHAT_MEMBERS, on_join))
     application.add_error_handler(error_handler)
 
-
     # 开启辅助线程
     server = Thread(target=run)
     # run_on(port_number) #Run in main thread
     # server.daemon = True # Do not make us wait for you to exit
     server.start()
-
-    server2=Thread(target=loop_reflush)
-    server2.start()
-
+    # server2=Thread(target=loop_reflush)
+    # server2.start()
     application.run_polling()

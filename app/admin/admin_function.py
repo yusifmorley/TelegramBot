@@ -1,9 +1,8 @@
 # 管理功能
 from telegram import ChatPermissions
-from telegram.error import BadRequest
 from telegram.ext import CallbackContext
 from app.logger.t_log import get_logging
-from app.model.models import init_session, BanUserLogo, BanWord
+from app.model.models import BanUserLogo, getSession
 from telegram import Update
 
 log = get_logging().getLogger(__name__)
@@ -34,23 +33,23 @@ def write_ban_word(ban_word_object, str):
 # 封禁用户
 # 在调用词方法之前请检查 机器人是否有相关权限
 async def block_person(update: Update, context: CallbackContext, ban_word):
-    session = init_session()
-    existing_user: BanUserLogo | None = session.get(BanUserLogo, update.effective_user.id)
-    if not existing_user:
-        session.add(BanUserLogo(uid=update.effective_user.id,
-                                usr_name=update.effective_user.name,
-                                word=update.message.text,
-                                ban_word=ban_word
-                                ))
-    session.commit()
+    with getSession() as session:
+        existing_user: BanUserLogo | None = session.get(BanUserLogo, update.effective_user.id)
+        if not existing_user:
+            session.add(BanUserLogo(uid=update.effective_user.id,
+                                    usr_name=update.effective_user.name,
+                                    word=update.message.text,
+                                    ban_word=ban_word
+                                    ))
+        session.commit()
 
-    a = await context.bot.delete_message(message_id=update.effective_message.message_id,
-                                         chat_id=update.effective_chat.id)
-    b = await context.bot.restrict_chat_member(chat_id=update.effective_chat.id,
-                                               user_id=update.effective_user.id,
-                                               permissions=ChatPermissions(can_send_messages=False,
-                                                                           can_send_other_messages=False))
-    return a and b
+        a = await context.bot.delete_message(message_id=update.effective_message.message_id,
+                                             chat_id=update.effective_chat.id)
+        b = await context.bot.restrict_chat_member(chat_id=update.effective_chat.id,
+                                                   user_id=update.effective_user.id,
+                                                   permissions=ChatPermissions(can_send_messages=False,
+                                                                               can_send_other_messages=False))
+        return a and b
 
 
 # 判断是否有删除消息的权限

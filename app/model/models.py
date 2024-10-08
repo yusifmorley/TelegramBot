@@ -16,7 +16,7 @@ from app.logger.t_log import logger
 
 Base = declarative_base()
 # 7小时刷新 连接池
-engine = create_engine(get_config.get_engine_str(),pool_recycle=3600*7)
+engine = create_engine(get_config.get_engine_str(),pool_pre_ping=True)
 DBSession = sessionmaker(bind=engine)
 seesion = DBSession()
 
@@ -85,25 +85,7 @@ class UserUseRecord(Base):
     count_record = Column(Integer, comment='使用次数')
 
 
-def init_session():
-    return seesion  # 返回seesion实例
+def getSession():
+    return DBSession()
 
 
-def reflush():
-    global seesion
-    seesion.close()
-    seesion = DBSession()
-
-
-def target_task():
-    now = datetime.datetime.now()
-    ts = now.strftime('%Y-%m-%d %H:%M:%S')
-    reflush()
-    logger.info('执行reflush seesion time :', ts)
-    loop_reflush()
-
-# 6小时刷新session
-def loop_reflush():
-    s = sched.scheduler(time.time, time.sleep)  # 生成调度器
-    s.enter(3600 * 6, 1, target_task, ())
-    s.run()
