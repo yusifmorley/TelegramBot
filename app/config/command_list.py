@@ -1,11 +1,11 @@
 import telegram
 lis=[
-   ['getrandomtheme', '随机获取一个安卓或桌面种类的主题链接(有时主题可能不适用于您的设备)'],
-   ['getandroidtheme', '随机获取一个安卓主题文件'] ,
-   ['getdesktoptheme', '随机获取一个桌面主题文件'],
+   # ['getrandomtheme', '随机获取一个安卓或桌面种类的主题链接(有时主题可能不适用于您的设备)'],
+   # ['getandroidtheme', '随机获取一个安卓主题文件'] ,
+   # ['getdesktoptheme', '随机获取一个桌面主题文件'],
    ['getiostheme', '随机获取一个IOS主题链接'],
-   ['create_attheme_base_pic', ' 基于图片创建attheme主题'],
-   ['create_tdesktop_base_pic','基于图片创建 tdesktop 主题']
+   # ['create_attheme_base_pic', ' 基于图片创建attheme主题'],
+   # ['create_tdesktop_base_pic','基于图片创建 tdesktop 主题']
 ]
 
 def get_command():
