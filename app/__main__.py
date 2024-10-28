@@ -386,7 +386,7 @@ if __name__ == "__main__":
     # application.add_handler(CommandHandler('getdesktoptheme', get_desktop_theme))
     # application.add_handler(CommandHandler('getrandomtheme', get_ran_theme))
 
-    # application.add_handler(CommandHandler('start', start))
+    application.add_handler(CommandHandler('start', start))
     # application.add_handler(CommandHandler('report', write_ban_word))
 
     # application.add_handler(CommandHandler('combinthemeandphoto', combin_theme))
